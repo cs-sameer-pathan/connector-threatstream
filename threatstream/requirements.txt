@@ -1,0 +1,5 @@
+validators==0.12.0
+pythonwhois==2.4.3
+xlrd
+pyminizip==0.2.4
+json2html

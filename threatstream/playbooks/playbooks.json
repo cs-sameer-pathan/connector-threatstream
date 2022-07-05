@@ -1,0 +1,2953 @@
+{
+  "type": "workflow_collections",
+  "data": [
+    {
+      "@type": "WorkflowCollection",
+      "name": "Sample - Anomali ThreatStream - 2.2.1",
+      "description": "Sample playbooks for \"Anomali ThreatStream\" connector. If you are planning to use any of the sample playbooks in your environment, ensure that you clone those playbooks and move them to a different collection, since the sample playbook collection gets deleted during connector upgrade and delete.",
+      "visible": true,
+      "image": "/api/3/images/945c419f-5628-4aae-a04e-ef34335a1e8a",
+      "workflows": [
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Anomali ThreatStream > Ingest",
+          "aliasName": null,
+          "description": "Fetch Incidents from Anomali ThreatStream",
+          "collection": "/api/3/workflow_collections/983d0f08-1eda-4bca-bb67-797fe8e19541",
+          "tag": "#threatstream #dataingestion #create #ingest",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/68b89354-b037-41d7-b5ce-add83accb412",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Fetch Incidents",
+              "description": null,
+              "arguments": {
+                "arguments": [],
+                "apply_async": false,
+                "step_variables": [],
+                "workflowReference": "/api/3/workflows/728bfc6c-4ba0-4c2e-8403-fec0eb75fb1b"
+              },
+              "status": null,
+              "left": "20",
+              "top": "133",
+              "stepType": "/api/3/workflow_step_types/74932bdc-b8b6-4d24-88c4-1a4dfbc524f3",
+              "uuid": "5ce24611-0904-4dff-97b5-070530ddcb62"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "arguments": {
+                "route": "582d9566-585c-4758-a849-fceaa41ecfe0",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records}}"
+                  }
+                },
+                "executeButtonText": "Execute",
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "68b89354-b037-41d7-b5ce-add83accb412"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Create record",
+              "description": null,
+              "arguments": {
+                "for_each": {
+                  "item": "{{vars.steps.Fetch_Incidents.data}}",
+                  "__bulk": true,
+                  "condition": ""
+                },
+                "resource": {
+                  "name": "{{vars.item[\"name\"]}}",
+                  "source": "Anomali ThreatStream Incident: {%if vars.item[\"circles\"] | length > 0 %} {{vars.item[\"circles\"][0][\"name\"]}} {%else %} Anomali ThreatStream {%endif %}",
+                  "status": "{{vars.item[\"status\"][\"display_name\"] | resolveRange(vars.alerts_status_map)}}",
+                  "severity": "{{vars.item[\"tlp\"] | resolveRange(vars.alerts_severity_map)}}",
+                  "sourceId": "Anomali ThreatStream Incident: {{vars.item[\"id\"]}}",
+                  "__replace": "true",
+                  "sourcedata": "{{vars.item | toJSON}}"
+                },
+                "_showJson": false,
+                "operation": "Overwrite",
+                "collection": "/api/3/upsert/alerts",
+                "fieldOperation": {
+                  "recordTags": "Overwrite"
+                },
+                "step_variables": []
+              },
+              "status": null,
+              "left": "20",
+              "top": "353",
+              "stepType": "/api/3/workflow_step_types/2597053c-e718-44b4-8394-4d40fe26d357",
+              "uuid": "788696ae-f465-4b93-98d0-dd51cc00b4a4"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Configuration",
+              "description": null,
+              "arguments": {
+                "alerts_status_map": "{'New, Open, Incident Reported': {{'AlertStatus'| picklist('Open') }}, 'Containment Achieved, Restoration Achieved': {{'AlertStatus'| picklist('Investigating') }}, 'Stalled': {{'AlertStatus'| picklist('Pending') }}, 'Closed, Rejected, Deleted': {{'AlertStatus'| picklist('Closed') }}}",
+                "alerts_severity_map": "{'white': {{'Severity'| picklist('Low') }}, 'green': {{'Severity'| picklist('Medium') }}, 'amber': {{'Severity'| picklist('High') }}, 'red': {{'Severity'| picklist('Critical') }}}"
+              },
+              "status": null,
+              "left": "20",
+              "top": "246",
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "uuid": "89fde241-02a0-491f-9eb6-6b71fa290393"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Update Last Incident Fetch Macro",
+              "description": null,
+              "arguments": {
+                "params": {
+                  "macro": "ThreatStreamLastIncidentPullTime",
+                  "value": "{{ vars.steps.Fetch_Incidents.curr_timestamp}}"
+                },
+                "version": "3.0.3",
+                "connector": "cyops_utilities",
+                "operation": "updatemacro",
+                "operationTitle": "CyOPs: Update Macro",
+                "step_variables": []
+              },
+              "status": null,
+              "left": "20",
+              "top": "480",
+              "stepType": "/api/3/workflow_step_types/0109f35d-090b-4a2b-bd8a-94cbc3508562",
+              "uuid": "ab13c8b1-1130-48da-9b11-138621c02d4d"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "c9a9440b-916a-41c1-8824-848e15866245",
+              "name": "Start -> Fetch Incidents",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/5ce24611-0904-4dff-97b5-070530ddcb62",
+              "sourceStep": "/api/3/workflow_steps/68b89354-b037-41d7-b5ce-add83accb412"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "76a15551-8f94-488d-a268-605d63387de2",
+              "name": "Create Record -> Update Last Incident Fetch Macro",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/ab13c8b1-1130-48da-9b11-138621c02d4d",
+              "sourceStep": "/api/3/workflow_steps/788696ae-f465-4b93-98d0-dd51cc00b4a4"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "8bd7be40-c12e-48e2-9fdb-ca2d4870f0eb",
+              "name": "Fetch Incidents -> Set Configuration",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/89fde241-02a0-491f-9eb6-6b71fa290393",
+              "sourceStep": "/api/3/workflow_steps/5ce24611-0904-4dff-97b5-070530ddcb62"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "d1fbcd42-b1ce-4afc-ae13-4a2928b02fc1",
+              "name": "Set Configuration -> Create Record",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/788696ae-f465-4b93-98d0-dd51cc00b4a4",
+              "sourceStep": "/api/3/workflow_steps/89fde241-02a0-491f-9eb6-6b71fa290393"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": 1591787100,
+          "uuid": "07448145-23f4-45dd-ac2e-15eeb704b968",
+          "recordTags": [
+            "/api/3/tags/dataingestion",
+            "/api/3/tags/create",
+            "/api/3/tags/ingest",
+            "/api/3/tags/threatstream"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "> Anomali ThreatStream > Fetch",
+          "aliasName": null,
+          "description": "Fetch Incidents from Anomali ThreatStream",
+          "collection": "/api/3/workflow_collections/983d0f08-1eda-4bca-bb67-797fe8e19541",
+          "tag": "#threatstream #dataingestion #fetch",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/d3971e18-187f-4cc6-bbc9-ba63061490a6",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Set Result",
+              "description": null,
+              "arguments": {
+                "data": "{{vars.steps.Fetch_Anomali_Incidents.data.objects}}",
+                "curr_timestamp": "{{vars.curr_timestamp}}"
+              },
+              "status": null,
+              "left": "369",
+              "top": "568",
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "uuid": "1673684e-bafe-49b5-846c-7b99face6e51"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Fetch Anomali Incidents",
+              "description": null,
+              "arguments": {
+                "name": "Anomali ThreatStream",
+                "config": "",
+                "params": {
+                  "limit": "{{vars.number_of_incidents_to_fetch}}",
+                  "value": "{{vars.search_query}}&modified_ts_gte={{vars.last_pull_time}}",
+                  "offset": 0
+                },
+                "version": "2.2.1",
+                "connector": "threatstream",
+                "operation": "fetch_incidents",
+                "operationTitle": "Get Incidents List",
+                "step_variables": []
+              },
+              "status": null,
+              "left": "300",
+              "top": "460",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "a48dfc67-a362-4763-9193-d5ad61731a7e"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Configuration",
+              "description": null,
+              "arguments": {
+                "search_query": "created_ts__gte=2019-01-28T21:04:14",
+                "number_of_incidents_to_fetch": 10,
+                "fetch_incidents_in_last_X_minutes": 10
+              },
+              "status": null,
+              "left": "93",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "uuid": "a72e1d80-e6bc-428d-9cd5-1ca3f888dc52"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Set Time Configuration",
+              "description": null,
+              "arguments": {
+                "curr_timestamp": "{{arrow.utcnow().format('YYYY-MM-DDTHH:mm:ss')}}",
+                "last_pull_time": "{% if macro.ThreatStreamLastIncidentPullTime == \"initial\" %} {{arrow.utcnow().shift(minutes =- (vars.fetch_incidents_in_last_X_minutes) * 60).format('YYYY-MM-DDTHH:mm:ss')}} {% else %} {{macro.ThreatStreamLastIncidentPullTime}} {% endif %}"
+              },
+              "status": null,
+              "left": "220",
+              "top": "340",
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "uuid": "bcc13016-e782-4334-9dc6-372c97ae3153"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": "",
+              "arguments": {
+                "step_variables": {
+                  "_configuration_schema": "[\n        {\n          \"title\": \"Search Query\",\n          \"required\": true,\n          \"editable\": true,\n          \"visible\": true,\n          \"type\": \"text\",\n          \"name\": \"search_query\",\n          \"value\": \"\",\n          \"placeholder\": \"created_ts__gte=2019-01-28T21:04:14\",\n          \"description\": \"Valid search query to filter out the incidents \"\n        },\n        {\n          \"title\": \"Number of Incidents to Fetch\",\n          \"required\": true,\n          \"editable\": true,\n          \"visible\": true,\n          \"type\": \"integer\",\n          \"name\": \"number_of_incidents_to_fetch\",\n          \"value\": 0,\n          \"tooltip\": \"Specifying 0 will return up to a maximum of 1000 results (if available). Max limit is 1000\",\n          \"description\": \"Maximum number of results that this operation should return.\"\n        },\n        {\n          \"title\": \"Fetch Incidents in Last X min\",\n          \"required\": true,\n          \"editable\": true,\n          \"visible\": true,\n          \"type\": \"integer\",\n          \"name\": \"fetch_incidents_in_last_X_minutes\",\n          \"value\": 10\n        }\n      ]"
+                }
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/b348f017-9a94-471f-87f8-ce88b6a7ad62",
+              "uuid": "d3971e18-187f-4cc6-bbc9-ba63061490a6"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Environment Setup",
+              "description": null,
+              "arguments": {
+                "when": "{{vars.request.env_setup}}",
+                "arguments": {
+                  "AnomaliTSMacroName": "ThreatStreamLastIncidentPullTime",
+                  "AnomaliTSMacroValue": "initial"
+                },
+                "apply_async": false,
+                "step_variables": [],
+                "workflowReference": "/api/3/workflows/593b2b47-1d00-4890-a1df-5c47db5d613a"
+              },
+              "status": null,
+              "left": "154",
+              "top": "229",
+              "stepType": "/api/3/workflow_step_types/74932bdc-b8b6-4d24-88c4-1a4dfbc524f3",
+              "uuid": "ea47872e-0c10-4633-b92b-1be00c734e55"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "048d436e-63d0-4583-abf9-7b1804b07599",
+              "name": "Configuration -> Environment Setup",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/ea47872e-0c10-4633-b92b-1be00c734e55",
+              "sourceStep": "/api/3/workflow_steps/a72e1d80-e6bc-428d-9cd5-1ca3f888dc52"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "795ca1cf-e402-4693-9f03-e1ccaab3cc8a",
+              "name": "Start -> Configuration",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/a72e1d80-e6bc-428d-9cd5-1ca3f888dc52",
+              "sourceStep": "/api/3/workflow_steps/d3971e18-187f-4cc6-bbc9-ba63061490a6"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "979724b3-2b37-4775-821c-a974dd24b2eb",
+              "name": "Fetch Anomali Incidents -> Set Result",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/1673684e-bafe-49b5-846c-7b99face6e51",
+              "sourceStep": "/api/3/workflow_steps/a48dfc67-a362-4763-9193-d5ad61731a7e"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "b76a20dd-4b6a-4661-8188-cbdd25ab862e",
+              "name": "Environment Setup -> Set Time Configuration",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/bcc13016-e782-4334-9dc6-372c97ae3153",
+              "sourceStep": "/api/3/workflow_steps/ea47872e-0c10-4633-b92b-1be00c734e55"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "b915c843-a44b-407a-91bc-d6302da33fdc",
+              "name": "Set Time Configuration -> Fetch Anomali Incidents",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/a48dfc67-a362-4763-9193-d5ad61731a7e",
+              "sourceStep": "/api/3/workflow_steps/bcc13016-e782-4334-9dc6-372c97ae3153"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": 1591775396,
+          "uuid": "728bfc6c-4ba0-4c2e-8403-fec0eb75fb1b",
+          "recordTags": [
+            "/api/3/tags/dataingestion",
+            "/api/3/tags/fetch",
+            "/api/3/tags/threatstream"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": ">> Anomali ThreatStream > Handle Macros",
+          "aliasName": null,
+          "description": "This playbook create Anomali ThreatStream macros if not exist.",
+          "collection": "/api/3/workflow_collections/983d0f08-1eda-4bca-bb67-797fe8e19541",
+          "tag": "#threatstream #dataingestion",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [
+            "AnomaliTSMacroName",
+            "AnomaliTSMacroValue"
+          ],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/8040ff45-b1d9-4026-8a14-db069c8ab36e",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "No Operation",
+              "description": null,
+              "arguments": {
+                "name": "Utilities",
+                "params": [],
+                "version": "2.5.0",
+                "connector": "cyops_utilities",
+                "operation": "no_op",
+                "operationTitle": "Utils: No Operation",
+                "step_variables": []
+              },
+              "status": null,
+              "left": "400",
+              "top": "200",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "427c8f98-b6a5-4766-8371-a91f7e64fd46"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "arguments": {
+                "step_variables": {
+                  "input": {
+                    "params": {
+                      "AnomaliTSMacroName": "{{ vars.AnomaliTSMacroName }}",
+                      "AnomaliTSMacroValue": "{{ vars.AnomaliTSMacroValue }}"
+                    }
+                  }
+                }
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/b348f017-9a94-471f-87f8-ce88b6a7ad62",
+              "uuid": "8040ff45-b1d9-4026-8a14-db069c8ab36e"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Check Anomali ThreatStream Macro",
+              "description": "",
+              "arguments": {
+                "conditions": [
+                  {
+                    "option": "Create Macro",
+                    "step_iri": "/api/3/workflow_steps/f4ae3d12-0cf6-427a-aa6f-504b7867a37a",
+                    "condition": "{{ vars.steps.Get_Macro_Status.data['hydra:totalItems'] == 0 }}"
+                  },
+                  {
+                    "option": "Macro Exists",
+                    "step_iri": "/api/3/workflow_steps/427c8f98-b6a5-4766-8371-a91f7e64fd46",
+                    "condition": "{{ true }}"
+                  }
+                ]
+              },
+              "status": null,
+              "left": "20",
+              "top": "268",
+              "stepType": "/api/3/workflow_step_types/12254cf5-5db7-4b1a-8cb1-3af081924b28",
+              "uuid": "beb74dee-b3f3-4d4e-b8f4-ee9cee010025"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Macro Status",
+              "description": "",
+              "arguments": {
+                "name": "Utilities",
+                "params": {
+                  "iri": "/api/wf/api/dynamic-variable/?format=json&name={{vars.AnomaliTSMacroName}}",
+                  "body": "",
+                  "method": "GET"
+                },
+                "version": "2.7.0",
+                "connector": "cyops_utilities",
+                "operation": "make_cyops_request",
+                "operationTitle": "CyOPs: Make CyOPs API Call",
+                "step_variables": []
+              },
+              "status": null,
+              "left": "20",
+              "top": "140",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "e86bff89-d78b-4958-9e30-e3beba284bbb"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Create Anomali ThreatStream Macro",
+              "description": null,
+              "arguments": {
+                "params": {
+                  "iri": "/api/wf/api/dynamic-variable/?format=json",
+                  "body": "{ 'name': '{{vars.AnomaliTSMacroName}}'   , 'value': '{{vars.AnomaliTSMacroValue}}' }",
+                  "method": "POST"
+                },
+                "version": "2.7.0",
+                "connector": "cyops_utilities",
+                "operation": "make_cyops_request",
+                "operationTitle": "CyOPs: Make CyOPs API Call",
+                "step_variables": []
+              },
+              "status": null,
+              "left": "400",
+              "top": "328",
+              "stepType": "/api/3/workflow_step_types/0109f35d-090b-4a2b-bd8a-94cbc3508562",
+              "uuid": "f4ae3d12-0cf6-427a-aa6f-504b7867a37a"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "a70c9cb0-d98c-49cd-9bda-7573c42018dc",
+              "name": "Check Anomali ThreatStream Macro -> Create Anomali ThreatStream Macro",
+              "label": "Create Macro",
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/f4ae3d12-0cf6-427a-aa6f-504b7867a37a",
+              "sourceStep": "/api/3/workflow_steps/beb74dee-b3f3-4d4e-b8f4-ee9cee010025"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "b4cd8f4b-e9d9-4010-9d83-90f4e9c54e10",
+              "name": "Check Anomali ThreatStream Macro -> No Operation",
+              "label": "Macro Exists",
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/427c8f98-b6a5-4766-8371-a91f7e64fd46",
+              "sourceStep": "/api/3/workflow_steps/beb74dee-b3f3-4d4e-b8f4-ee9cee010025"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "c0b21ecf-7d16-452d-b955-403e750953a9",
+              "name": "Start -> Get Macro Status",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/e86bff89-d78b-4958-9e30-e3beba284bbb",
+              "sourceStep": "/api/3/workflow_steps/8040ff45-b1d9-4026-8a14-db069c8ab36e"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "e94fb4ad-f8eb-4c17-89ed-8b3e0c993eaf",
+              "name": "Get Macro Status -> Check Anomali ThreatStream Macro",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/beb74dee-b3f3-4d4e-b8f4-ee9cee010025",
+              "sourceStep": "/api/3/workflow_steps/e86bff89-d78b-4958-9e30-e3beba284bbb"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": 1591775362,
+          "uuid": "593b2b47-1d00-4890-a1df-5c47db5d613a",
+          "recordTags": [
+            "/api/3/tags/dataingestion",
+            "/api/3/tags/threatstream"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get Threat Bulletin Entities",
+          "aliasName": null,
+          "description": "Retrieves a list of all threat model entities associated with a specific threat bulletin based on the threat bulletin ID and other input parameters that you have specified.",
+          "collection": "/api/3/workflow_collections/983d0f08-1eda-4bca-bb67-797fe8e19541",
+          "tag": "#Anomali ThreatStream",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/26b1c44b-2b03-4574-9cd4-c25110f89a2d",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "1ff301ec-d538-46aa-8807-a55e38396f2f",
+                "title": "Anomali ThreatStream:Get Threat Bulletin Entities",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "26b1c44b-2b03-4574-9cd4-c25110f89a2d"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Threat Bulletin Entities",
+              "description": null,
+              "arguments": {
+                "name": "Anomali ThreatStream",
+                "config": "c64d4e0c-a2cd-473b-ae6f-198076c3ae00",
+                "params": {
+                  "id": 7520,
+                  "entity_type": "TTP",
+                  "record_number": "Fetch All Records"
+                },
+                "version": "2.2.1",
+                "connector": "threatstream",
+                "operation": "list_threat_model_entity",
+                "operationTitle": "Get Threat Bulletin Entities",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "c7073392-95cf-4176-bcb0-94daa2f7847d"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "9fcc78f7-4c31-432c-a627-76680f9a2643",
+              "name": "Alerts -> Get Threat Bulletin Entities",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/c7073392-95cf-4176-bcb0-94daa2f7847d",
+              "sourceStep": "/api/3/workflow_steps/26b1c44b-2b03-4574-9cd4-c25110f89a2d"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": null,
+          "uuid": "114701e3-1af0-4df7-8dfc-42725e5a1aaa",
+          "recordTags": [
+            "/api/3/tags/threatstream",
+            "/api/3/tags/Anomali"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Create Incident",
+          "aliasName": null,
+          "description": "Creates an incident in ThreatStream based on the name, tags, and other input parameters that you have specified.",
+          "collection": "/api/3/workflow_collections/983d0f08-1eda-4bca-bb67-797fe8e19541",
+          "tag": "#Anomali ThreatStream",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/74fd60f1-4899-4be7-a155-b7a70f37a6c7",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "8720d623-76a6-4fdf-a101-ef0caf5bf404",
+                "title": "Anomali ThreatStream: Create Incident",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "74fd60f1-4899-4be7-a155-b7a70f37a6c7"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Create Incident",
+              "description": null,
+              "arguments": {
+                "name": "Anomali ThreatStream",
+                "config": "c64d4e0c-a2cd-473b-ae6f-198076c3ae00",
+                "params": {
+                  "tlp": "Green",
+                  "name": "Test incident created by API",
+                  "tags": "",
+                  "fields": "",
+                  "is_public": true,
+                  "intelligence": "3256, 5738"
+                },
+                "version": "2.2.1",
+                "connector": "threatstream",
+                "operation": "create_incident",
+                "operationTitle": "Create Incident",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "f70af420-eb6b-4adb-8406-dbf91f4748b2"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "01291d89-6f2d-4d3a-8aea-80d65e31cb43",
+              "name": "Alerts -> Create Incident",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/f70af420-eb6b-4adb-8406-dbf91f4748b2",
+              "sourceStep": "/api/3/workflow_steps/74fd60f1-4899-4be7-a155-b7a70f37a6c7"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": null,
+          "uuid": "12fd8533-1dd5-4783-83e9-f151be03040d",
+          "recordTags": [
+            "/api/3/tags/threatstream",
+            "/api/3/tags/Anomali"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get Whois IP Information",
+          "aliasName": null,
+          "description": "Executes a WhoIs lookup on the specified IP address and retrieves a list of IP addresses based on the IP and filter criteria that you have specified.",
+          "collection": "/api/3/workflow_collections/983d0f08-1eda-4bca-bb67-797fe8e19541",
+          "tag": "#Anomali ThreatStream",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/0a16a696-a706-4841-b936-81aa22c050fa",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "6dedc3e7-1b07-4093-92d0-a57d50f4dec6",
+                "title": "Anomali ThreatStream: Get Whois IP Information",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "0a16a696-a706-4841-b936-81aa22c050fa"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Whois IP Information",
+              "description": null,
+              "arguments": {
+                "name": "Anomali ThreatStream",
+                "config": "c64d4e0c-a2cd-473b-ae6f-198076c3ae00",
+                "params": {
+                  "value": "89.247.120.205"
+                },
+                "version": "2.2.1",
+                "connector": "threatstream",
+                "operation": "whois_ip",
+                "operationTitle": "Get Whois IP Information",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "fe40a3c4-b098-455a-92a8-d1d713b4f284"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "c5d29031-bb59-4a6b-b428-d600299fb3fe",
+              "name": "Alerts -> Get Whois IP Information",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/fe40a3c4-b098-455a-92a8-d1d713b4f284",
+              "sourceStep": "/api/3/workflow_steps/0a16a696-a706-4841-b936-81aa22c050fa"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": null,
+          "uuid": "1483a291-7900-4471-af51-ec17c39b1384",
+          "recordTags": [
+            "/api/3/tags/threatstream",
+            "/api/3/tags/Anomali"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get Email ID Reputation",
+          "aliasName": null,
+          "description": "Retrieves the reputation of the specified Email address based on the filter criteria that you have specified.",
+          "collection": "/api/3/workflow_collections/983d0f08-1eda-4bca-bb67-797fe8e19541",
+          "tag": "#Anomali ThreatStream",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/5b61f756-dac3-466c-9fa8-e4bccfe070f6",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "cc6cf42c-7425-4560-83fc-7c2dcdf387ab",
+                "title": "Anomali ThreatStream: Get Email ID Reputation",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "5b61f756-dac3-466c-9fa8-e4bccfe070f6"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Email ID Reputation",
+              "description": null,
+              "arguments": {
+                "name": "Anomali ThreatStream",
+                "config": "c64d4e0c-a2cd-473b-ae6f-198076c3ae00",
+                "params": {
+                  "limit": 10,
+                  "value": "ask.uk.co.in",
+                  "offset": 0,
+                  "filter_option": "Contains",
+                  "record_number": "Fetch Limited Records"
+                },
+                "version": "2.2.1",
+                "connector": "threatstream",
+                "operation": "email_reputation",
+                "operationTitle": "Get Email ID Reputation",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "9e3bdc49-111e-4feb-86f8-3a8175345151"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "38ed374c-fdbf-44e3-a538-b4dc53e5db96",
+              "name": "Alerts -> Get Email ID Reputation",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/9e3bdc49-111e-4feb-86f8-3a8175345151",
+              "sourceStep": "/api/3/workflow_steps/5b61f756-dac3-466c-9fa8-e4bccfe070f6"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": null,
+          "uuid": "1fffe31c-f05a-4bcf-be7f-182c684836d7",
+          "recordTags": [
+            "/api/3/tags/threatstream",
+            "/api/3/tags/Anomali"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Submit URLs or Files to Sandbox",
+          "aliasName": null,
+          "description": "Submit files or URLs to a specific ThreatStream-hosted sandbox based on the sandbox name, URLs/files, tags and other input parameters that you have specified.",
+          "collection": "/api/3/workflow_collections/983d0f08-1eda-4bca-bb67-797fe8e19541",
+          "tag": "#Anomali ThreatStream",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/381fb957-84e7-4ba5-b266-1b3176326c70",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "ede739b6-6ef9-4271-a17c-0ed6616a3696",
+                "title": "Anomali ThreatStream: Submit URLs or Files to Sandbox",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records}}"
+                  }
+                },
+                "displayConditions": {
+                  "alerts": {
+                    "sort": [],
+                    "limit": 30,
+                    "logic": "AND",
+                    "filters": []
+                  }
+                },
+                "executeButtonText": "Execute",
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "381fb957-84e7-4ba5-b266-1b3176326c70"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Submit URLs or Files to Sandbox",
+              "description": null,
+              "arguments": {
+                "name": "Anomali ThreatStream",
+                "config": "c64d4e0c-a2cd-473b-ae6f-198076c3ae00",
+                "params": {
+                  "detail": "cybersponse_test",
+                  "platform": "ALL",
+                  "sample_type": "File",
+                  "reference_id": "/api/3/attachments/3c7f8df7-1205-44c7-8a9e-ed7a3d3dd5aa",
+                  "sandbox_type": "ThreatStream Sandbox",
+                  "classification": "Private",
+                  "trusted_circles": "",
+                  "use_premium_sandbox": false
+                },
+                "version": "2.2.1",
+                "connector": "threatstream",
+                "operation": "submit_urls_files",
+                "operationTitle": "Submit URLs or Files",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "8e89cee8-d27d-4da2-a271-3cfbd3d2c830"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "e9588f34-67ac-4796-b7d9-e93950130f07",
+              "name": "Alerts -> Submit URLs or Files",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/8e89cee8-d27d-4da2-a271-3cfbd3d2c830",
+              "sourceStep": "/api/3/workflow_steps/381fb957-84e7-4ba5-b266-1b3176326c70"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": null,
+          "uuid": "24275673-131d-4464-b607-378c964a60a3",
+          "recordTags": [
+            "/api/3/tags/threatstream",
+            "/api/3/tags/Anomali"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Update Threat Bulletin",
+          "aliasName": null,
+          "description": "Updates an Threat Bulletin in ThreatStream based on the incident ID and other input parameters that you have specified.",
+          "collection": "/api/3/workflow_collections/983d0f08-1eda-4bca-bb67-797fe8e19541",
+          "tag": "#Anomali ThreatStream",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/4bc680e6-f2c0-4031-b7ea-f3ab75a13820",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "d543c560-7310-4279-9594-2c335fa514fa",
+                "title": "Anomali ThreatStream: Update Threat Bulletin",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "4bc680e6-f2c0-4031-b7ea-f3ab75a13820"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Update Threat Bulletin",
+              "description": null,
+              "arguments": {
+                "name": "Anomali ThreatStream",
+                "config": "c64d4e0c-a2cd-473b-ae6f-198076c3ae00",
+                "params": {
+                  "name": "",
+                  "tb_id": "",
+                  "fields": "",
+                  "reference_id": ""
+                },
+                "version": "2.2.1",
+                "connector": "threatstream",
+                "operation": "update_threat_bulletin",
+                "operationTitle": "Update Threat Bulletin",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "a7ab381d-0e84-45e0-99fa-1291d5c9fd9a"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "389ca217-c074-4ded-9ff3-720ac1b66bb9",
+              "name": "Alerts -> Update Threat Bulletin",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/a7ab381d-0e84-45e0-99fa-1291d5c9fd9a",
+              "sourceStep": "/api/3/workflow_steps/4bc680e6-f2c0-4031-b7ea-f3ab75a13820"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": null,
+          "uuid": "249ac573-19d7-44ca-ae49-056e1346baae",
+          "recordTags": [
+            "/api/3/tags/threatstream",
+            "/api/3/tags/Anomali"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Update Incident",
+          "aliasName": null,
+          "description": "Updates an incident in ThreatStream based on the incident ID and other input parameters that you have specified.",
+          "collection": "/api/3/workflow_collections/983d0f08-1eda-4bca-bb67-797fe8e19541",
+          "tag": "#Anomali ThreatStream",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/d9f24f69-422c-414c-b4b8-917ff2b303ca",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Update Incident",
+              "description": null,
+              "arguments": {
+                "name": "Anomali ThreatStream",
+                "config": "c64d4e0c-a2cd-473b-ae6f-198076c3ae00",
+                "params": {
+                  "value": 66861,
+                  "fields": "",
+                  "status": "Incident Reported",
+                  "status_desc": "",
+                  "intelligence": ""
+                },
+                "version": "2.2.1",
+                "connector": "threatstream",
+                "operation": "update_incident",
+                "operationTitle": "Update Incident",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "37955729-603a-411a-8858-117736a07076"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "c6c2fcd6-7015-45a4-85dd-74b12cc8ee03",
+                "title": "Anomali ThreatStream: Update Incident",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "d9f24f69-422c-414c-b4b8-917ff2b303ca"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "e6f20f72-dcec-476a-804a-8938f22dcdab",
+              "name": "Alerts -> Update Incident",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/37955729-603a-411a-8858-117736a07076",
+              "sourceStep": "/api/3/workflow_steps/d9f24f69-422c-414c-b4b8-917ff2b303ca"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": null,
+          "uuid": "fa77b5d1-8cb8-4ca9-b20c-2b0158d3b504",
+          "recordTags": [
+            "/api/3/tags/threatstream",
+            "/api/3/tags/Anomali"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get Submitted Observables Status by Import ID",
+          "aliasName": null,
+          "description": "Retrieves the status of a submitted observable from ThreatStream based on the import ID that was returned in the response of the Submit Observables operation",
+          "collection": "/api/3/workflow_collections/983d0f08-1eda-4bca-bb67-797fe8e19541",
+          "tag": "#Anomali ThreatStream",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/f2558af6-c4cf-462e-9134-60f18d6b0f19",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Submitted Observables Status by Import ID",
+              "description": null,
+              "arguments": {
+                "name": "Anomali ThreatStream",
+                "config": "c64d4e0c-a2cd-473b-ae6f-198076c3ae00",
+                "params": {
+                  "value": "835718"
+                },
+                "version": "2.2.1",
+                "connector": "threatstream",
+                "operation": "get_import_job_status",
+                "operationTitle": "Get Submitted Observables Status by Import ID",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "7f6dc536-cc87-4189-94bd-3a350d575d3a"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "94c006a2-5797-4b10-a758-e9e6e2db2107",
+                "title": "Anomali ThreatStream: Get Submitted Observables Status by Import ID",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "f2558af6-c4cf-462e-9134-60f18d6b0f19"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "0f5a9de9-f2be-4397-9db3-92907754633b",
+              "name": "Alerts -> Get Submitted Observables Status by Import ID",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/7f6dc536-cc87-4189-94bd-3a350d575d3a",
+              "sourceStep": "/api/3/workflow_steps/f2558af6-c4cf-462e-9134-60f18d6b0f19"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": null,
+          "uuid": "fb5ebcb4-af1a-4d36-a440-a5d07fd3c259",
+          "recordTags": [
+            "/api/3/tags/threatstream",
+            "/api/3/tags/Anomali"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get Threat Bulletin List",
+          "aliasName": null,
+          "description": "Retrieves a list of all threat bulletins or specific threat bulletins based on the search query and other input parameters that you have specified.",
+          "collection": "/api/3/workflow_collections/983d0f08-1eda-4bca-bb67-797fe8e19541",
+          "tag": "#Anomali ThreatStream",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/3c0f1ff4-0afc-4c3e-a580-59d9a1620db6",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Threat Bulletin List",
+              "description": null,
+              "arguments": {
+                "name": "Anomali ThreatStream",
+                "config": "c64d4e0c-a2cd-473b-ae6f-198076c3ae00",
+                "params": {
+                  "query": "",
+                  "record_number": "Fetch Limited Records"
+                },
+                "version": "2.2.1",
+                "connector": "threatstream",
+                "operation": "list_threat_bulletins",
+                "operationTitle": "Get Threat Bulletin List",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "0819223c-4ef6-48ba-876c-25e29130b610"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "a0c2c03f-a8bc-49dd-b621-f319ca2455a1",
+                "title": "Anomali ThreatStream: Get Threat Bulletin List",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "3c0f1ff4-0afc-4c3e-a580-59d9a1620db6"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "ae20c6a5-8926-49f0-9dc0-e03438927544",
+              "name": "Alerts -> Get Threat Bulletin List",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/0819223c-4ef6-48ba-876c-25e29130b610",
+              "sourceStep": "/api/3/workflow_steps/3c0f1ff4-0afc-4c3e-a580-59d9a1620db6"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": null,
+          "uuid": "3004df87-3dea-43a4-8c99-61a59c41d6cf",
+          "recordTags": [
+            "/api/3/tags/threatstream",
+            "/api/3/tags/Anomali"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get Intelligence Enrichments",
+          "aliasName": null,
+          "description": "Retrieves the enrichment data for the given observable ",
+          "collection": "/api/3/workflow_collections/983d0f08-1eda-4bca-bb67-797fe8e19541",
+          "tag": "#Anomali ThreatStream",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/89a9e793-4e74-48c6-bfea-bed5c6b721f0",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "a288c274-abc9-4251-b983-c0f8e25d4858",
+                "title": "Anomali ThreatStream: Get Intelligence Enrichments",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "89a9e793-4e74-48c6-bfea-bed5c6b721f0"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Intelligence Enrichments",
+              "description": null,
+              "arguments": {
+                "name": "Anomali ThreatStream",
+                "config": "",
+                "params": {
+                  "itype": "Domain",
+                  "value": "example.com",
+                  "services": "Recorded Future"
+                },
+                "version": "2.2.1",
+                "connector": "threatstream",
+                "operation": "intelligence_enrichments",
+                "operationTitle": "Get Intelligence Enrichments",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "9e1f6919-669c-4bf7-967d-6c2540656d72"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "0cd443a6-d165-4d17-9993-4f7ceda5a09d",
+              "name": "Alerts -> Get Intelligence Enrichments",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/9e1f6919-669c-4bf7-967d-6c2540656d72",
+              "sourceStep": "/api/3/workflow_steps/89a9e793-4e74-48c6-bfea-bed5c6b721f0"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": null,
+          "uuid": "69ff208a-3a5a-44d6-af02-5d0b002809dd",
+          "recordTags": [
+            "/api/3/tags/threatstream",
+            "/api/3/tags/Anomali"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get Incident List",
+          "aliasName": null,
+          "description": "Retrieves a list of all incidents based on the search query and other input parameters that you have specified.",
+          "collection": "/api/3/workflow_collections/983d0f08-1eda-4bca-bb67-797fe8e19541",
+          "tag": "#Anomali ThreatStream",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/d2d3beb6-d73d-4d46-b92b-712c476eb449",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Incident List",
+              "description": null,
+              "arguments": {
+                "name": "Anomali ThreatStream",
+                "config": "",
+                "params": {
+                  "limit": 10,
+                  "value": "created_ts__gte=2019-01-28T21:04:14",
+                  "offset": 0
+                },
+                "version": "2.2.1",
+                "connector": "threatstream",
+                "operation": "fetch_incidents",
+                "operationTitle": "Get Incident List",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "187",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "7678642f-5faf-4496-bb89-bf4493ff5e1b"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "9e49a7aa-4fd2-47cb-85ee-53036885a67c",
+                "title": "Anomali ThreatStream: Get Incident List",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "d2d3beb6-d73d-4d46-b92b-712c476eb449"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "bb4e6b22-63e5-41ef-94f9-0567f11ff770",
+              "name": "Alerts -> Get Incident List",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/7678642f-5faf-4496-bb89-bf4493ff5e1b",
+              "sourceStep": "/api/3/workflow_steps/d2d3beb6-d73d-4d46-b92b-712c476eb449"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": null,
+          "uuid": "7976aefc-9552-4e7c-bacf-f31dd1fc0209",
+          "recordTags": [
+            "/api/3/tags/threatstream",
+            "/api/3/tags/Anomali"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get Incident",
+          "aliasName": null,
+          "description": "Collects and retrieves generated incidents from ThreatStream based on the incident ID that you have specified.",
+          "collection": "/api/3/workflow_collections/983d0f08-1eda-4bca-bb67-797fe8e19541",
+          "tag": "#Anomali ThreatStream",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/e387a191-d23f-46bc-aa6e-ef181d89082a",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Incident",
+              "description": null,
+              "arguments": {
+                "name": "Anomali ThreatStream",
+                "config": "c64d4e0c-a2cd-473b-ae6f-198076c3ae00",
+                "params": {
+                  "value": 66861
+                },
+                "version": "2.2.1",
+                "connector": "threatstream",
+                "operation": "get_incident",
+                "operationTitle": "Get Incident",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "16475286-b560-4ac0-bcb8-f67841f11419"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "d166555a-11d4-4b78-a4a8-e410eb42e51d",
+                "title": "Anomali ThreatStream: Get Incident",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "e387a191-d23f-46bc-aa6e-ef181d89082a"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "b45cc83b-5f02-460d-8ffd-c4fe20db4863",
+              "name": "Alerts -> Get Incident",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/16475286-b560-4ac0-bcb8-f67841f11419",
+              "sourceStep": "/api/3/workflow_steps/e387a191-d23f-46bc-aa6e-ef181d89082a"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": null,
+          "uuid": "7ced5da9-d3b8-46b3-b953-93a7a0457ac4",
+          "recordTags": [
+            "/api/3/tags/threatstream",
+            "/api/3/tags/Anomali"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Run Filter Language Query",
+          "aliasName": null,
+          "description": "Runs a search query using ThreatStreams Filter Language Query grammar.",
+          "collection": "/api/3/workflow_collections/983d0f08-1eda-4bca-bb67-797fe8e19541",
+          "tag": "#Anomali ThreatStream",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/6b459829-8c05-405e-b0c2-ed4f7412542b",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Run Filter Language Query",
+              "description": null,
+              "arguments": {
+                "name": "Anomali ThreatStream",
+                "config": "c64d4e0c-a2cd-473b-ae6f-198076c3ae00",
+                "params": {
+                  "limit": 10,
+                  "value": "(confidence>=90+AND+(itype=\"apt_ip\"+OR+itype=\"bot_ ip\"+OR+itype=\"c2_ip\"))",
+                  "offset": 0,
+                  "record_number": "Fetch Limited Records"
+                },
+                "version": "2.2.1",
+                "connector": "threatstream",
+                "operation": "filter_language_query",
+                "operationTitle": "Run Filter Language Query",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "10c7e4d0-50f0-48c7-b209-19eef91c6954"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "d310110d-8a3d-41e3-92ad-2a6777ad4f3f",
+                "title": "Anomali ThreatStream: Run Filter Language Query",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "6b459829-8c05-405e-b0c2-ed4f7412542b"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "2c66b9ac-a050-46a8-b22e-ab5de0cf6c05",
+              "name": "Alerts -> Run Filter Language Query",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/10c7e4d0-50f0-48c7-b209-19eef91c6954",
+              "sourceStep": "/api/3/workflow_steps/6b459829-8c05-405e-b0c2-ed4f7412542b"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": null,
+          "uuid": "809fa073-511e-46e3-baaf-6d2dffc851b1",
+          "recordTags": [
+            "/api/3/tags/threatstream",
+            "/api/3/tags/Anomali"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get Whois Domain Information",
+          "aliasName": null,
+          "description": "Executes a WhoIs lookup on the specified domain name and retrieves a list of domains based on the domain name and filter criteria that you have specified.",
+          "collection": "/api/3/workflow_collections/983d0f08-1eda-4bca-bb67-797fe8e19541",
+          "tag": "#Anomali ThreatStream",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/cdb9dc68-ee24-41d7-897f-bf5b1de45883",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Whois Domain Information",
+              "description": null,
+              "arguments": {
+                "name": "Anomali ThreatStream",
+                "config": "c64d4e0c-a2cd-473b-ae6f-198076c3ae00",
+                "params": {
+                  "value": "kubeitalia.it"
+                },
+                "version": "2.2.1",
+                "connector": "threatstream",
+                "operation": "whois_domain",
+                "operationTitle": "Get Whois Domain Information",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "62f4c54c-3a1f-482a-810e-a9464867b4c8"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "4e8e30ff-c753-4998-b8b1-d8db52127c6a",
+                "title": "Anomali ThreatStream: Get Whois Domain Information",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "cdb9dc68-ee24-41d7-897f-bf5b1de45883"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "4e4ffa16-f7d9-4280-a5a6-188575a0043f",
+              "name": "Alerts -> Get Whois Domain Information",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/62f4c54c-3a1f-482a-810e-a9464867b4c8",
+              "sourceStep": "/api/3/workflow_steps/cdb9dc68-ee24-41d7-897f-bf5b1de45883"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": null,
+          "uuid": "84bcb17c-7c8f-4083-b236-eb86fc1d7afb",
+          "recordTags": [
+            "/api/3/tags/threatstream",
+            "/api/3/tags/Anomali"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Delete Incident",
+          "aliasName": null,
+          "description": "Deletes an incident from ThreatStream based on the incident ID that you have specified.",
+          "collection": "/api/3/workflow_collections/983d0f08-1eda-4bca-bb67-797fe8e19541",
+          "tag": "#Anomali ThreatStream",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/2bb21236-ff24-4dd3-92e7-d4dfff4211fe",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "d2caf748-0293-4437-9acc-c51285deab66",
+                "title": "Anomali ThreatStream: Delete Incident",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "2bb21236-ff24-4dd3-92e7-d4dfff4211fe"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Delete Incident",
+              "description": null,
+              "arguments": {
+                "name": "Anomali ThreatStream",
+                "config": "c64d4e0c-a2cd-473b-ae6f-198076c3ae00",
+                "params": {
+                  "value": 66861
+                },
+                "version": "2.2.1",
+                "connector": "threatstream",
+                "operation": "delete_incident",
+                "operationTitle": "Delete Incident",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "66b6cd47-f513-43da-bfec-94ddd52f87ec"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "93536bfb-5824-493b-ac02-5bf6e2d869bc",
+              "name": "Alerts -> Delete Incident",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/66b6cd47-f513-43da-bfec-94ddd52f87ec",
+              "sourceStep": "/api/3/workflow_steps/2bb21236-ff24-4dd3-92e7-d4dfff4211fe"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": null,
+          "uuid": "8748b4d6-bc77-484b-b6d5-7e46d1fcc865",
+          "recordTags": [
+            "/api/3/tags/threatstream",
+            "/api/3/tags/Anomali"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Create Threat Bulletin",
+          "aliasName": null,
+          "description": "Creates a Threat Bulletin in ThreatStream based on the name, tags, and other input parameters that you have specified.",
+          "collection": "/api/3/workflow_collections/983d0f08-1eda-4bca-bb67-797fe8e19541",
+          "tag": "#Anomali ThreatStream",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/f6341d6a-7376-4c84-86c9-390d85ba06ca",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Create Threat Bulletin",
+              "description": null,
+              "arguments": {
+                "name": "Anomali ThreatStream",
+                "config": "c64d4e0c-a2cd-473b-ae6f-198076c3ae00",
+                "params": {
+                  "tlp": "Green",
+                  "body": "1for Cyberspose testing created the threat bulletin using api.",
+                  "name": "Cybersponse test bulletin1",
+                  "fields": "{\n  \"source\": \"Anomali\"\n}",
+                  "is_public": false,
+                  "reference_id": "",
+                  "body_content_type": "Richtext"
+                },
+                "version": "2.2.1",
+                "connector": "threatstream",
+                "operation": "create_threat_bulletin",
+                "operationTitle": "Create Threat Bulletin",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "90f25ed1-633d-46dd-937f-58c69815e8d7"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "3241a95e-e834-42e0-9291-a9376b4eb0e1",
+                "title": "Anomali ThreatStream: Create Threat Bulletin",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "f6341d6a-7376-4c84-86c9-390d85ba06ca"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "cc5471b0-2363-41c3-a191-8fa2b8be253d",
+              "name": "Alerts -> Create Threat Bulletin",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/90f25ed1-633d-46dd-937f-58c69815e8d7",
+              "sourceStep": "/api/3/workflow_steps/f6341d6a-7376-4c84-86c9-390d85ba06ca"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": null,
+          "uuid": "8dee37d0-4f83-46d1-8d8e-ae27914221be",
+          "recordTags": [
+            "/api/3/tags/threatstream",
+            "/api/3/tags/Anomali"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get Domain Reputation",
+          "aliasName": null,
+          "description": "Retrieves the reputation of the specified domain based on the filter criteria that you have specified.",
+          "collection": "/api/3/workflow_collections/983d0f08-1eda-4bca-bb67-797fe8e19541",
+          "tag": "#Anomali ThreatStream",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/352c55de-9dce-4898-97a2-424d641fcb67",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "a8bafa7e-5fa7-4fa9-825c-4ef6da103d32",
+                "title": "Anomali ThreatStream: Get Domain Reputation",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "352c55de-9dce-4898-97a2-424d641fcb67"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Domain Reputation",
+              "description": null,
+              "arguments": {
+                "name": "Anomali ThreatStream",
+                "config": "",
+                "params": {
+                  "value": "tcp://domain.com",
+                  "filter_option": "Contains",
+                  "record_number": "Fetch All Records"
+                },
+                "version": "2.2.1",
+                "connector": "threatstream",
+                "operation": "domain_reputation",
+                "operationTitle": "Get Domain Reputation",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "7a1bc8f5-62ea-41d2-968b-96cc2ef68009"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "adc98112-0b98-4625-9178-191fdee9e3d5",
+              "name": "Alerts -> Get Domain Reputation",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/7a1bc8f5-62ea-41d2-968b-96cc2ef68009",
+              "sourceStep": "/api/3/workflow_steps/352c55de-9dce-4898-97a2-424d641fcb67"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": null,
+          "uuid": "a056097b-c8c3-44dc-b2dd-405e29975c16",
+          "recordTags": [
+            "/api/3/tags/threatstream",
+            "/api/3/tags/Anomali"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get File Reputation",
+          "aliasName": null,
+          "description": "Retrieves the reputation of the specified FileHash based on the filter criteria that you have specified.",
+          "collection": "/api/3/workflow_collections/983d0f08-1eda-4bca-bb67-797fe8e19541",
+          "tag": "#Anomali ThreatStream",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/9a15f7eb-1496-462e-ba1b-b358b3bb69af",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Get File Reputation",
+              "description": null,
+              "arguments": {
+                "name": "Anomali ThreatStream",
+                "config": "c64d4e0c-a2cd-473b-ae6f-198076c3ae00",
+                "params": {
+                  "value": "8359e029989b712bfd33b6b82d36ab46",
+                  "validation": "",
+                  "filter_option": "Exact",
+                  "record_number": "Fetch All Records"
+                },
+                "version": "2.2.1",
+                "connector": "threatstream",
+                "operation": "file_reputation",
+                "operationTitle": "Get File Reputation",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "4279f71d-b69b-4c97-add4-98fd8d6b21ac"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "4b08e7d1-67d0-4e4a-ace2-bbedeb3d3051",
+                "title": "Anomali ThreatStream: Get File Reputation",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "9a15f7eb-1496-462e-ba1b-b358b3bb69af"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "1b3d8edf-af0f-49a4-96f8-e3307b0f7229",
+              "name": "Alerts -> Get File Reputation",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/4279f71d-b69b-4c97-add4-98fd8d6b21ac",
+              "sourceStep": "/api/3/workflow_steps/9a15f7eb-1496-462e-ba1b-b358b3bb69af"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": null,
+          "uuid": "a6273c7c-41e1-40cb-bc60-ade9d99dc2cf",
+          "recordTags": [
+            "/api/3/tags/threatstream",
+            "/api/3/tags/Anomali"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get Threat Bulletin Observables",
+          "aliasName": null,
+          "description": "Retrieves a list of all observables associated with a specific threat bulletin based on the threat bulletin ID and other input parameters that you have specified.",
+          "collection": "/api/3/workflow_collections/983d0f08-1eda-4bca-bb67-797fe8e19541",
+          "tag": "#Anomali ThreatStream",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/55e0580f-7502-4c4c-9618-0868ce5aec43",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "f50bdcd0-f472-41e9-971c-8d5215abd031",
+                "title": "Anomali ThreatStream: Get Threat Bulletin Observables",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "55e0580f-7502-4c4c-9618-0868ce5aec43"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Threat Bulletin Observables",
+              "description": null,
+              "arguments": {
+                "name": "Anomali ThreatStream",
+                "config": "c64d4e0c-a2cd-473b-ae6f-198076c3ae00",
+                "params": {
+                  "limit": 20,
+                  "value": 7520,
+                  "offset": 0,
+                  "record_number": "Fetch Limited Records"
+                },
+                "version": "2.2.1",
+                "connector": "threatstream",
+                "operation": "list_observables_associated_threat_bulletin",
+                "operationTitle": "Get Threat Bulletin Observables",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "dd8402af-f0da-47f8-96ce-ba5cb9855679"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "ccaa7a05-b3d9-4cee-b159-107309893319",
+              "name": "Alerts -> Get Threat Bulletin Observables",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/dd8402af-f0da-47f8-96ce-ba5cb9855679",
+              "sourceStep": "/api/3/workflow_steps/55e0580f-7502-4c4c-9618-0868ce5aec43"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": null,
+          "uuid": "a9c4bb0f-470d-46b5-a9c6-e6eee8cc0b2f",
+          "recordTags": [
+            "/api/3/tags/threatstream",
+            "/api/3/tags/Anomali"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get Submitted URL/File Report",
+          "aliasName": null,
+          "description": "Retrieves the sandbox analysis report of files or URLs that you have submitted to ThreatStream based on the report ID that you have specified.",
+          "collection": "/api/3/workflow_collections/983d0f08-1eda-4bca-bb67-797fe8e19541",
+          "tag": "#Anomali ThreatStream",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/f5888a83-58b0-4aa4-bb95-7cdab81308a2",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Submitted URL or File Report",
+              "description": null,
+              "arguments": {
+                "name": "Anomali ThreatStream",
+                "config": "c64d4e0c-a2cd-473b-ae6f-198076c3ae00",
+                "params": {
+                  "value": 467758
+                },
+                "version": "2.2.1",
+                "connector": "threatstream",
+                "operation": "get_submitted_url_report",
+                "operationTitle": "Get Submitted URL/File Report",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "6b365509-3b6b-4d0b-b452-43786b4dc5c6"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "f95bbc84-6076-4216-a2ce-01a353aeff9f",
+                "title": "Anomali ThreatStream: Get Submitted URL/File Report",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "f5888a83-58b0-4aa4-bb95-7cdab81308a2"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "bb516563-6f3e-4392-a84b-5f4592bf1d1e",
+              "name": "Alerts -> Get Submitted URL/File Report",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/6b365509-3b6b-4d0b-b452-43786b4dc5c6",
+              "sourceStep": "/api/3/workflow_steps/f5888a83-58b0-4aa4-bb95-7cdab81308a2"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": null,
+          "uuid": "cbad78ac-8211-46fb-8af1-89f204f2dd0b",
+          "recordTags": [
+            "/api/3/tags/threatstream",
+            "/api/3/tags/Anomali"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Submit Observables",
+          "aliasName": null,
+          "description": "Imports threat data (indicators) into ThreatStream and require the approval of the imported data through the ThreatStream UI",
+          "collection": "/api/3/workflow_collections/983d0f08-1eda-4bca-bb67-797fe8e19541",
+          "tag": "#Anomali ThreatStream",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/1b236392-643b-4b3e-ab22-b7da666699d7",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "85c501ce-769a-4422-a029-cfa71c7a7f96",
+                "title": "Anomali ThreatStream: Submit Observables",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "1b236392-643b-4b3e-ab22-b7da666699d7"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Submit Observables",
+              "description": null,
+              "arguments": {
+                "name": "Anomali ThreatStream",
+                "config": "c64d4e0c-a2cd-473b-ae6f-198076c3ae00",
+                "params": {
+                  "data": "IP Address 1.2.3.4 test api , Url www.gfhfjsjs.com phish_url",
+                  "notes": "",
+                  "severity": "High",
+                  "confidence": 70,
+                  "ip_mapping": "mal_ip",
+                  "md5_mapping": "mal_md5",
+                  "url_mapping": "phish_url",
+                  "reference_id": "",
+                  "email_mapping": "phish_email",
+                  "expiration_ts": "90 days",
+                  "classification": "Private",
+                  "domain_mapping": "apt_domain",
+                  "trusted_circles": "",
+                  "source_confidence_weight": ""
+                },
+                "version": "2.2.1",
+                "connector": "threatstream",
+                "operation": "submit_observables",
+                "operationTitle": "Submit Observables",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "9b123985-bbfa-46ad-9270-660164bbdd1e"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "2c0d7ba7-99a9-42fc-b75b-49c7ce1799dc",
+              "name": "Alerts -> Submit Observables",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/9b123985-bbfa-46ad-9270-660164bbdd1e",
+              "sourceStep": "/api/3/workflow_steps/1b236392-643b-4b3e-ab22-b7da666699d7"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": null,
+          "uuid": "ccbe62cd-aef1-4f21-a136-37bdd4c51f76",
+          "recordTags": [
+            "/api/3/tags/threatstream",
+            "/api/3/tags/Anomali"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get URL Reputation",
+          "aliasName": null,
+          "description": "Retrieves the reputation of the specified URL based on the filter criteria that you have specified.",
+          "collection": "/api/3/workflow_collections/983d0f08-1eda-4bca-bb67-797fe8e19541",
+          "tag": "#Anomali ThreatStream",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/ba9296be-3ad0-46e1-935f-43f5b576404e",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Get URL Reputation",
+              "description": null,
+              "arguments": {
+                "name": "Anomali ThreatStream",
+                "config": "c64d4e0c-a2cd-473b-ae6f-198076c3ae00",
+                "params": {
+                  "value": "usaa.com",
+                  "filter_option": "Contains",
+                  "record_number": "Fetch All Records"
+                },
+                "version": "2.2.1",
+                "connector": "threatstream",
+                "operation": "url_reputation",
+                "operationTitle": "Get URL Reputation",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "b4d985e9-fe8c-45b6-bc37-18a1abd60842"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "a5a7e569-69a0-4c13-a5f6-4c089366db52",
+                "title": "Anomali ThreatStream: Get URL Reputation",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "ba9296be-3ad0-46e1-935f-43f5b576404e"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "5a6ae677-672b-4c96-9337-3b0b6d57432b",
+              "name": "Alerts -> Get URL Reputation",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/b4d985e9-fe8c-45b6-bc37-18a1abd60842",
+              "sourceStep": "/api/3/workflow_steps/ba9296be-3ad0-46e1-935f-43f5b576404e"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": null,
+          "uuid": "dd4d7f73-3ab1-408d-aa3c-ec1333ade120",
+          "recordTags": [
+            "/api/3/tags/threatstream",
+            "/api/3/tags/Anomali"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get IP Reputation",
+          "aliasName": null,
+          "description": "Retrieves the reputation of the specified IP address based on the filter criteria that you have specified.",
+          "collection": "/api/3/workflow_collections/983d0f08-1eda-4bca-bb67-797fe8e19541",
+          "tag": "#Anomali ThreatStream",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/478ba336-b10a-477f-a956-397d7b9177bc",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "3c0dc05f-4c29-4045-88d0-051e69b1c6ee",
+                "title": "Anomali ThreatStream: Get IP Reputation",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "478ba336-b10a-477f-a956-397d7b9177bc"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Get IP Reputation",
+              "description": null,
+              "arguments": {
+                "name": "Anomali ThreatStream",
+                "config": "c64d4e0c-a2cd-473b-ae6f-198076c3ae00",
+                "params": {
+                  "limit": 40,
+                  "value": "45.70",
+                  "offset": 0,
+                  "filter_option": "Contains",
+                  "record_number": "Fetch Limited Records"
+                },
+                "version": "2.2.1",
+                "connector": "threatstream",
+                "operation": "ip_reputation",
+                "operationTitle": "Get IP Reputation",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "ba5da02d-ad3d-4e15-9fc4-7c6898e6dc31"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "c6b2c33a-32cd-4892-ada5-147f59412b41",
+              "name": "Alerts -> Get IP Reputation",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/ba5da02d-ad3d-4e15-9fc4-7c6898e6dc31",
+              "sourceStep": "/api/3/workflow_steps/478ba336-b10a-477f-a956-397d7b9177bc"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": null,
+          "uuid": "e134b368-fb58-483f-8e85-3384157b0e11",
+          "recordTags": [
+            "/api/3/tags/threatstream",
+            "/api/3/tags/Anomali"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get Submitted URL/File Status",
+          "aliasName": null,
+          "description": "Retrieves the sandbox status of files or URLs that you have submitted to ThreatStream based on the report ID that you have specified.",
+          "collection": "/api/3/workflow_collections/983d0f08-1eda-4bca-bb67-797fe8e19541",
+          "tag": "#Anomali ThreatStream",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/55cf7b4c-3438-45b6-9082-31d2a4e7c5b6",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "2164c775-1094-44cb-ba7a-bca3d57b9282",
+                "title": "Anomali ThreatStream: Get Submitted URL/File Status",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "55cf7b4c-3438-45b6-9082-31d2a4e7c5b6"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Submitted URL or File Status",
+              "description": null,
+              "arguments": {
+                "name": "Anomali ThreatStream",
+                "config": "c64d4e0c-a2cd-473b-ae6f-198076c3ae00",
+                "params": {
+                  "value": 467758
+                },
+                "version": "2.2.1",
+                "connector": "threatstream",
+                "operation": "get_submit_url_status",
+                "operationTitle": "Get Submitted URL/File Status",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "b1bc3078-8f6b-4632-bc58-ab54ae3daeb1"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "b58828be-0bbc-4b0a-82eb-c055d7687834",
+              "name": "Alerts -> Get Submitted URL/File Status",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/b1bc3078-8f6b-4632-bc58-ab54ae3daeb1",
+              "sourceStep": "/api/3/workflow_steps/55cf7b4c-3438-45b6-9082-31d2a4e7c5b6"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": null,
+          "uuid": "e28af08f-4b77-4ad7-bc7c-950662765be0",
+          "recordTags": [
+            "/api/3/tags/threatstream",
+            "/api/3/tags/Anomali"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get Import Job Details",
+          "aliasName": null,
+          "description": "Retrieves the details of import jobs from ThreatStream based on the search query that you have specified.",
+          "collection": "/api/3/workflow_collections/983d0f08-1eda-4bca-bb67-797fe8e19541",
+          "tag": "#Anomali ThreatStream",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/7d1d3fde-197f-4cbc-bb3c-2b7c44eaece2",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "de2a58f1-9269-46da-8c77-70ed0067f1b7",
+                "title": "Anomali ThreatStream: Get Import Job Details",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "7d1d3fde-197f-4cbc-bb3c-2b7c44eaece2"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Import Job Details",
+              "description": null,
+              "arguments": {
+                "name": "Anomali ThreatStream",
+                "config": "c64d4e0c-a2cd-473b-ae6f-198076c3ae00",
+                "params": {
+                  "limit": 20,
+                  "value": "date_modified__gte=2019-05-01T00:00:00.000Z&status__in=done,approved",
+                  "offset": 0,
+                  "record_number": "Fetch Limited Records"
+                },
+                "version": "2.2.1",
+                "connector": "threatstream",
+                "operation": "get_import_jobs",
+                "operationTitle": "Get Import Job Details",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "cbea3e3f-d849-4664-9d25-add47482848a"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "0bd22958-c861-4c36-8a2c-970beda513ca",
+              "name": "Alerts -> Get Import Job Details",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/cbea3e3f-d849-4664-9d25-add47482848a",
+              "sourceStep": "/api/3/workflow_steps/7d1d3fde-197f-4cbc-bb3c-2b7c44eaece2"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": null,
+          "uuid": "eb45a886-be4a-4a9d-a9a7-308ef8f54eef",
+          "recordTags": [
+            "/api/3/tags/threatstream",
+            "/api/3/tags/Anomali"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get Incident List By Indicator",
+          "aliasName": null,
+          "description": "Retrieves a list of incidents based on the intelligence value and other input parameters that you have specified.",
+          "collection": "/api/3/workflow_collections/983d0f08-1eda-4bca-bb67-797fe8e19541",
+          "tag": "#Anomali ThreatStream",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/3a3ef3a3-7a21-43b2-a1bc-9a21d2df987a",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Incident List By Indicator",
+              "description": null,
+              "arguments": {
+                "name": "Anomali ThreatStream",
+                "config": "c64d4e0c-a2cd-473b-ae6f-198076c3ae00",
+                "params": {
+                  "limit": 10,
+                  "value": "example.com",
+                  "offset": 0
+                },
+                "version": "2.2.1",
+                "connector": "threatstream",
+                "operation": "list_incidents_by_indicator",
+                "operationTitle": "Get Incident List By Indicator",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "0a936810-013f-49bb-b207-47120a4c0fac"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "7abe5c66-8077-41dc-aa2e-baef01900533",
+                "title": "Anomali ThreatStream: Get Incident List By Indicator",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "3a3ef3a3-7a21-43b2-a1bc-9a21d2df987a"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "1a361ed1-2bef-4f77-bdbe-c9b9b0c57a16",
+              "name": "Alerts -> Get Incident List By Indicator",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/0a936810-013f-49bb-b207-47120a4c0fac",
+              "sourceStep": "/api/3/workflow_steps/3a3ef3a3-7a21-43b2-a1bc-9a21d2df987a"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": null,
+          "uuid": "f18914a0-432b-4704-b452-56be22bdb92b",
+          "recordTags": [
+            "/api/3/tags/threatstream",
+            "/api/3/tags/Anomali"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Run Advanced Search",
+          "aliasName": null,
+          "description": "Runs an advanced search query using ThreatStreams Query grammar.",
+          "collection": "/api/3/workflow_collections/983d0f08-1eda-4bca-bb67-797fe8e19541",
+          "tag": "#Anomali ThreatStream",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/e7fdefa8-1424-401c-992f-b2781467eeee",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Run Advanced Search",
+              "description": null,
+              "arguments": {
+                "name": "Anomali ThreatStream",
+                "config": "c64d4e0c-a2cd-473b-ae6f-198076c3ae00",
+                "params": {
+                  "value": "trusted_circle_ids__exact=10736",
+                  "record_number": "Fetch All Records"
+                },
+                "version": "2.2.1",
+                "connector": "threatstream",
+                "operation": "advance_query",
+                "operationTitle": "Run Advanced Search",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "3b10383f-6e10-4814-83c6-540a6290192f"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "d09b077e-96aa-4bdb-b66b-7d3ef3cbbf1c",
+                "title": "Anomali ThreatStream: Run Advanced Search",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "e7fdefa8-1424-401c-992f-b2781467eeee"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "21cf93b5-d623-4f71-ad25-8a12bbdaa43e",
+              "name": "Alerts -> Run Advanced Search",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/3b10383f-6e10-4814-83c6-540a6290192f",
+              "sourceStep": "/api/3/workflow_steps/e7fdefa8-1424-401c-992f-b2781467eeee"
+            }
+          ],
+          "versions": null,
+          "lastModifyDate": null,
+          "uuid": "f4fa1e5a-584d-43dd-841c-04e50c8105be",
+          "recordTags": [
+            "/api/3/tags/threatstream",
+            "/api/3/tags/Anomali"
+          ],
+          "isPrivate": false,
+          "owners": []
+        }
+      ],
+      "uuid": "983d0f08-1eda-4bca-bb67-797fe8e19541",
+      "recordTags": []
+    }
+  ],
+  "exported_tags": [
+    "dataingestion",
+    "create",
+    "ingest",
+    "threatstream",
+    "fetch",
+    "Anomali"
+  ]
+}
