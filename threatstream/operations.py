@@ -19,12 +19,16 @@ logger = get_logger('anomali-threatstream')
 FILE_REF = 'Attachment ID'
 IMPORT_OBSERVABLES = '/api/v1/intelligence/import/'
 
+MACRO_LIST = ["IP_Enrichment_Playbooks_IRIs", "URL_Enrichment_Playbooks_IRIs", "Domain_Enrichment_Playbooks_IRIs",
+
+              "Email_Enrichment_Playbooks_IRIs", "FileHash_Enrichment_Playbooks_IRIs"]
+
 action_list = ["list_incidents", "fetch_incidents"]
 
 whois_action = ["whois_domain", "whois_ip", "get_status", "check_health"]
 
 resp_list = ["get_import_job_status", "get_incident", "fetch_incidents", "get_status", "check_health",
-             "get_import_jobs",
+             "get_import_jobs", "approve_import_job", "reject_import_job",
              "delete_incident", "list_incidents"]
 
 query_actions = ["get_import_job_status", "filter_language_query", "delete_incident", "get_incident",
@@ -41,37 +45,6 @@ itype_dict = {
     "url_reputation": "url",
     "file_reputation": "md5"
 }
-
-def version_comp(v1, v2):
-    versions1 = v1.split(".")
-    versions2 = v2.split(".")
-
-    len_ver1 = len(versions1)
-    len_ver2 = len(versions2)
-
-    versions1 = [int(i) for i in versions1]
-    versions2 = [int(i) for i in versions2]
-
-    if len_ver1 > len_ver2:
-        for i in range(len_ver2, len_ver1):
-            versions2.append(0)
-    elif len_ver2 > len_ver1:
-        for i in range(len_ver1, len_ver2):
-            versions1.append(0)
-
-    for i in range(len(versions1)):
-        if versions1[i] > versions2[i]:
-            return 1
-        elif versions2[i] > versions1[i]:
-            return -1
-    return 0
-
-# Conditional import based on the FortiSOAR version.
-res = version_comp(settings.RELEASE_VERSION, "6.4.1")
-if res > 0:
-    from integrations.crudhub import download_file_from_cyops
-else:
-    from connectors.cyops_utilities.builtins import download_file_from_cyops
 
 
 def _json_fallback(obj):
@@ -201,22 +174,23 @@ def make_rest_call(endpoint, config, result):
 
 def from_cyops_download_file(iri):
     try:
-        file_name = None
-        attachment_data = make_request(iri, 'GET')
-        if iri.startswith('/api/3/attachments/'):
-            file_iri = attachment_data['file']['@id']
-            file_name = attachment_data['file']['filename']
-            logger.info('file id = {0}, file_name = {1}'.format(file_iri, file_name))
-        else:
-            file_iri = iri
-        dw_file_md = download_file_from_cyops(file_iri)
-        file_path = join('/tmp', dw_file_md['cyops_file_path'])
-        if file_name == None:
-            file_name = dw_file_md['filename'] if dw_file_md['filename'] != None else "Upload_from_the_FortiSOAR"
-        return file_path, file_name
-    except Exception as err:
-        logger.exception(str(err))
-        raise ConnectorError(str(err))
+        from integrations.crudhub import download_file_from_cyops
+    except:
+        from connectors.cyops_utilities.builtins import download_file_from_cyops
+
+    file_name = None
+    attachment_data = make_request(iri, 'GET')
+    if iri.startswith('/api/3/attachments/'):
+        file_iri = attachment_data['file']['@id']
+        file_name = attachment_data['file']['filename']
+        logger.info('file id = {0}, file_name = {1}'.format(file_iri, file_name))
+    else:
+        file_iri = iri
+    dw_file_md = download_file_from_cyops(file_iri)
+    file_path = join('/tmp', dw_file_md['cyops_file_path'])
+    if file_name == None:
+        file_name = dw_file_md['filename'] if dw_file_md['filename'] != None else "Upload_from_the_FortiSOAR"
+    return file_path, file_name
 
 
 def handle_date(days):

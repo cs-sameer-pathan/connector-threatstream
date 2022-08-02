@@ -1,5 +1,11 @@
 #### What's Improved
-- Support for Remote Action Execution in Segmented Networks through FortiSOAR Agents
-- Updated the data ingestion playbooks.
-- Updated the playbook's tags.
-- Updated Publisher
+- Added following action and PB's:
+  - Approved IOC By Import ID
+  - Reject IOC By Import ID
+- Added the following pluggable enrichment playbooks that automatically enrich data when you install and configure the Anomali ThreatStream:
+  - File Hash > Anomali ThreatStream > Enrichment
+  - URL > Anomali ThreatStream > Enrichment
+  - IP Address > Anomali ThreatStream > Enrichment
+  - Domain > Anomali ThreatStream > Enrichment
+  - Email Address > Anomali ThreatStream > Enrichment
+- Added multiple configurations support for Data Ingestion to ensure that the respective global variables based on the selected configuration are used.
