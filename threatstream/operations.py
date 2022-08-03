@@ -6,7 +6,6 @@
 import validators, json
 import pythonwhois
 import os
-import requests
 from os.path import join, exists
 from requests import request, exceptions as req_exceptions
 from datetime import datetime, timedelta
@@ -775,63 +774,7 @@ def submit_urls_files(config, params):
         logger.error("{0}".format(str(err)))
         raise ConnectorError("{0}".format(str(err)))
 
-        
-def get_import_status(config, params):
-  OK_STATUS = [requests.codes.ok, requests.codes.created, requests.codes.accepted, 204]
-  server_url = check_server_url(config.get("base_url"))
-  endpoint = server_url + "/api/v1/importsession/" + str(params.get("job_id"))
-  payload = generate_payload(config, None)
-  response = request("POST", endpoint, params=payload, verify=config.get("verify_ssl"))
-  if response.status_code not in OK_STATUS:
-    return response.status_code
-  else:
-    json_results = json.loads(response.content)
-    return json_results
 
-def check_jobid(config, params):
-  OK_STATUS = [requests.codes.ok, requests.codes.created, requests.codes.accepted, 204]
-  server_url = check_server_url(config.get("base_url"))
-  endpoint = server_url + "/api/v1/importsession/" + str(params.get("job_id"))
-  payload = generate_payload(config, None)
-  response = request("POST", endpoint, params=payload, verify=config.get("verify_ssl"))
-  if response.status_code not in OK_STATUS:
-    return "Error"
-  else:
-    json_results = json.loads(response.content)
-    return "true"
-  
-  
-def approve_import_job(config, params):
-  import_status = check_jobid(config,params)
-  OK_STATUS = [requests.codes.ok, requests.codes.created, requests.codes.accepted, 204]
-  payload = generate_payload(config, None)
-  if (import_status == "true"):
-    server_url = check_server_url(config.get("base_url"))
-    endpoint = server_url + "/api/v1/importsession/" + str(params.get("job_id"))+ "/approve_all"
-    response = request("PATCH", endpoint, params=payload, verify=config.get("verify_ssl"))
-    if response.status_code not in OK_STATUS:
-      return "Error The Job ID Wrong"
-    else:
-      return response.text
-  else:
-      return  "An error occurred while checking the status of the import job. ID: " + str(params.get("job_id"))
-
-def reject_import_job(config, params):
-  import_status = check_jobid(config,params)
-  OK_STATUS = [requests.codes.ok, requests.codes.created, requests.codes.accepted, 204]
-  payload = generate_payload(config, None)
-  if (import_status == "true"):
-    server_url = check_server_url(config.get("base_url"))
-    endpoint = server_url + "/api/v1/importsession/" + str(params.get("job_id"))
-    response = request("DELETE", endpoint, params=payload, verify=config.get("verify_ssl"))
-    if response.status_code not in OK_STATUS:
-      return "Error The Job ID Wrong"
-    else:
-      return response.status_code
-  else:
-      return  "An error occurred while checking the status of the import job. ID: " + str(params.get("job_id"))
-  
-  
 def intelligence_enrichments(config, params):
     try:
         operation_details = dict()
@@ -862,9 +805,6 @@ def intelligence_enrichments(config, params):
 
 
 operation_sym = {
-    "reject_import_job":reject_import_job,
-    "approve_import_job":approve_import_job,
-  	"get_import_status":get_import_status,
     "create_incident": create_incident,
     "update_incident": update_incident,
     "submit_observables": import_observables,
