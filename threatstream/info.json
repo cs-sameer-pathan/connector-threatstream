@@ -1,19 +1,19 @@
 {
   "name": "threatstream",
   "label": "Anomali ThreatStream",
-  "version": "2.2.1",
+  "version": "2.3.0",
   "description": "Anomali ThreatStream offers the most comprehensive Threat Intelligence Platform, allowing organizations to access all intelligence feeds and integrate it seamlessly with internal security and IT systems. This connector facilitates automated operations to to pull threat intelligence from the ThreatStream platform, import observables into ThreatStream from any source, manage threat model entities and investigations, and so on.",
   "publisher": "Fortinet",
   "cs_approved": true,
   "cs_compatible": true,
-  "category": "threat_intelligence",
+  "category": "Threat Intelligence",
   "icon_small_name": "small.png",
   "icon_large_name": "large.png",
   "ingestion_supported": true,
   "ingestion_modes": [
     "scheduled"
   ],
-  "help_online": "https://docs.fortinet.com/document/fortisoar/2.2.1/anomali-threatstream/34/anomali-threatstream-v2-2-1",
+  "help_online": "",
   "configuration": {
     "fields": [
       {
@@ -1365,7 +1365,7 @@
     },
     {
       "operation": "get_import_job_status",
-      "title": "Get Submitted Observables Status by Import ID",
+      "title": "Get Import Job Status",
       "description": "Retrieves the status of a submitted observable from ThreatStream based on the import ID that was returned in the response of the Submit Observables operation.",
       "category": "investigation",
       "annotation": "get_import_job_status",
@@ -1582,6 +1582,52 @@
               }
             ]
           }
+        }
+      ]
+    },
+    {
+      "operation": "approve_import_job",
+      "title": "Approved IOC By Import ID",
+      "description": "Approve the Import Job, based on its ID",
+      "category": "investigation",
+      "annotation": "approve_import_job",
+      "output_schema": {},
+      "endpoint": "/api/v1/importsession/{value}/approve_all",
+      "http_method": "PATCH",
+      "handler_method": true,
+      "enabled": true,
+      "parameters": [
+        {
+          "title": "Job ID",
+          "required": true,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "value",
+          "description": "Job ID for observable IOC"
+        }
+      ]
+    },
+    {
+      "operation": "reject_import_job",
+      "title": "Reject IOC By Import ID",
+      "description": "function to reject an import job, after it has been verified as 'ready to review'",
+      "category": "investigation",
+      "annotation": "reject_import_job",
+      "output_schema": {},
+      "endpoint": "/api/v1/importsession/{value}",
+      "http_method": "DELETE",
+      "handler_method": true,
+      "enabled": true,
+      "parameters": [
+        {
+          "title": "Job ID",
+          "required": true,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "value",
+          "description": "Job ID for observable IOC."
         }
       ]
     },
