@@ -1,5 +1,5 @@
 """ Copyright start
-  Copyright (C) 2008 - 2020 Fortinet Inc.
+  Copyright (C) 2008 - 2022 Fortinet Inc.
   All rights reserved.
   FORTINET CONFIDENTIAL & FORTINET PROPRIETARY SOURCE CODE
   Copyright end """
@@ -50,7 +50,7 @@ class ThreatStream(Connector):
     def on_activate(self, config):
         self.del_micro(config)
 
-    def on_add_config(self, config):
+    def on_add_config(self, config, active):
         self.del_micro(config)
 
     def on_delete_config(self, config):

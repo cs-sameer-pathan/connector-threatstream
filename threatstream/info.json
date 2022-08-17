@@ -3,7 +3,7 @@
   "label": "Anomali ThreatStream",
   "version": "2.3.0",
   "description": "Anomali ThreatStream offers the most comprehensive Threat Intelligence Platform, allowing organizations to access all intelligence feeds and integrate it seamlessly with internal security and IT systems. This connector facilitates automated operations to to pull threat intelligence from the ThreatStream platform, import observables into ThreatStream from any source, manage threat model entities and investigations, and so on.",
-  "publisher": "Fortinet",
+  "publisher": "Community",
   "cs_approved": true,
   "cs_compatible": true,
   "category": "Threat Intelligence",
@@ -13,7 +13,7 @@
   "ingestion_modes": [
     "scheduled"
   ],
-  "help_online": "",
+  "help_online": "https://docs.fortinet.com/document/fortisoar/2.3.0/anomali-threatstream/355/anomali-threatstream-v2-3-0",
   "configuration": {
     "fields": [
       {
@@ -1588,7 +1588,7 @@
     {
       "operation": "approve_import_job",
       "title": "Approved IOC By Import ID",
-      "description": "Approve the Import Job, based on its ID",
+      "description": "Approves the specific import job in ThreatStream based on the import ID you have specified. ",
       "category": "investigation",
       "annotation": "approve_import_job",
       "output_schema": {},
@@ -1604,14 +1604,14 @@
           "visible": true,
           "type": "text",
           "name": "value",
-          "description": "Job ID for observable IOC"
+          "description": "ID of the import job that you want to approve in ThreatStream. "
         }
       ]
     },
     {
       "operation": "reject_import_job",
       "title": "Reject IOC By Import ID",
-      "description": "function to reject an import job, after it has been verified as 'ready to review'",
+      "description": "Rejects the specific import job, after it has been verified as 'ready for review' in ThreatStream based on the import ID you have specified.",
       "category": "investigation",
       "annotation": "reject_import_job",
       "output_schema": {},
@@ -1627,7 +1627,7 @@
           "visible": true,
           "type": "text",
           "name": "value",
-          "description": "Job ID for observable IOC."
+          "description": "ID of the import job that you want to reject in ThreatStream. You can reject import jobs after it has been verified as 'ready for review'."
         }
       ]
     },

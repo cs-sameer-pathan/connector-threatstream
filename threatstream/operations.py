@@ -1,5 +1,5 @@
 """ Copyright start
-  Copyright (C) 2008 - 2020 Fortinet Inc.
+  Copyright (C) 2008 - 2022 Fortinet Inc.
   All rights reserved.
   FORTINET CONFIDENTIAL & FORTINET PROPRIETARY SOURCE CODE
   Copyright end """
@@ -432,7 +432,7 @@ def list_incidents(config, params):
 
 
 def fetch_incidents(config, params):
-    try:
+
         operation_details = dict()
         if params.get('value', None):
             operation_details['http_method'] = "GET"
@@ -447,10 +447,6 @@ def fetch_incidents(config, params):
             operation_details['operation'] = "fetch_all_incidents"
             resp = api_request(config, params, operation_details)
             return resp
-
-    except Exception as err:
-        logger.error("Failure {0}".format(str(err)))
-        raise ConnectorError("Failure {0}".format(str(err)))
 
 
 def api_request(config, params, operation_details):

@@ -8,4 +8,3 @@
   - IP Address > Anomali ThreatStream > Enrichment
   - Domain > Anomali ThreatStream > Enrichment
   - Email Address > Anomali ThreatStream > Enrichment
-- Added multiple configurations support for Data Ingestion to ensure that the respective global variables based on the selected configuration are used.
