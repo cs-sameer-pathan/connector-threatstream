@@ -10,6 +10,14 @@
   "icon_small_name": "small.png",
   "icon_large_name": "large.png",
   "ingestion_supported": true,
+  "tags": [
+    "Enrichment",
+    "IP_Enrichment",
+    "FileHash_Enrichment",
+    "URL_Enrichment",
+    "Domain_Enrichment",
+    "Email _Enrichment"
+  ],
   "ingestion_modes": [
     "scheduled"
   ],
@@ -185,8 +193,7 @@
           "name": "record_number",
           "value": "Fetch Limited Records",
           "onchange": {
-            "Fetch All Records": [
-            ],
+            "Fetch All Records": [],
             "Fetch Limited Records": [
               {
                 "title": "Limit",
@@ -342,8 +349,7 @@
           "name": "record_number",
           "value": "Fetch Limited Records",
           "onchange": {
-            "Fetch All Records": [
-            ],
+            "Fetch All Records": [],
             "Fetch Limited Records": [
               {
                 "title": "Limit",
@@ -499,8 +505,7 @@
           "name": "record_number",
           "value": "Fetch Limited Records",
           "onchange": {
-            "Fetch All Records": [
-            ],
+            "Fetch All Records": [],
             "Fetch Limited Records": [
               {
                 "title": "Limit",
@@ -657,8 +662,7 @@
           "name": "record_number",
           "value": "Fetch Limited Records",
           "onchange": {
-            "Fetch All Records": [
-            ],
+            "Fetch All Records": [],
             "Fetch Limited Records": [
               {
                 "title": "Limit",
@@ -814,8 +818,7 @@
           "name": "record_number",
           "value": "Fetch Limited Records",
           "onchange": {
-            "Fetch All Records": [
-            ],
+            "Fetch All Records": [],
             "Fetch Limited Records": [
               {
                 "title": "Limit",
@@ -1017,8 +1020,7 @@
           "name": "record_number",
           "value": "Fetch Limited Records",
           "onchange": {
-            "Fetch All Records": [
-            ],
+            "Fetch All Records": [],
             "Fetch Limited Records": [
               {
                 "title": "Limit",
@@ -1143,8 +1145,7 @@
           "name": "record_number",
           "value": "Fetch Limited Records",
           "onchange": {
-            "Fetch All Records": [
-            ],
+            "Fetch All Records": [],
             "Fetch Limited Records": [
               {
                 "title": "Limit",
@@ -1556,8 +1557,7 @@
           "name": "record_number",
           "value": "Fetch Limited Records",
           "onchange": {
-            "Fetch All Records": [
-            ],
+            "Fetch All Records": [],
             "Fetch Limited Records": [
               {
                 "title": "Limit",
@@ -1795,8 +1795,7 @@
             "feed_id": "",
             "watched_by_me": "",
             "end_date": "",
-            "tags": [
-            ],
+            "tags": [],
             "starred_total_count": "",
             "publication_status": "",
             "id": "",
@@ -1896,8 +1895,7 @@
             "feed_id": "",
             "watched_by_me": "",
             "end_date": "",
-            "tags": [
-            ],
+            "tags": [],
             "starred_total_count": "",
             "publication_status": "",
             "id": "",
@@ -3631,8 +3629,7 @@
             "owner_user_name": "",
             "watched_by_me": "",
             "resource_uri": "",
-            "tags": [
-            ],
+            "tags": [],
             "created_ts": "",
             "starred_total_count": "",
             "parent": "",
@@ -3690,8 +3687,7 @@
           "name": "record_number",
           "value": "Fetch Limited Records",
           "onchange": {
-            "Fetch All Records": [
-            ],
+            "Fetch All Records": [],
             "Fetch Limited Records": [
               {
                 "title": "Limit",
@@ -3872,8 +3868,7 @@
                 "feed_id": "",
                 "watched_by_me": "",
                 "end_date": "",
-                "tags": [
-                ],
+                "tags": [],
                 "starred_total_count": "",
                 "publication_status": "",
                 "id": "",
@@ -4222,8 +4217,7 @@
           "name": "record_number",
           "value": "Fetch Limited Records",
           "onchange": {
-            "Fetch All Records": [
-            ],
+            "Fetch All Records": [],
             "Fetch Limited Records": [
               {
                 "title": "Limit",
@@ -4368,8 +4362,7 @@
           "name": "record_number",
           "value": "Fetch Limited Records",
           "onchange": {
-            "Fetch All Records": [
-            ],
+            "Fetch All Records": [],
             "Fetch Limited Records": [
               {
                 "title": "Limit",
@@ -5083,8 +5076,7 @@
             "feed_id": "",
             "watched_by_me": "",
             "end_date": "",
-            "tags": [
-            ],
+            "tags": [],
             "starred_total_count": "",
             "publication_status": "",
             "id": "",
