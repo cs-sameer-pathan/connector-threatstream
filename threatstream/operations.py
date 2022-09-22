@@ -13,15 +13,15 @@ from connectors.core.connector import Connector, get_logger, ConnectorError
 from integrations.crudhub import make_request
 from django.conf import settings
 
-
 logger = get_logger('anomali-threatstream')
 
 FILE_REF = 'Attachment ID'
 IMPORT_OBSERVABLES = '/api/v1/intelligence/import/'
 
 MACRO_LIST = ["IP_Enrichment_Playbooks_IRIs", "URL_Enrichment_Playbooks_IRIs", "Domain_Enrichment_Playbooks_IRIs",
-
               "Email_Enrichment_Playbooks_IRIs", "FileHash_Enrichment_Playbooks_IRIs"]
+
+CONNECTOR_NAME = "threatstream"
 
 action_list = ["list_incidents", "fetch_incidents"]
 
@@ -432,21 +432,20 @@ def list_incidents(config, params):
 
 
 def fetch_incidents(config, params):
+    operation_details = dict()
+    if params.get('value', None):
+        operation_details['http_method'] = "GET"
+        operation_details['endpoint'] = "/api/v1/incident/?{value}"
+        operation_details['operation'] = "fetch_incidents"
+        resp = api_request(config, params, operation_details)
+        return resp
 
-        operation_details = dict()
-        if params.get('value', None):
-            operation_details['http_method'] = "GET"
-            operation_details['endpoint'] = "/api/v1/incident/?{value}"
-            operation_details['operation'] = "fetch_incidents"
-            resp = api_request(config, params, operation_details)
-            return resp
-
-        else:
-            operation_details['http_method'] = "GET"
-            operation_details['endpoint'] = "/api/v1/incident/"
-            operation_details['operation'] = "fetch_all_incidents"
-            resp = api_request(config, params, operation_details)
-            return resp
+    else:
+        operation_details['http_method'] = "GET"
+        operation_details['endpoint'] = "/api/v1/incident/"
+        operation_details['operation'] = "fetch_all_incidents"
+        resp = api_request(config, params, operation_details)
+        return resp
 
 
 def api_request(config, params, operation_details):
