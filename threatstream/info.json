@@ -16,7 +16,7 @@
     "FileHash_Enrichment",
     "URL_Enrichment",
     "Domain_Enrichment",
-    "Email _Enrichment"
+    "Email_Enrichment"
   ],
   "ingestion_modes": [
     "scheduled"
