@@ -4,7 +4,7 @@
   "version": "2.3.0",
   "description": "Anomali ThreatStream offers the most comprehensive Threat Intelligence Platform, allowing organizations to access all intelligence feeds and integrate it seamlessly with internal security and IT systems. This connector facilitates automated operations to to pull threat intelligence from the ThreatStream platform, import observables into ThreatStream from any source, manage threat model entities and investigations, and so on.",
   "publisher": "Community",
-  "cs_approved": true,
+  "cs_approved": false,
   "cs_compatible": true,
   "category": "Threat Intelligence",
   "icon_small_name": "small.png",
