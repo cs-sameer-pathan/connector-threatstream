@@ -4,7 +4,6 @@
   FORTINET CONFIDENTIAL & FORTINET PROPRIETARY SOURCE CODE
   Copyright end """
 import validators, json
-import pythonwhois
 import os
 from os.path import join, exists
 from requests import request, exceptions as req_exceptions
@@ -133,12 +132,7 @@ def parse_response(resp_json, params, operation_details, config):
 
         elif operation_details['operation'] in whois_action:  # When the operation is whois
             if resp_json['data']:
-                whois_response = pythonwhois.parse.parse_raw_whois([resp_json['data']], True)
-                try:
-                    whois_response = json.dumps(whois_response, default=_json_fallback)
-                    return json.loads(whois_response)
-                except Exception as err:
-                    raise ConnectorError(err)
+                return resp_json['data']
 
         else:  # when the result has more records.
             return get_all_record(resp_json, params, config)
