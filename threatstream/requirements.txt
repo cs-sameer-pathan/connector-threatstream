@@ -1,5 +1,1 @@
 validators
-pythonwhois==2.4.3
-xlrd
-pyminizip
-json2html
