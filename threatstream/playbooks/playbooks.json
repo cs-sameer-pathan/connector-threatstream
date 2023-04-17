@@ -4,7 +4,7 @@
     {
       "@context": "/api/3/contexts/WorkflowCollection",
       "@type": "WorkflowCollection",
-      "name": "Sample - Anomali ThreatStream - 2.3.1",
+      "name": "Sample - Anomali ThreatStream - 2.3.2",
       "description": "Sample playbooks for \"Anomali ThreatStream\" connector. If you are planning to use any of the sample playbooks in your environment, ensure that you clone those playbooks and move them to a different collection, since the sample playbook collection gets deleted during connector upgrade and delete.",
       "visible": true,
       "image": "/api/3/images/ac411af5-6e72-439b-be86-184971b91d98",
@@ -43,7 +43,7 @@
                 "params": {
                   "is_public": true
                 },
-                "version": "2.3.1",
+                "version": "2.3.2",
                 "connector": "threatstream",
                 "operation": "create_incident",
                 "operationTitle": "Create Incident",
@@ -163,7 +163,7 @@
                 "name": "Anomali ThreatStream",
                 "config": "''",
                 "params": [],
-                "version": "2.3.1",
+                "version": "2.3.2",
                 "connector": "threatstream",
                 "operation": "get_incident",
                 "operationTitle": "Get Incident",
@@ -256,7 +256,7 @@
                 "name": "Anomali ThreatStream",
                 "config": "''",
                 "params": [],
-                "version": "2.3.1",
+                "version": "2.3.2",
                 "connector": "threatstream",
                 "operation": "get_import_job_status",
                 "operationTitle": "Get Import Job Status",
@@ -322,7 +322,7 @@
                 "name": "Anomali ThreatStream",
                 "config": "''",
                 "params": [],
-                "version": "2.3.1",
+                "version": "2.3.2",
                 "connector": "threatstream",
                 "operation": "reject_import_job",
                 "operationTitle": "Reject IOC By Import ID",
@@ -445,7 +445,7 @@
                   "limit": 0,
                   "offset": 0
                 },
-                "version": "2.3.1",
+                "version": "2.3.2",
                 "connector": "threatstream",
                 "operation": "fetch_incidents",
                 "operationTitle": "Get Incident List",
@@ -511,7 +511,7 @@
                 "name": "Anomali ThreatStream",
                 "config": "''",
                 "params": [],
-                "version": "2.3.1",
+                "version": "2.3.2",
                 "connector": "threatstream",
                 "operation": "delete_incident",
                 "operationTitle": "Delete Incident",
@@ -634,7 +634,7 @@
                   "is_public": false,
                   "body_content_type": "Markdown"
                 },
-                "version": "2.3.1",
+                "version": "2.3.2",
                 "connector": "threatstream",
                 "operation": "create_threat_bulletin",
                 "operationTitle": "Create Threat Bulletin",
@@ -730,7 +730,7 @@
                   "filter_option": "Exact",
                   "record_number": "Fetch Limited Records"
                 },
-                "version": "2.3.1",
+                "version": "2.3.2",
                 "connector": "threatstream",
                 "operation": "file_reputation",
                 "operationTitle": "Get File Reputation",
@@ -799,7 +799,7 @@
                   "filter_option": "Exact",
                   "record_number": "Fetch Limited Records"
                 },
-                "version": "2.3.1",
+                "version": "2.3.2",
                 "connector": "threatstream",
                 "operation": "url_reputation",
                 "operationTitle": "Get URL Reputation",
@@ -919,7 +919,7 @@
                 "name": "Anomali ThreatStream",
                 "config": "''",
                 "params": [],
-                "version": "2.3.1",
+                "version": "2.3.2",
                 "connector": "threatstream",
                 "operation": "whois_domain",
                 "operationTitle": "Get Whois Domain Information",
@@ -1015,7 +1015,7 @@
                   "sandbox_type": "ThreatStream Sandbox",
                   "use_premium_sandbox": false
                 },
-                "version": "2.3.1",
+                "version": "2.3.2",
                 "connector": "threatstream",
                 "operation": "submit_urls_files",
                 "operationTitle": "Submit URLs or Files to Sandbox",
@@ -1084,7 +1084,7 @@
                   "filter_option": "Exact",
                   "record_number": "Fetch Limited Records"
                 },
-                "version": "2.3.1",
+                "version": "2.3.2",
                 "connector": "threatstream",
                 "operation": "ip_reputation",
                 "operationTitle": "Get IP Reputation",
@@ -1177,7 +1177,7 @@
                 "name": "Anomali ThreatStream",
                 "config": "''",
                 "params": [],
-                "version": "2.3.1",
+                "version": "2.3.2",
                 "connector": "threatstream",
                 "operation": "update_incident",
                 "operationTitle": "Update Incident",
@@ -1297,7 +1297,7 @@
                 "name": "Anomali ThreatStream",
                 "config": "''",
                 "params": [],
-                "version": "2.3.1",
+                "version": "2.3.2",
                 "connector": "threatstream",
                 "operation": "get_submitted_url_report",
                 "operationTitle": "Get Sandbox Report of Submitted URL/File",
@@ -1366,7 +1366,7 @@
                   "filter_option": "Exact",
                   "record_number": "Fetch Limited Records"
                 },
-                "version": "2.3.1",
+                "version": "2.3.2",
                 "connector": "threatstream",
                 "operation": "domain_reputation",
                 "operationTitle": "Get Domain Reputation",
@@ -1462,7 +1462,7 @@
                   "filter_option": "Exact",
                   "record_number": "Fetch Limited Records"
                 },
-                "version": "2.3.1",
+                "version": "2.3.2",
                 "connector": "threatstream",
                 "operation": "email_reputation",
                 "operationTitle": "Get Email ID Reputation",
@@ -1557,7 +1557,7 @@
                 "params": {
                   "record_number": "Fetch Limited Records"
                 },
-                "version": "2.3.1",
+                "version": "2.3.2",
                 "connector": "threatstream",
                 "operation": "filter_language_query",
                 "operationTitle": "Run Filter Language Query",
@@ -1652,7 +1652,7 @@
                 "params": {
                   "record_number": "Fetch Limited Records"
                 },
-                "version": "2.3.1",
+                "version": "2.3.2",
                 "connector": "threatstream",
                 "operation": "get_import_jobs",
                 "operationTitle": "Get Import Job Details",
@@ -1772,7 +1772,7 @@
                 "name": "Anomali ThreatStream",
                 "config": "''",
                 "params": [],
-                "version": "2.3.1",
+                "version": "2.3.2",
                 "connector": "threatstream",
                 "operation": "whois_ip",
                 "operationTitle": "Get Whois IP Information",
@@ -1865,7 +1865,7 @@
                 "name": "Anomali ThreatStream",
                 "config": "''",
                 "params": [],
-                "version": "2.3.1",
+                "version": "2.3.2",
                 "connector": "threatstream",
                 "operation": "update_threat_bulletin",
                 "operationTitle": "Update Threat Bulletin",
@@ -1960,7 +1960,7 @@
                 "params": {
                   "record_number": "Fetch Limited Records"
                 },
-                "version": "2.3.1",
+                "version": "2.3.2",
                 "connector": "threatstream",
                 "operation": "advance_query",
                 "operationTitle": "Run Advanced Search",
@@ -2056,7 +2056,7 @@
                   "limit": 0,
                   "offset": 0
                 },
-                "version": "2.3.1",
+                "version": "2.3.2",
                 "connector": "threatstream",
                 "operation": "list_incidents_by_indicator",
                 "operationTitle": "Get Incident List By Indicator",
@@ -2124,7 +2124,7 @@
                 "params": {
                   "record_number": "Fetch Limited Records"
                 },
-                "version": "2.3.1",
+                "version": "2.3.2",
                 "connector": "threatstream",
                 "operation": "list_threat_model_entity",
                 "operationTitle": "Get Threat Bulletin Entities",
@@ -2246,7 +2246,7 @@
                 "params": {
                   "record_number": "Fetch Limited Records"
                 },
-                "version": "2.3.1",
+                "version": "2.3.2",
                 "connector": "threatstream",
                 "operation": "list_threat_bulletins",
                 "operationTitle": "Get Threat Bulletin List",
@@ -2312,7 +2312,7 @@
                 "name": "Anomali ThreatStream",
                 "config": "''",
                 "params": [],
-                "version": "2.3.1",
+                "version": "2.3.2",
                 "connector": "threatstream",
                 "operation": "get_submit_url_status",
                 "operationTitle": "Get Sandbox Status of Submitted URL/File",
@@ -2434,7 +2434,7 @@
                 "params": {
                   "record_number": "Fetch Limited Records"
                 },
-                "version": "2.3.1",
+                "version": "2.3.2",
                 "connector": "threatstream",
                 "operation": "list_observables_associated_threat_bulletin",
                 "operationTitle": "Get Threat Bulletin Observables",
@@ -2503,7 +2503,7 @@
                   "severity": "Low",
                   "expiration_ts": "90 days"
                 },
-                "version": "2.3.1",
+                "version": "2.3.2",
                 "connector": "threatstream",
                 "operation": "submit_observables",
                 "operationTitle": "Submit Observables",
@@ -2623,7 +2623,7 @@
                 "name": "Anomali ThreatStream",
                 "config": "''",
                 "params": [],
-                "version": "2.3.1",
+                "version": "2.3.2",
                 "connector": "threatstream",
                 "operation": "approve_import_job",
                 "operationTitle": "Approved IOC By Import ID",
@@ -2689,7 +2689,7 @@
                 "name": "Anomali ThreatStream",
                 "config": "''",
                 "params": [],
-                "version": "2.3.1",
+                "version": "2.3.2",
                 "connector": "threatstream",
                 "operation": "intelligence_enrichments",
                 "operationTitle": "Get Intelligence Enrichments",
@@ -2987,7 +2987,7 @@
                   "value": "{{vars.search_query}}&modified_ts_gte={{vars.last_pull_time}}",
                   "offset": 0
                 },
-                "version": "2.3.1",
+                "version": "2.3.2",
                 "connector": "threatstream",
                 "operation": "fetch_incidents",
                 "operationTitle": "Get Incidents List",
@@ -3358,7 +3358,7 @@
                   "filter_option": "Exact",
                   "record_number": "Fetch All Records"
                 },
-                "version": "2.3.1",
+                "version": "2.3.2",
                 "connector": "threatstream",
                 "operation": "email_reputation",
                 "mock_result": "{\n  \"data\": {\n    \"objects\": [\n      {\n        \"status\": \"falsepos\",\n        \"itype\": \"phish_email\",\n        \"expiration_ts\": \"9999-12-31T00:00:00.000Z\",\n        \"ip\": null,\n        \"is_editable\": false,\n        \"feed_id\": 0,\n        \"update_id\": 3605196936,\n        \"value\": \"{{vars.indicator_value}}\",\n        \"is_public\": true,\n        \"threat_type\": \"phish\",\n        \"workgroups\": [],\n        \"rdns\": null,\n        \"confidence\": 100,\n        \"uuid\": \"a66d25fb-4240-4e6d-bad2-a2bf94e1d233\",\n        \"retina_confidence\": -1,\n        \"trusted_circle_ids\": null,\n        \"id\": 52184653577,\n        \"source\": \"Analyst\",\n        \"owner_organization_id\": 1234,\n        \"import_session_id\": 727983,\n        \"latitude\": null,\n        \"type\": \"email\",\n        \"sort\": [\n          3605196936\n        ],\n        \"description\": null,\n        \"tags\": [\n          {\n            \"id\": \"wevv\",\n            \"name\": \"Delivery\"\n          },\n          {\n            \"id\": \"rtl6\",\n            \"name\": \"phishing email\"\n          }\n        ],\n        \"threatscore\": 80,\n        \"source_reported_confidence\": 100,\n        \"modified_ts\": \"2019-04-08T13:49:06.500Z\",\n        \"org\": \"\",\n        \"asn\": \"\",\n        \"created_ts\": \"2019-02-20T15:54:08.003Z\",\n        \"tlp\": null,\n        \"is_anonymous\": false,\n        \"country\": null,\n        \"can_add_public_tags\": true,\n        \"longitude\": null,\n        \"subtype\": null,\n        \"meta\": {\n          \"detail2\": \"imported by user 1236 Confirmed as false positive\",\n          \"severity\": \"very-high\",\n          \"detail\": \"\"\n        },\n        \"resource_uri\": \"/api/v2/intelligence/52184653577/\"\n      }\n    ],\n    \"meta\": {\n      \"total_count\": 3,\n      \"offset\": 0,\n      \"limit\": 1000,\n      \"took\": 15,\n      \"next\": null\n    }\n  },\n  \"status\": \"Success\",\n  \"message\": \"\",\n  \"operation\": null\n}",
@@ -3685,7 +3685,7 @@
                   "filter_option": "Exact",
                   "record_number": "Fetch All Records"
                 },
-                "version": "2.3.1",
+                "version": "2.3.2",
                 "connector": "threatstream",
                 "operation": "domain_reputation",
                 "mock_result": "{\n  \"data\": {\n    \"objects\": [\n    {\n      \"source_created\": null,\n      \"status\": \"active\",\n      \"itype\": \"mal_domain\",\n      \"expiration_ts\": \"9999-12-31T00:00:00.000Z\",\n      \"ip\": \"127.0.0.1\",\n      \"is_editable\": true,\n      \"feed_id\": 0,\n      \"update_id\": 14767472652,\n      \"value\": \"{{vars.indicator_value}}\",\n      \"is_public\": false,\n      \"threat_type\": \"malware\",\n      \"workgroups\": [],\n      \"rdns\": null,\n      \"confidence\": 100,\n      \"uuid\": \"5db3ac63-e776-4837-b613-0466fca61a99\",\n      \"retina_confidence\": -1,\n      \"trusted_circle_ids\": null,\n      \"created_by\": \"test@fortisoar.com\",\n      \"id\": 59075429651,\n      \"source\": \"test@fortisoar.com\",\n      \"owner_organization_id\": 1234,\n      \"import_session_id\": 5488058,\n      \"source_modified\": null,\n      \"type\": \"domain\",\n      \"sort\": [\n        14767472652\n      ],\n      \"description\": null,\n      \"tags\": [\n        {\n          \"tlp\": \"red\",\n          \"org_id\": \"1234\",\n          \"name\": \"Firewall-Block\",\n          \"id\": \"asd\"\n        }\n      ],\n      \"threatscore\": 80,\n      \"latitude\": 42.8856,\n      \"modified_ts\": \"2022-06-29T14:48:05.483Z\",\n      \"org\": \"HostFlyte Server Solutions\",\n      \"asn\": \"36352\",\n      \"created_ts\": \"2022-06-29T14:47:37.343Z\",\n      \"tlp\": \"red\",\n      \"is_anonymous\": false,\n      \"country\": \"US\",\n      \"source_reported_confidence\": 100,\n      \"can_add_public_tags\": true,\n      \"longitude\": -78.8736,\n      \"subtype\": null,\n      \"meta\": {\n        \"registrant_name\": \"NOT DISCLOSED!\",\n        \"detail2\": \"imported by user demo\",\n        \"severity\": \"very-high\"\n      },\n      \"import_source\": \"NCA\",\n      \"resource_uri\": \"/api/v2/intelligence/59075429651/\"\n    }\n  ],\n  \"meta\": {\n    \"total_count\": 1,\n    \"offset\": 0,\n    \"limit\": 1000,\n    \"took\": 20,\n    \"next\": null\n  }\n  },\n  \"status\": \"Success\",\n  \"message\": \"\",\n  \"operation\": null\n}",
@@ -3966,7 +3966,7 @@
                   "filter_option": "Exact",
                   "record_number": "Fetch Limited Records"
                 },
-                "version": "2.3.1",
+                "version": "2.3.2",
                 "connector": "threatstream",
                 "operation": "ip_reputation",
                 "mock_result": "{\n  \"data\": {\n    \"meta\": {\n      \"next\": null,\n      \"took\": 6,\n      \"limit\": 40,\n      \"offset\": 0,\n      \"total_count\": 1\n    },\n    \"objects\": [\n      {\n        \"id\": 3133244,\n        \"ip\": \"{{vars.indicator_value}}\",\n        \"asn\": \"3491\",\n        \"org\": \"demo\",\n        \"tlp\": null,\n        \"meta\": {\n          \"detail2\": \"demo-03-20_02:50:00.071331\",\n          \"severity\": \"low\"\n        },\n        \"rdns\": null,\n        \"sort\": [\n          3133244\n        ],\n        \"tags\": [\n          {\n            \"name\": \"spam_ip\"\n          }\n        ],\n        \"type\": \"ip\",\n        \"uuid\": null,\n        \"itype\": \"spam_ip\",\n        \"value\": \"{{vars.indicator_value}}\",\n        \"source\": \"Emerging Threats\",\n        \"status\": \"inactive\",\n        \"country\": \"US\",\n        \"feed_id\": 15,\n        \"subtype\": null,\n        \"latitude\": 38.9841,\n        \"is_public\": true,\n        \"longitude\": -77.3827,\n        \"update_id\": 3133244,\n        \"confidence\": 75,\n        \"created_ts\": \"2012-12-18T15:00:44.000Z\",\n        \"workgroups\": [],\n        \"description\": null,\n        \"is_editable\": false,\n        \"modified_ts\": \"2014-11-07T18:03:47.667Z\",\n        \"threat_type\": \"spam\",\n        \"threatscore\": 19,\n        \"is_anonymous\": null,\n        \"resource_uri\": \"/api/v2/intelligence/3133244/\",\n        \"expiration_ts\": \"2014-11-07T18:03:47.667Z\",\n        \"import_session_id\": null,\n        \"retina_confidence\": -1,\n        \"trusted_circle_ids\": null,\n        \"can_add_public_tags\": true,\n        \"owner_organization_id\": 123,\n        \"source_reported_confidence\": -1\n      }\n    ]\n  },\n  \"status\": \"Success\",\n  \"message\": \"\",\n  \"operation\": null\n}",
@@ -4086,7 +4086,7 @@
                   "filter_option": "Exact",
                   "record_number": "Fetch All Records"
                 },
-                "version": "2.3.1",
+                "version": "2.3.2",
                 "connector": "threatstream",
                 "operation": "url_reputation",
                 "mock_result": "{\n  \"data\": {\n    \"objects\": [\n    {\n      \"source_created\": null,\n      \"status\": \"active\",\n      \"itype\": \"phish_url\",\n      \"expiration_ts\": \"2022-10-03T11:46:53.661Z\",\n      \"ip\": \"127.0.0.1\",\n      \"is_editable\": false,\n      \"feed_id\": 0,\n      \"update_id\": 14812262892,\n      \"value\": \"{{vars.indicator_value}}\",\n      \"is_public\": false,\n      \"threat_type\": \"phish\",\n      \"workgroups\": [],\n      \"rdns\": null,\n      \"confidence\": 78,\n      \"uuid\": \"7c820aab-10d5-46eb-9841-5f4f3b2c6f04\",\n      \"retina_confidence\": 78,\n      \"trusted_circle_ids\": [\n        1567\n      ],\n      \"id\": 59103965334,\n      \"source\": \"demo\",\n      \"owner_organization_id\": 1234,\n      \"import_session_id\": 5516634,\n      \"source_modified\": null,\n      \"type\": \"url\",\n      \"sort\": [\n        14812262892\n      ],\n      \"description\": null,\n      \"tags\": [\n        {\n          \"id\": \"red56\",\n          \"name\": \"#my_group\"\n        },\n        {\n          \"id\": \"14523z\",\n          \"name\": \"#suspicious\"\n        },\n        {\n          \"id\": \"a12f\",\n          \"name\": \"demo\"\n        },\n        {\n          \"id\": \"766\",\n          \"name\": \"https://twitter.com/ecarlesi/status/1544283550018666497\"\n        }\n      ],\n      \"threatscore\": 63,\n      \"latitude\": 37.751007,\n      \"modified_ts\": \"2022-07-05T11:48:26.218Z\",\n      \"org\": \"Cloudflare\",\n      \"asn\": 13335,\n      \"created_ts\": \"2022-07-05T11:46:54.859Z\",\n      \"tlp\": \"white\",\n      \"is_anonymous\": false,\n      \"country\": \"US\",\n      \"source_reported_confidence\": 100,\n      \"can_add_public_tags\": true,\n      \"longitude\": -97.822,\n      \"subtype\": null,\n      \"meta\": {\n        \"detail2\": \"imported by user demo\",\n        \"severity\": \"high\"\n      },\n      \"resource_uri\": \"/api/v2/intelligence/59103965334/\"\n    }\n  ],\n  \"meta\": {\n    \"total_count\": 1,\n    \"offset\": 0,\n    \"limit\": 1000,\n    \"took\": 30,\n    \"next\": null\n  }\n  },\n  \"status\": \"Success\",\n  \"message\": \"\",\n  \"operation\": null\n}",
@@ -4385,7 +4385,7 @@
                   "filter_option": "Exact",
                   "record_number": "Fetch All Records"
                 },
-                "version": "2.3.1",
+                "version": "2.3.2",
                 "connector": "threatstream",
                 "operation": "file_reputation",
                 "mock_result": "{\n  \"data\": {\n    \"objects\": [\n      {\n        \"source_created\": null,\n        \"status\": \"active\",\n        \"itype\": \"mal_md5\",\n        \"expiration_ts\": \"9999-12-31T00:00:00.000Z\",\n        \"ip\": null,\n        \"is_editable\": true,\n        \"feed_id\": 50,\n        \"update_id\": 13842892824,\n        \"value\": \"{{vars.indicator_value}}\",\n        \"is_public\": false,\n        \"threat_type\": \"malware\",\n        \"workgroups\": [],\n        \"rdns\": null,\n        \"confidence\": 80,\n        \"uuid\": \"9a321406-50aa-483d-8a09-fcc7a395ae52\",\n        \"retina_confidence\": -1,\n        \"trusted_circle_ids\": null,\n        \"created_by\": \"test@fortisoar.com\",\n        \"id\": 58412862425,\n        \"source\": \"test@fortisoar.com\",\n        \"owner_organization_id\": 1234,\n        \"import_session_id\": 4953842,\n        \"source_modified\": null,\n        \"type\": \"md5\",\n        \"sort\": [\n          13842892824\n        ],\n        \"description\": null,\n        \"tags\": [\n          {\n            \"org_id\": \"1234\",\n            \"name\": \"from-sandbox\",\n            \"id\": \"t6230\"\n          },\n          {\n            \"tlp\": \"red\",\n            \"org_id\": \"1234\",\n            \"name\": \"Phishing\",\n            \"id\": \"7523a\"\n          }\n        ],\n        \"threatscore\": 72,\n        \"latitude\": null,\n        \"modified_ts\": \"2022-02-26T14:23:28.897Z\",\n        \"org\": \"\",\n        \"asn\": \"\",\n        \"created_ts\": \"2022-02-26T14:23:28.897Z\",\n        \"tlp\": \"amber\",\n        \"is_anonymous\": false,\n        \"country\": null,\n        \"source_reported_confidence\": -1,\n        \"can_add_public_tags\": true,\n        \"longitude\": null,\n        \"subtype\": null,\n        \"meta\": {\n          \"detail2\": \"imported by user 12345\",\n          \"severity\": \"very-high\"\n        },\n        \"import_source\": \"Phishing Email Reported\",\n        \"resource_uri\": \"/api/v2/intelligence/58412862425/\"\n      }\n    ],\n    \"meta\": {\n      \"total_count\": 1,\n      \"offset\": 0,\n      \"limit\": 1000,\n      \"took\": 26,\n      \"next\": null\n    }\n  },\n  \"status\": \"Success\",\n  \"message\": \"\",\n  \"operation\": null\n}",
