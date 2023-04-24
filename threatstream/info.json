@@ -21,7 +21,7 @@
   "ingestion_modes": [
     "scheduled"
   ],
-  "help_online": "https://docs.fortinet.com/document/fortisoar/2.3.1/anomali-threatstream/474/anomali-threatstream-v2-3-1",
+  "help_online": "https://docs.fortinet.com/document/fortisoar/2.3.2/anomali-threatstream/566/anomali-threatstream-v2-3-2",
   "configuration": {
     "fields": [
       {
