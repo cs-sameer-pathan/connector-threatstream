@@ -328,7 +328,7 @@ def import_observables(config, params):
             expiration_day.get(params.get("expiration_ts"), "90 days")
         )
 
-        files = {
+        data = {
             "confidence": (None, params.get("confidence")),
             "severity": (None, severity),
             "classification": (None, classification),
@@ -338,26 +338,26 @@ def import_observables(config, params):
             "url_mapping": (None, params.get("url_mapping")),
             "email_mapping": (None, params.get("email_mapping")),
             "md5_mapping": (None, params.get("md5_mapping")),
-            "threat_type": "malware",
+            "threat_type": params.get('threat_type') if params.get('threat_type') else "malware",
         }
 
         tags = params.get("notes")
         if isinstance(tags, list):
             tags = ", ".join(tags)
         if tags:
-            files.setdefault("notes", (None, tags))
+            data.setdefault("notes", (None, tags))
 
         trusted_circles = params.get("trusted_circles")
         if trusted_circles:
-            files.setdefault("trusted_circles", (None, trusted_circles))
+            data.setdefault("trusted_circles", (None, trusted_circles))
 
         observables_data = params.get("data")
         if observables_data:
-            files.setdefault("datatext", (None, observables_data))
+            data.setdefault("datatext", (None, observables_data))
 
         source_confidence_weight = params.get("source_confidence_weight")
         if source_confidence_weight:
-            files.setdefault(
+            data.setdefault(
                 "source_confidence_weight", (None, source_confidence_weight)
             )
 
@@ -367,13 +367,13 @@ def import_observables(config, params):
             logger.error("Either File Details or Observable data are required")
             raise ConnectorError("Either File Details or Observable data are required")
 
-        data = {k: v for k, v in files.items() if v is not None}
+        data = {k: v for k, v in data.items() if v is not None}
+        files = None
         if reference_id:
             file_path, file_name = from_cyops_download_file(reference_id)
-            files = {}
-            files.setdefault(
+            files = {
                 "file", (file_name, open(file_path, "r").read(), "text/csv")
-            )
+            }
 
         endpoint = server_url + IMPORT_OBSERVABLES
 
