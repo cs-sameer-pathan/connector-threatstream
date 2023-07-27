@@ -1,2 +1,4 @@
+#### What's Improved
+- Added new parameter `Threat Type` in `Submit Observables` action.
 #### What's Fixed
-- Fixed an issue that was preventing the 'Submit Observables' operation from sending observables to Anomali ThreatStream.
+- Fixed a bug where 'Submit Observables' operation was failing with internal Server Error.
