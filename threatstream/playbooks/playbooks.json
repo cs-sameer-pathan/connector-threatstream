@@ -2990,7 +2990,7 @@
                 "version": "2.3.3",
                 "connector": "threatstream",
                 "operation": "fetch_incidents",
-                "operationTitle": "Get Incidents List",
+                "operationTitle": "Get Incident List",
                 "step_variables": []
               },
               "status": null,

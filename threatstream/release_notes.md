@@ -1,4 +1,4 @@
 #### What's Improved
-- Added new parameter `Threat Type` in `Submit Observables` action.
+- Added a new parameter `Threat Type` in the `Submit Observables` action.
 #### What's Fixed
-- Fixed a bug where 'Submit Observables' operation was failing with internal Server Error.
+- Fixed an issue where the Submit Observables operation was failing with an internal server error.
