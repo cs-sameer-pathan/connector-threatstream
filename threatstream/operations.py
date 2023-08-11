@@ -3,6 +3,8 @@
   All rights reserved.
   FORTINET CONFIDENTIAL & FORTINET PROPRIETARY SOURCE CODE
   Copyright end """
+from time import sleep
+
 import validators, json
 import os
 from os.path import join, exists
@@ -16,7 +18,9 @@ logger = get_logger("anomali-threatstream")
 
 FILE_REF = "Attachment ID"
 IMPORT_OBSERVABLES = "/api/v1/intelligence/import/"
-
+MAX_RETRY = 5
+DELAY_TIME = 10
+MAX_REQUEST_TIMEOUT = 600
 MACRO_LIST = [
     "IP_Enrichment_Playbooks_IRIs",
     "URL_Enrichment_Playbooks_IRIs",
@@ -190,6 +194,7 @@ def make_rest_call(endpoint, config, result):
             endpoint_url,
             params=generate_payload(config, None),
             verify=config.get("verify_ssl"),
+            timeout=MAX_REQUEST_TIMEOUT
         )
         if response.status_code == 200:
             resp_json = response.json()
@@ -279,6 +284,7 @@ def add_attachment_to_tb(tb_id, reference_id, config):
             params=payload,
             files=files,
             verify=config.get("verify_ssl"),
+            timeout=MAX_REQUEST_TIMEOUT
         )
         if response.status_code == 201:
             return response.json()
@@ -339,8 +345,8 @@ def import_observables(config, params):
             "email_mapping": (None, params.get("email_mapping")),
             "md5_mapping": (None, params.get("md5_mapping")),
             "threat_type": params.get('threat_type') if params.get('threat_type') else "malware",
+            "default_state": "active" if params.get('require_approval') is False else None
         }
-
         tags = params.get("notes")
         if isinstance(tags, list):
             tags = ", ".join(tags)
@@ -384,6 +390,7 @@ def import_observables(config, params):
             files=files,
             data=data,
             verify=config.get("verify_ssl"),
+            timeout=MAX_REQUEST_TIMEOUT
         )
 
         if file_path and exists(file_path):
@@ -449,6 +456,7 @@ def create_incident(config, params):
             params=payload,
             data=json.dumps(query_data),
             verify=config.get("verify_ssl"),
+            timeout=MAX_REQUEST_TIMEOUT
         )
         if response.status_code == 201:
             return response.json()
@@ -490,6 +498,7 @@ def update_incident(config, params):
             params=payload,
             data=json.dumps(result),
             verify=config.get("verify_ssl"),
+            timeout=MAX_REQUEST_TIMEOUT
         )
         if response.status_code == 202:
             return response.json()
@@ -618,40 +627,54 @@ def api_request(config, params, operation_details):
                     payload["offset"] = 0
 
         # Common REST request query handler.
-        response = request(
-            operation_details["http_method"],
-            endpoint,
-            params=payload,
-            verify=config.get("verify_ssl"),
-        )
 
-        if response.status_code == 200:
-            if operation_details["operation"] in list(
-                set(resp_list) | set(query_actions)
-            ):
-                resp_json = response.json()
-                if params.get("record_number") == "Fetch All Records":
-                    if not resp_json["meta"]["next"] is None:
-                        return get_all_record(resp_json, params, config)
-                return resp_json
-            else:
-                resp_json = response.json()
-                return parse_response(resp_json, params, operation_details, config)
-
-        elif response.status_code == 204:
-            return {
-                "result": "Successfully deleted the incident with ID {0}".format(
-                    params.get("value")
+        retry_count = 0
+        while retry_count < MAX_RETRY:
+            try:
+                response = request(
+                    operation_details["http_method"],
+                    endpoint,
+                    params=payload,
+                    verify=config.get("verify_ssl"),
+                    timeout=MAX_REQUEST_TIMEOUT
                 )
-            }
+                if response.status_code == 200:
+                    if operation_details["operation"] in list(
+                        set(resp_list) | set(query_actions)
+                    ):
+                        resp_json = response.json()
+                        if params.get("record_number") == "Fetch All Records":
+                            if not resp_json["meta"]["next"] is None:
+                                return get_all_record(resp_json, params, config)
+                        return resp_json
+                    else:
+                        resp_json = response.json()
+                        return parse_response(resp_json, params, operation_details, config)
 
-        raise ConnectorError(
-            "{0}:{1} {2}".format(
-                response.status_code,
-                response.reason,
-                response.text if not response.text.startswith("<!DOCTYPE") else "",
-            )
-        )
+                elif response.status_code == 204:
+                    return {
+                        "result": "Successfully deleted the incident with ID {0}".format(
+                            params.get("value")
+                        )
+                    }
+
+                raise ConnectorError(
+                    "{0}:{1} {2}".format(
+                        response.status_code,
+                        response.reason,
+                        response.text if not response.text.startswith("<!DOCTYPE") else "",
+                    )
+                )
+            except (req_exceptions.ChunkedEncodingError, req_exceptions.ConnectionError,
+                    req_exceptions.ReadTimeout, req_exceptions.ProxyError, ConnectionResetError) as ex:
+                retry_count += 1
+
+                if retry_count >= MAX_RETRY:
+                    logger.error("Retry limit reached: {}".format(retry_count))
+                    raise Exception(ex)
+                else:
+                    logger.error("Retries attempted: {}".format(retry_count))
+                    sleep(DELAY_TIME)
     except req_exceptions.SSLError:
         logger.error("An SSL error occurred")
         raise ConnectorError("An SSL error occurred")
@@ -792,6 +815,7 @@ def create_threat_bulletin(config, params):
             params=payload,
             data=json.dumps(query_data),
             verify=config.get("verify_ssl"),
+            timeout=MAX_REQUEST_TIMEOUT
         )
         if response.status_code == 201:
             reference_id = params.get("reference_id")
@@ -838,6 +862,7 @@ def update_threat_bulletin(config, params):
             params=payload,
             data=json.dumps(result),
             verify=config.get("verify_ssl"),
+            timeout=MAX_REQUEST_TIMEOUT
         )
         if response.status_code == 202:
             reference_id = params.get("reference_id")
@@ -890,6 +915,7 @@ def submit_urls_files(config, params):
             params=payload,
             files=files,
             verify=config.get("verify_ssl"),
+            timeout=MAX_REQUEST_TIMEOUT
         )
         if response.status_code == 202:
             return response.json()

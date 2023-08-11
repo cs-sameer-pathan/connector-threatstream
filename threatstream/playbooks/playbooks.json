@@ -2501,7 +2501,8 @@
                 "config": "''",
                 "params": {
                   "severity": "Low",
-                  "expiration_ts": "90 days"
+                  "expiration_ts": "90 days",
+                  "require_approval": true
                 },
                 "version": "2.3.3",
                 "connector": "threatstream",

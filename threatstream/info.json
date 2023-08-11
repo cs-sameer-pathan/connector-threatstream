@@ -1349,6 +1349,16 @@
           "placeholder": "e.g. malware",
           "description": "(Optional) Specify summarized threat type of the indicator. For example, malware",
           "tooltip": "Specify summarized threat type of the indicator."
+        },
+        {
+          "title": "Approval Required",
+          "editable": true,
+          "visible": true,
+          "type": "checkbox",
+          "value": true,
+          "name": "require_approval",
+          "description": "(Optional) Specify whether import job must be approved from the ThreatStream user interface before observables become active. By default it checked.",
+          "tooltip": "Specify whether import job must be approved from the ThreatStream user interface before observables become active."
         }
       ]
     },
