@@ -1,5 +1,5 @@
 #### What's Improved
-- Added following parameters in the `Submit Observables` action.
+- Following new parameters were added to the `Submit Observables` action:
   - `Threat Type`
   - `Approval Required`
 
