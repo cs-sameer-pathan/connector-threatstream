@@ -1357,8 +1357,8 @@
           "type": "checkbox",
           "value": true,
           "name": "require_approval",
-          "description": "(Optional) Specify whether import job must be approved from the ThreatStream user interface before observables become active. By default it checked.",
-          "tooltip": "Specify whether import job must be approved from the ThreatStream user interface before observables become active."
+          "description": "(Optional) Select to enable the approval of the import job from the ThreatStream user interface before observables become active. By default, it is selected.",
+          "tooltip": "Select to enable the approval of the import job from the ThreatStream user interface before observables become active."
         }
       ]
     },
