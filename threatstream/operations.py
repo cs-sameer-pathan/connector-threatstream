@@ -17,7 +17,7 @@ from django.conf import settings
 logger = get_logger("anomali-threatstream")
 
 FILE_REF = "Attachment ID"
-IMPORT_OBSERVABLES = "/api/v1/intelligence/import/"
+IMPORT_OBSERVABLES = "/api/v2/intelligence/import/"
 MAX_RETRY = 5
 DELAY_TIME = 10
 MAX_REQUEST_TIMEOUT = 600
@@ -316,7 +316,6 @@ def import_observables(config, params):
             "High": "high",
             "Very High": "very-high",
         }
-
         severity = sev_dict.get(params.get("severity"), "low")
         classification_dict = {"Public": "public", "Private": "private"}
         classification = classification_dict.get(
@@ -345,7 +344,8 @@ def import_observables(config, params):
             "email_mapping": (None, params.get("email_mapping")),
             "md5_mapping": (None, params.get("md5_mapping")),
             "threat_type": params.get('threat_type') if params.get('threat_type') else "malware",
-            "default_state": "active" if params.get('require_approval') is False else None
+            "default_state": "active" if params.get('require_approval') is False else None,
+            "reject_benign": params.get('reject_benign', True)
         }
         tags = params.get("notes")
         if isinstance(tags, list):
@@ -373,7 +373,7 @@ def import_observables(config, params):
             logger.error("Either File Details or Observable data are required")
             raise ConnectorError("Either File Details or Observable data are required")
 
-        data = {k: v for k, v in data.items() if v is not None}
+        data = {k: v for k, v in data.items() if v not in [None, "", (None, None), (None, "")]}
         files = None
         if reference_id:
             file_path, file_name = from_cyops_download_file(reference_id)
@@ -396,16 +396,15 @@ def import_observables(config, params):
         if file_path and exists(file_path):
             os.remove(file_path)
 
-        if response.status_code == 202:
+        if response.ok:
             return response.json()
         else:
-            logger.error(
-                "Failure {0}: {1}".format(response.status_code, response.reason)
-            )
-            raise ConnectorError(
-                "Failure {0}: {1}".format(response.status_code, response.reason)
-            )
-
+            try:
+                logger.error("Failure {0}: {1}".format(response.status_code, response.json()))
+                raise ConnectorError("Failure {0}: {1}".format(response.status_code, response.json()))
+            except (KeyError, json.decoder.JSONDecodeError) as error:
+                logger.error("Failed {0}: {1}".format(response.status_code, response.reason))
+                raise ConnectorError("Failure {0}: {1}".format(response.status_code, response.reason))
     except Exception as err:
         logger.error("{0}".format(str(err)))
         raise ConnectorError("{0}".format(str(err)))
