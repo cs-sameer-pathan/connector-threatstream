@@ -378,7 +378,7 @@ def import_observables(config, params):
         if reference_id:
             file_path, file_name = from_cyops_download_file(reference_id)
             files = {
-                "file", (file_name, open(file_path, "r").read(), "text/csv")
+                "file": (file_name, open(file_path, "r").read(), "text/csv")
             }
 
         endpoint = server_url + IMPORT_OBSERVABLES
