@@ -1,10 +1,10 @@
 {
   "name": "threatstream",
   "label": "Anomali ThreatStream",
-  "version": "2.3.3",
+  "version": "2.4.0",
   "description": "Anomali ThreatStream offers the most comprehensive Threat Intelligence Platform, allowing organizations to access all intelligence feeds and integrate it seamlessly with internal security and IT systems. This connector facilitates automated operations to to pull threat intelligence from the ThreatStream platform, import observables into ThreatStream from any source, manage threat model entities and investigations, and so on.",
   "publisher": "Fortinet",
-  "cs_approved": false,
+  "cs_approved": true,
   "cs_compatible": true,
   "category": "Threat Intelligence",
   "icon_small_name": "small.png",
@@ -21,7 +21,7 @@
   "ingestion_modes": [
     "scheduled"
   ],
-  "help_online": "https://docs.fortinet.com/document/fortisoar/2.3.3/anomali-threatstream/644/anomali-threatstream-v2-3-3",
+  "help_online": "",
   "configuration": {
     "fields": [
       {
@@ -860,7 +860,7 @@
       "endpoint": "/api/v1/inteldetails/whois/{value}/",
       "http_method": "GET",
       "handler_method": false,
-      "output_schema": {},
+      "output_schema": "",
       "enabled": true,
       "parameters": [
         {
@@ -883,7 +883,7 @@
       "handler_method": false,
       "endpoint": "/api/v1/inteldetails/whois/{value}/",
       "http_method": "GET",
-      "output_schema": {},
+      "output_schema": "",
       "enabled": true,
       "parameters": [
         {
@@ -1359,6 +1359,16 @@
           "name": "require_approval",
           "description": "(Optional) Select to enable the approval of the import job from the ThreatStream user interface before observables become active. By default, it is selected.",
           "tooltip": "Select to enable the approval of the import job from the ThreatStream user interface before observables become active."
+        },
+        {
+          "title": "Exclude Observables",
+          "editable": true,
+          "visible": true,
+          "type": "checkbox",
+          "value": true,
+          "name": "reject_benign",
+          "description": "(Optional) Select to exclude the observable in this import. By default it is True. Note: Observables those assigned a confidence score of 15 or less—are automatically excluded from the import job.",
+          "tooltip": "Select to exclude the observable in this import. Note: Observables those assigned a confidence score of 15 or less—are automatically excluded from the import job."
         }
       ]
     },
