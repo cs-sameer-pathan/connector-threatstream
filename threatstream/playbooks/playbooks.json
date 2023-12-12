@@ -2575,7 +2575,7 @@
         {
           "@type": "Workflow",
           "triggerLimit": null,
-          "name": "Approved IOC By Import ID",
+          "name": "Approve IOC By Import ID",
           "aliasName": null,
           "tag": "#Anomali ThreatStream",
           "description": "Approve the Import Job, based on its ID",
@@ -2596,7 +2596,7 @@
               "description": null,
               "arguments": {
                 "route": "db0644e6-2fa8-40db-aed6-962c4d02bfe2",
-                "title": "Anomali ThreatStream: Approved IOC By Import ID",
+                "title": "Anomali ThreatStream: Approve IOC By Import ID",
                 "resources": [
                   "alerts"
                 ],
@@ -2619,7 +2619,7 @@
             },
             {
               "@type": "WorkflowStep",
-              "name": "Approved IOC By Import ID",
+              "name": "Approve IOC By Import ID",
               "description": null,
               "arguments": {
                 "name": "Anomali ThreatStream",
@@ -2628,7 +2628,7 @@
                 "version": "2.4.0",
                 "connector": "threatstream",
                 "operation": "approve_import_job",
-                "operationTitle": "Approved IOC By Import ID",
+                "operationTitle": "Approve IOC By Import ID",
                 "step_variables": {
                   "output_data": "{{vars.result}}"
                 }
@@ -2644,7 +2644,7 @@
           "routes": [
             {
               "@type": "WorkflowRoute",
-              "name": "Start-> Approved IOC By Import ID",
+              "name": "Start-> Approve IOC By Import ID",
               "targetStep": "/api/3/workflow_steps/63b0f547-f639-429e-866d-e6a2558d9dd7",
               "sourceStep": "/api/3/workflow_steps/5b29bff9-f218-4d36-a95a-6360d75c7c94",
               "label": null,
@@ -3480,7 +3480,7 @@
                   {
                     "option": "Yes",
                     "step_iri": "/api/3/workflow_steps/50ad9c68-d853-4b61-ae73-509eeeb02688",
-                    "condition": "{{ vars.steps.Get_Email_Reputation.status == \"Success\" or vars.useMockOutput }}",
+                    "condition": "{{ (vars.steps.Get_Email_Reputation.status == \"Success\" and vars.steps.Get_Email_Reputation.data.objects | length > 0 ) or vars.useMockOutput }}",
                     "step_name": "Compute Anomali ThreatStream Summary"
                   },
                   {
@@ -3656,7 +3656,7 @@
                   {
                     "option": "Yes",
                     "step_iri": "/api/3/workflow_steps/5f7cbc9c-1a07-4a56-9ab5-d9276ecf03c6",
-                    "condition": "{{ vars.steps.Get_Domain_Reputation.status == \"Success\" or vars.useMockOutput }}",
+                    "condition": "{{ (vars.steps.Get_Domain_Reputation.status == \"Success\" and vars.steps.Get_Domain_Reputation.data.objects | length > 0) or vars.useMockOutput }}",
                     "step_name": "Compute Anomali ThreatStream Summary"
                   },
                   {
@@ -3878,7 +3878,7 @@
                   {
                     "option": "Yes",
                     "step_iri": "/api/3/workflow_steps/b1d1cfdf-55cf-4efa-80e8-4b25f3c50726",
-                    "condition": "{{ vars.steps.Get_IP_Reputation.status == \"Success\" or vars.useMockOutput }}",
+                    "condition": "{{ (vars.steps.Get_IP_Reputation.status == \"Success\" and vars.steps.Get_IP_Reputation.data.objects | length > 0) or vars.useMockOutput }}",
                     "step_name": "Compute Anomali ThreatStream Summary"
                   },
                   {
@@ -4169,7 +4169,7 @@
                   {
                     "option": "Yes",
                     "step_iri": "/api/3/workflow_steps/f5e14c18-15ef-4afd-994d-dd685e52b5ba",
-                    "condition": "{{ vars.steps.Get_URL_Reputation.status == \"Success\" or vars.useMockOutput }}",
+                    "condition": "{{ (vars.steps.Get_URL_Reputation.status == \"Success\" and vars.steps.Get_URL_Reputation.data.objects | length > 0) or vars.useMockOutput }}",
                     "step_name": "Compute Anomali ThreatStream Summary"
                   },
                   {
@@ -4412,7 +4412,7 @@
                   {
                     "option": "Yes",
                     "step_iri": "/api/3/workflow_steps/272ed311-df5d-45fd-8023-4c0c30703ee9",
-                    "condition": "{{ vars.steps.Get_File_Reputation.status == \"Success\" or vars.useMockOutput }}",
+                    "condition": "{{ (vars.steps.Get_File_Reputation.status == \"Success\" and vars.steps.Get_File_Reputation.data.objects | length > 0) or vars.useMockOutput }}",
                     "step_name": "Compute Anomali ThreatStream Summary"
                   },
                   {
