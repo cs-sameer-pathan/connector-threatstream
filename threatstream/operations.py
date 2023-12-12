@@ -77,6 +77,13 @@ itype_dict = {
     "file_reputation": "md5",
 }
 
+PUBLISHED_STATUS_MAPPING = {
+    "Pending Review": "pending_review",
+    "Review Requested": "review_requested",
+    "Reviewed": "reviewed",
+    "Published": "published"
+}
+
 
 def _json_fallback(obj):
     if isinstance(obj, datetime):
@@ -843,6 +850,8 @@ def update_threat_bulletin(config, params):
         server_url = check_server_url(config.get("base_url"))
         payload = generate_payload(config, None)
         result = {k: v for k, v in params.items() if v is not None and v != ""}
+        if result.get("status"):
+            result["status"] = PUBLISHED_STATUS_MAPPING.get(result["status"], result["status"])
         tb_id = params.get("tb_id")
         result.pop("tb_id")
 
