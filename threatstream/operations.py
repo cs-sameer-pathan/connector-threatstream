@@ -33,7 +33,7 @@ CONNECTOR_NAME = "threatstream"
 
 action_list = ["list_incidents", "fetch_incidents"]
 
-whois_action = ["whois_domain", "whois_ip", "get_status", "check_health"]
+whois_action = ["whois_domain", "whois_ip", "get_status", "check_health", "approve_import_job", "reject_import_job"]
 
 resp_list = [
     "get_import_job_status",
@@ -75,6 +75,13 @@ itype_dict = {
     "ip_reputation": "ip",
     "url_reputation": "url",
     "file_reputation": "md5",
+}
+
+PUBLISHED_STATUS_MAPPING = {
+    "Pending Review": "pending_review",
+    "Review Requested": "review_requested",
+    "Reviewed": "reviewed",
+    "Published": "published"
 }
 
 
@@ -607,7 +614,7 @@ def api_request(config, params, operation_details):
                     payload["limit"] = params.get("limit")
                     payload["offset"] = params.get("offset", 0)
                 else:
-                    payload["limit"] = 0
+                    payload["limit"] = 1000
                     payload["offset"] = 0
                 payload.pop("record_number")
 
@@ -637,7 +644,7 @@ def api_request(config, params, operation_details):
                     verify=config.get("verify_ssl"),
                     timeout=MAX_REQUEST_TIMEOUT
                 )
-                if response.status_code == 200:
+                if response.status_code in (200, 202):
                     if operation_details["operation"] in list(
                         set(resp_list) | set(query_actions)
                     ):
@@ -747,7 +754,7 @@ def list_threat_bulletins(config, params):
         operation_details["http_method"] = "GET"
         operation_details["operation"] = "list_threat_bulletins"
 
-        if params["query"]:
+        if params.get("query"):
             operation_details["endpoint"] = "/api/v1/tipreport/?{0}".format(
                 params.get("query")
             )
@@ -786,7 +793,7 @@ def create_threat_bulletin(config, params):
         query_data = {
             "name": params.get("name"),
             "is_public": params.get("is_public"),
-            "body_content_type": params.get("body_content_type").lower(),
+            "body_content_type": params.get("body_content_type", '').lower(),
             "status": "new",
         }
 
@@ -843,6 +850,8 @@ def update_threat_bulletin(config, params):
         server_url = check_server_url(config.get("base_url"))
         payload = generate_payload(config, None)
         result = {k: v for k, v in params.items() if v is not None and v != ""}
+        if result.get("status"):
+            result["status"] = PUBLISHED_STATUS_MAPPING.get(result["status"], result["status"])
         tb_id = params.get("tb_id")
         result.pop("tb_id")
 
@@ -889,7 +898,7 @@ def submit_urls_files(config, params):
         endpoint = server_url + "/api/v1/submit/new/"
         payload = generate_payload(config, None)
         files = {
-            "report_radio-classification": (None, params.get("classification").lower()),
+            "report_radio-classification": (None, params.get("classification", '').lower()),
             "report_radio-platform": (None, params.get("platform")),
             "detail": (None, params.get("detail")),
             "use_premium_sandbox": (None, params.get("use_premium_sandbox", False)),
@@ -935,7 +944,7 @@ def intelligence_enrichments(config, params):
     try:
         operation_details = dict()
         services = params.get("services")
-        itype = params.get("itype")
+        itype = params.get("itype", '')
 
         if services == "Passive DNS":
             operation_details["http_method"] = "GET"
