@@ -39,7 +39,7 @@
               "description": null,
               "arguments": {
                 "name": "Anomali ThreatStream",
-                "config": "''",
+                "config": "",
                 "params": {
                   "is_public": true
                 },
@@ -161,7 +161,7 @@
               "description": null,
               "arguments": {
                 "name": "Anomali ThreatStream",
-                "config": "''",
+                "config": "",
                 "params": [],
                 "version": "2.4.0",
                 "connector": "threatstream",
@@ -254,7 +254,7 @@
               "description": null,
               "arguments": {
                 "name": "Anomali ThreatStream",
-                "config": "''",
+                "config": "",
                 "params": [],
                 "version": "2.4.0",
                 "connector": "threatstream",
@@ -320,7 +320,7 @@
               "description": null,
               "arguments": {
                 "name": "Anomali ThreatStream",
-                "config": "''",
+                "config": "",
                 "params": [],
                 "version": "2.4.0",
                 "connector": "threatstream",
@@ -440,7 +440,7 @@
               "description": null,
               "arguments": {
                 "name": "Anomali ThreatStream",
-                "config": "''",
+                "config": "",
                 "params": {
                   "limit": 0,
                   "offset": 0
@@ -509,7 +509,7 @@
               "description": null,
               "arguments": {
                 "name": "Anomali ThreatStream",
-                "config": "''",
+                "config": "",
                 "params": [],
                 "version": "2.4.0",
                 "connector": "threatstream",
@@ -629,7 +629,7 @@
               "description": null,
               "arguments": {
                 "name": "Anomali ThreatStream",
-                "config": "''",
+                "config": "",
                 "params": {
                   "is_public": false,
                   "body_content_type": "Markdown"
@@ -725,7 +725,7 @@
               "description": null,
               "arguments": {
                 "name": "Anomali ThreatStream",
-                "config": "''",
+                "config": "",
                 "params": {
                   "filter_option": "Exact",
                   "record_number": "Fetch Limited Records"
@@ -794,7 +794,7 @@
               "description": null,
               "arguments": {
                 "name": "Anomali ThreatStream",
-                "config": "''",
+                "config": "",
                 "params": {
                   "filter_option": "Exact",
                   "record_number": "Fetch Limited Records"
@@ -917,7 +917,7 @@
               "description": null,
               "arguments": {
                 "name": "Anomali ThreatStream",
-                "config": "''",
+                "config": "",
                 "params": [],
                 "version": "2.4.0",
                 "connector": "threatstream",
@@ -1010,7 +1010,7 @@
               "description": null,
               "arguments": {
                 "name": "Anomali ThreatStream",
-                "config": "''",
+                "config": "",
                 "params": {
                   "sandbox_type": "ThreatStream Sandbox",
                   "use_premium_sandbox": false
@@ -1079,7 +1079,7 @@
               "description": null,
               "arguments": {
                 "name": "Anomali ThreatStream",
-                "config": "''",
+                "config": "",
                 "params": {
                   "filter_option": "Exact",
                   "record_number": "Fetch Limited Records"
@@ -1175,7 +1175,7 @@
               "description": null,
               "arguments": {
                 "name": "Anomali ThreatStream",
-                "config": "''",
+                "config": "",
                 "params": [],
                 "version": "2.4.0",
                 "connector": "threatstream",
@@ -1295,7 +1295,7 @@
               "description": null,
               "arguments": {
                 "name": "Anomali ThreatStream",
-                "config": "''",
+                "config": "",
                 "params": [],
                 "version": "2.4.0",
                 "connector": "threatstream",
@@ -1361,7 +1361,7 @@
               "description": null,
               "arguments": {
                 "name": "Anomali ThreatStream",
-                "config": "''",
+                "config": "",
                 "params": {
                   "filter_option": "Exact",
                   "record_number": "Fetch Limited Records"
@@ -1457,7 +1457,7 @@
               "description": null,
               "arguments": {
                 "name": "Anomali ThreatStream",
-                "config": "''",
+                "config": "",
                 "params": {
                   "filter_option": "Exact",
                   "record_number": "Fetch Limited Records"
@@ -1553,7 +1553,7 @@
               "description": null,
               "arguments": {
                 "name": "Anomali ThreatStream",
-                "config": "''",
+                "config": "",
                 "params": {
                   "record_number": "Fetch Limited Records"
                 },
@@ -1648,7 +1648,7 @@
               "description": null,
               "arguments": {
                 "name": "Anomali ThreatStream",
-                "config": "''",
+                "config": "",
                 "params": {
                   "record_number": "Fetch Limited Records"
                 },
@@ -1770,7 +1770,7 @@
               "description": null,
               "arguments": {
                 "name": "Anomali ThreatStream",
-                "config": "''",
+                "config": "",
                 "params": [],
                 "version": "2.4.0",
                 "connector": "threatstream",
@@ -1863,7 +1863,7 @@
               "description": null,
               "arguments": {
                 "name": "Anomali ThreatStream",
-                "config": "''",
+                "config": "",
                 "params": [],
                 "version": "2.4.0",
                 "connector": "threatstream",
@@ -1956,7 +1956,7 @@
               "description": null,
               "arguments": {
                 "name": "Anomali ThreatStream",
-                "config": "''",
+                "config": "",
                 "params": {
                   "record_number": "Fetch Limited Records"
                 },
@@ -2051,7 +2051,7 @@
               "description": null,
               "arguments": {
                 "name": "Anomali ThreatStream",
-                "config": "''",
+                "config": "",
                 "params": {
                   "limit": 0,
                   "offset": 0
@@ -2120,7 +2120,7 @@
               "description": null,
               "arguments": {
                 "name": "Anomali ThreatStream",
-                "config": "''",
+                "config": "",
                 "params": {
                   "record_number": "Fetch Limited Records"
                 },
@@ -2242,7 +2242,7 @@
               "description": null,
               "arguments": {
                 "name": "Anomali ThreatStream",
-                "config": "''",
+                "config": "",
                 "params": {
                   "record_number": "Fetch Limited Records"
                 },
@@ -2310,7 +2310,7 @@
               "description": null,
               "arguments": {
                 "name": "Anomali ThreatStream",
-                "config": "''",
+                "config": "",
                 "params": [],
                 "version": "2.4.0",
                 "connector": "threatstream",
@@ -2430,7 +2430,7 @@
               "description": null,
               "arguments": {
                 "name": "Anomali ThreatStream",
-                "config": "''",
+                "config": "",
                 "params": {
                   "record_number": "Fetch Limited Records"
                 },
@@ -2498,7 +2498,7 @@
               "description": null,
               "arguments": {
                 "name": "Anomali ThreatStream",
-                "config": "''",
+                "config": "",
                 "params": {
                   "severity": "Low",
                   "expiration_ts": "90 days",
@@ -2623,7 +2623,7 @@
               "description": null,
               "arguments": {
                 "name": "Anomali ThreatStream",
-                "config": "''",
+                "config": "",
                 "params": [],
                 "version": "2.4.0",
                 "connector": "threatstream",
@@ -2689,7 +2689,7 @@
               "description": null,
               "arguments": {
                 "name": "Anomali ThreatStream",
-                "config": "''",
+                "config": "",
                 "params": [],
                 "version": "2.4.0",
                 "connector": "threatstream",
@@ -2771,8 +2771,8 @@
           "remoteExecutableFlag": false,
           "parameters": [],
           "synchronous": false,
-          "lastModifyDate": 1591787100,
-          "collection": "/api/3/workflow_collections/983d0f08-1eda-4bca-bb67-797fe8e19541",
+          "lastModifyDate": 1703655578,
+          "collection": "/api/3/workflow_collections/ba632229-c620-4625-b229-af13372576f4",
           "versions": [],
           "triggerStep": "/api/3/workflow_steps/68b89354-b037-41d7-b5ce-add83accb412",
           "steps": [
@@ -2874,10 +2874,10 @@
               "description": null,
               "arguments": {
                 "params": {
-                  "macro": "ThreatStreamLastIncidentPullTime",
-                  "value": "{{ vars.steps.Fetch_Incidents.curr_timestamp}}"
+                  "macro": "{{vars.steps.Fetch_Incidents.pullTimeMacro}}",
+                  "value": "{{vars.steps.Fetch_Incidents.curr_timestamp}}"
                 },
-                "version": "3.0.3",
+                "version": "3.2.5",
                 "connector": "cyops_utilities",
                 "operation": "updatemacro",
                 "operationTitle": "CyOPs: Update Macro",
@@ -2899,6 +2899,7 @@
               "sourceStep": "/api/3/workflow_steps/788696ae-f465-4b93-98d0-dd51cc00b4a4",
               "label": null,
               "isExecuted": false,
+              "group": null,
               "uuid": "76a15551-8f94-488d-a268-605d63387de2"
             },
             {
@@ -2908,6 +2909,7 @@
               "sourceStep": "/api/3/workflow_steps/5ce24611-0904-4dff-97b5-070530ddcb62",
               "label": null,
               "isExecuted": false,
+              "group": null,
               "uuid": "8bd7be40-c12e-48e2-9fdb-ca2d4870f0eb"
             },
             {
@@ -2917,6 +2919,7 @@
               "sourceStep": "/api/3/workflow_steps/68b89354-b037-41d7-b5ce-add83accb412",
               "label": null,
               "isExecuted": false,
+              "group": null,
               "uuid": "c9a9440b-916a-41c1-8824-848e15866245"
             },
             {
@@ -2926,13 +2929,14 @@
               "sourceStep": "/api/3/workflow_steps/89fde241-02a0-491f-9eb6-6b71fa290393",
               "label": null,
               "isExecuted": false,
+              "group": null,
               "uuid": "d1fbcd42-b1ce-4afc-ae13-4a2928b02fc1"
             }
           ],
           "groups": [],
           "priority": null,
           "uuid": "07448145-23f4-45dd-ac2e-15eeb704b968",
-          "id": 2346,
+          "id": 5371,
           "owners": [],
           "isPrivate": false,
           "deletedAt": null,
@@ -2957,8 +2961,8 @@
           "remoteExecutableFlag": false,
           "parameters": [],
           "synchronous": false,
-          "lastModifyDate": 1591775396,
-          "collection": "/api/3/workflow_collections/983d0f08-1eda-4bca-bb67-797fe8e19541",
+          "lastModifyDate": 1703661202,
+          "collection": "/api/3/workflow_collections/ba632229-c620-4625-b229-af13372576f4",
           "versions": [],
           "triggerStep": "/api/3/workflow_steps/d3971e18-187f-4cc6-bbc9-ba63061490a6",
           "steps": [
@@ -2968,11 +2972,12 @@
               "description": null,
               "arguments": {
                 "data": "{{vars.steps.Fetch_Anomali_Incidents.data.objects}}",
+                "pullTimeMacro": "{{vars.pullTimeMacro}}",
                 "curr_timestamp": "{{vars.curr_timestamp}}"
               },
               "status": null,
-              "top": "568",
-              "left": "369",
+              "top": "705",
+              "left": "125",
               "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
               "group": null,
               "uuid": "1673684e-bafe-49b5-846c-7b99face6e51"
@@ -2985,8 +2990,8 @@
                 "name": "Anomali ThreatStream",
                 "config": "",
                 "params": {
-                  "limit": "{{vars.number_of_incidents_to_fetch}}",
-                  "value": "{{vars.search_query}}&modified_ts_gte={{vars.last_pull_time}}",
+                  "limit": "{% if vars.request.env_setup == true %}2{% else%}{{vars.number_of_incidents_to_fetch}}{% endif %}",
+                  "value": "{{vars.search_query}}&modified_ts__gte={{vars.last_pull_time}}",
                   "offset": 0
                 },
                 "version": "2.4.0",
@@ -2996,8 +3001,8 @@
                 "step_variables": []
               },
               "status": null,
-              "top": "460",
-              "left": "300",
+              "top": "570",
+              "left": "125",
               "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
               "group": null,
               "uuid": "a48dfc67-a362-4763-9193-d5ad61731a7e"
@@ -3008,12 +3013,13 @@
               "description": null,
               "arguments": {
                 "search_query": "created_ts__gte=2019-01-28T21:04:14",
+                "pullTimeMacro": "AnomaliThreatStreamLastPullTime_{{vars['audit_info']['cyops_playbook_iri'].split('/')[-1].replace('-','_')}}",
                 "number_of_incidents_to_fetch": 10,
                 "fetch_incidents_in_last_X_minutes": 10
               },
               "status": null,
-              "top": "120",
-              "left": "93",
+              "top": "165",
+              "left": "125",
               "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
               "group": null,
               "uuid": "a72e1d80-e6bc-428d-9cd5-1ca3f888dc52"
@@ -3024,11 +3030,11 @@
               "description": null,
               "arguments": {
                 "curr_timestamp": "{{arrow.utcnow().format('YYYY-MM-DDTHH:mm:ss')}}",
-                "last_pull_time": "{% if macro.ThreatStreamLastIncidentPullTime == \"initial\" %} {{arrow.utcnow().shift(minutes =- (vars.fetch_incidents_in_last_X_minutes) * 60).format('YYYY-MM-DDTHH:mm:ss')}} {% else %} {{macro.ThreatStreamLastIncidentPullTime}} {% endif %}"
+                "last_pull_time": "{% if (vars.steps.Get_Macro_Value.data[\"hydra:member\"] | length) > 0%}{{vars.steps.Get_Macro_Value.data[\"hydra:member\"][0].value }}{% else %}{{arrow.utcnow().shift(minutes=-vars.fetch_incidents_in_last_X_minutes).format('YYYY-MM-DDTHH:mm:ss')}}{% endif %}"
               },
               "status": null,
-              "top": "340",
-              "left": "220",
+              "top": "435",
+              "left": "125",
               "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
               "group": null,
               "uuid": "bcc13016-e782-4334-9dc6-372c97ae3153"
@@ -3043,43 +3049,46 @@
                 }
               },
               "status": null,
-              "top": "20",
-              "left": "20",
+              "top": "30",
+              "left": "125",
               "stepType": "/api/3/workflow_step_types/b348f017-9a94-471f-87f8-ce88b6a7ad62",
               "group": null,
               "uuid": "d3971e18-187f-4cc6-bbc9-ba63061490a6"
             },
             {
               "@type": "WorkflowStep",
-              "name": "Environment Setup",
+              "name": "Get Macro Value",
               "description": null,
               "arguments": {
-                "when": "{{vars.request.env_setup}}",
-                "arguments": {
-                  "AnomaliTSMacroName": "ThreatStreamLastIncidentPullTime",
-                  "AnomaliTSMacroValue": "initial"
+                "params": {
+                  "iri": "/api/wf/api/dynamic-variable/?name={{vars.pullTimeMacro}}",
+                  "body": "",
+                  "method": "GET"
                 },
-                "apply_async": false,
-                "step_variables": [],
-                "workflowReference": "/api/3/workflows/593b2b47-1d00-4890-a1df-5c47db5d613a"
+                "version": "3.2.3",
+                "connector": "cyops_utilities",
+                "operation": "make_cyops_request",
+                "operationTitle": "FSR: Make FortiSOAR API Call",
+                "step_variables": []
               },
               "status": null,
-              "top": "229",
-              "left": "154",
-              "stepType": "/api/3/workflow_step_types/74932bdc-b8b6-4d24-88c4-1a4dfbc524f3",
+              "top": "300",
+              "left": "125",
+              "stepType": "/api/3/workflow_step_types/0109f35d-090b-4a2b-bd8a-94cbc3508562",
               "group": null,
-              "uuid": "ea47872e-0c10-4633-b92b-1be00c734e55"
+              "uuid": "02ad44ab-93b0-46b9-942a-d438954c96ca"
             }
           ],
           "routes": [
             {
               "@type": "WorkflowRoute",
-              "name": "Configuration -> Environment Setup",
-              "targetStep": "/api/3/workflow_steps/ea47872e-0c10-4633-b92b-1be00c734e55",
+              "name": "Configuration -> Get Macro Value",
+              "targetStep": "/api/3/workflow_steps/02ad44ab-93b0-46b9-942a-d438954c96ca",
               "sourceStep": "/api/3/workflow_steps/a72e1d80-e6bc-428d-9cd5-1ca3f888dc52",
               "label": null,
               "isExecuted": false,
-              "uuid": "048d436e-63d0-4583-abf9-7b1804b07599"
+              "group": null,
+              "uuid": "53530378-48af-4683-9374-2bd131f0ed4a"
             },
             {
               "@type": "WorkflowRoute",
@@ -3088,6 +3097,7 @@
               "sourceStep": "/api/3/workflow_steps/d3971e18-187f-4cc6-bbc9-ba63061490a6",
               "label": null,
               "isExecuted": false,
+              "group": null,
               "uuid": "795ca1cf-e402-4693-9f03-e1ccaab3cc8a"
             },
             {
@@ -3097,16 +3107,18 @@
               "sourceStep": "/api/3/workflow_steps/a48dfc67-a362-4763-9193-d5ad61731a7e",
               "label": null,
               "isExecuted": false,
+              "group": null,
               "uuid": "979724b3-2b37-4775-821c-a974dd24b2eb"
             },
             {
               "@type": "WorkflowRoute",
-              "name": "Environment Setup -> Set Time Configuration",
+              "name": "Get Macro Value -> Set Time Configuration",
               "targetStep": "/api/3/workflow_steps/bcc13016-e782-4334-9dc6-372c97ae3153",
-              "sourceStep": "/api/3/workflow_steps/ea47872e-0c10-4633-b92b-1be00c734e55",
+              "sourceStep": "/api/3/workflow_steps/02ad44ab-93b0-46b9-942a-d438954c96ca",
               "label": null,
               "isExecuted": false,
-              "uuid": "b76a20dd-4b6a-4661-8188-cbdd25ab862e"
+              "group": null,
+              "uuid": "8521df38-c3f2-4ad7-827d-ed0ef01e0fa1"
             },
             {
               "@type": "WorkflowRoute",
@@ -3115,17 +3127,14 @@
               "sourceStep": "/api/3/workflow_steps/bcc13016-e782-4334-9dc6-372c97ae3153",
               "label": null,
               "isExecuted": false,
+              "group": null,
               "uuid": "b915c843-a44b-407a-91bc-d6302da33fdc"
             }
           ],
           "groups": [],
           "priority": null,
           "uuid": "728bfc6c-4ba0-4c2e-8403-fec0eb75fb1b",
-          "id": 2362,
-          "createUser": "/api/3/appliances/57545210-2adc-472b-a24f-2df6ee8dfe63",
-          "createDate": 1672378550.070341,
-          "modifyUser": "/api/3/appliances/57545210-2adc-472b-a24f-2df6ee8dfe63",
-          "modifyDate": 1672378550.070341,
+          "id": 5372,
           "owners": [],
           "isPrivate": false,
           "deletedAt": null,
@@ -3133,196 +3142,6 @@
           "recordTags": [
             "dataingestion",
             "fetch",
-            "threatstream"
-          ]
-        },
-        {
-          "@type": "Workflow",
-          "triggerLimit": null,
-          "name": ">> Anomali ThreatStream > Handle Macros",
-          "aliasName": null,
-          "tag": "#threatstream #dataingestion",
-          "description": "This playbook create Anomali ThreatStream macros if not exist.",
-          "isActive": false,
-          "debug": false,
-          "singleRecordExecution": false,
-          "remoteExecutableFlag": false,
-          "parameters": [
-            "AnomaliTSMacroName",
-            "AnomaliTSMacroValue"
-          ],
-          "synchronous": false,
-          "lastModifyDate": 1591775362,
-          "collection": "/api/3/workflow_collections/983d0f08-1eda-4bca-bb67-797fe8e19541",
-          "versions": [],
-          "triggerStep": "/api/3/workflow_steps/8040ff45-b1d9-4026-8a14-db069c8ab36e",
-          "steps": [
-            {
-              "@type": "WorkflowStep",
-              "name": "No Operation",
-              "description": null,
-              "arguments": {
-                "name": "Utilities",
-                "params": [],
-                "version": "2.5.0",
-                "connector": "cyops_utilities",
-                "operation": "no_op",
-                "operationTitle": "Utils: No Operation",
-                "step_variables": []
-              },
-              "status": null,
-              "top": "200",
-              "left": "400",
-              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
-              "group": null,
-              "uuid": "427c8f98-b6a5-4766-8371-a91f7e64fd46"
-            },
-            {
-              "@type": "WorkflowStep",
-              "name": "Start",
-              "description": null,
-              "arguments": {
-                "step_variables": {
-                  "input": {
-                    "params": {
-                      "AnomaliTSMacroName": "{{ vars.AnomaliTSMacroName }}",
-                      "AnomaliTSMacroValue": "{{ vars.AnomaliTSMacroValue }}"
-                    }
-                  }
-                }
-              },
-              "status": null,
-              "top": "20",
-              "left": "20",
-              "stepType": "/api/3/workflow_step_types/b348f017-9a94-471f-87f8-ce88b6a7ad62",
-              "group": null,
-              "uuid": "8040ff45-b1d9-4026-8a14-db069c8ab36e"
-            },
-            {
-              "@type": "WorkflowStep",
-              "name": "Check Anomali ThreatStream Macro",
-              "description": "",
-              "arguments": {
-                "conditions": [
-                  {
-                    "option": "Create Macro",
-                    "step_iri": "/api/3/workflow_steps/f4ae3d12-0cf6-427a-aa6f-504b7867a37a",
-                    "condition": "{{ vars.steps.Get_Macro_Status.data['hydra:totalItems'] == 0 }}"
-                  },
-                  {
-                    "option": "Macro Exists",
-                    "step_iri": "/api/3/workflow_steps/427c8f98-b6a5-4766-8371-a91f7e64fd46",
-                    "condition": "{{ true }}"
-                  }
-                ]
-              },
-              "status": null,
-              "top": "268",
-              "left": "20",
-              "stepType": "/api/3/workflow_step_types/12254cf5-5db7-4b1a-8cb1-3af081924b28",
-              "group": null,
-              "uuid": "beb74dee-b3f3-4d4e-b8f4-ee9cee010025"
-            },
-            {
-              "@type": "WorkflowStep",
-              "name": "Get Macro Status",
-              "description": "",
-              "arguments": {
-                "name": "Utilities",
-                "params": {
-                  "iri": "/api/wf/api/dynamic-variable/?format=json&name={{vars.AnomaliTSMacroName}}",
-                  "body": "",
-                  "method": "GET"
-                },
-                "version": "2.7.0",
-                "connector": "cyops_utilities",
-                "operation": "make_cyops_request",
-                "operationTitle": "CyOPs: Make CyOPs API Call",
-                "step_variables": []
-              },
-              "status": null,
-              "top": "140",
-              "left": "20",
-              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
-              "group": null,
-              "uuid": "e86bff89-d78b-4958-9e30-e3beba284bbb"
-            },
-            {
-              "@type": "WorkflowStep",
-              "name": "Create Anomali ThreatStream Macro",
-              "description": null,
-              "arguments": {
-                "params": {
-                  "iri": "/api/wf/api/dynamic-variable/?format=json",
-                  "body": "{ 'name': '{{vars.AnomaliTSMacroName}}'   , 'value': '{{vars.AnomaliTSMacroValue}}' }",
-                  "method": "POST"
-                },
-                "version": "2.7.0",
-                "connector": "cyops_utilities",
-                "operation": "make_cyops_request",
-                "operationTitle": "CyOPs: Make CyOPs API Call",
-                "step_variables": []
-              },
-              "status": null,
-              "top": "328",
-              "left": "400",
-              "stepType": "/api/3/workflow_step_types/0109f35d-090b-4a2b-bd8a-94cbc3508562",
-              "group": null,
-              "uuid": "f4ae3d12-0cf6-427a-aa6f-504b7867a37a"
-            }
-          ],
-          "routes": [
-            {
-              "@type": "WorkflowRoute",
-              "name": "Check Anomali ThreatStream Macro -> Create Anomali ThreatStream Macro",
-              "targetStep": "/api/3/workflow_steps/f4ae3d12-0cf6-427a-aa6f-504b7867a37a",
-              "sourceStep": "/api/3/workflow_steps/beb74dee-b3f3-4d4e-b8f4-ee9cee010025",
-              "label": "Create Macro",
-              "isExecuted": false,
-              "uuid": "a70c9cb0-d98c-49cd-9bda-7573c42018dc"
-            },
-            {
-              "@type": "WorkflowRoute",
-              "name": "Check Anomali ThreatStream Macro -> No Operation",
-              "targetStep": "/api/3/workflow_steps/427c8f98-b6a5-4766-8371-a91f7e64fd46",
-              "sourceStep": "/api/3/workflow_steps/beb74dee-b3f3-4d4e-b8f4-ee9cee010025",
-              "label": "Macro Exists",
-              "isExecuted": false,
-              "uuid": "b4cd8f4b-e9d9-4010-9d83-90f4e9c54e10"
-            },
-            {
-              "@type": "WorkflowRoute",
-              "name": "Start -> Get Macro Status",
-              "targetStep": "/api/3/workflow_steps/e86bff89-d78b-4958-9e30-e3beba284bbb",
-              "sourceStep": "/api/3/workflow_steps/8040ff45-b1d9-4026-8a14-db069c8ab36e",
-              "label": null,
-              "isExecuted": false,
-              "uuid": "c0b21ecf-7d16-452d-b955-403e750953a9"
-            },
-            {
-              "@type": "WorkflowRoute",
-              "name": "Get Macro Status -> Check Anomali ThreatStream Macro",
-              "targetStep": "/api/3/workflow_steps/beb74dee-b3f3-4d4e-b8f4-ee9cee010025",
-              "sourceStep": "/api/3/workflow_steps/e86bff89-d78b-4958-9e30-e3beba284bbb",
-              "label": null,
-              "isExecuted": false,
-              "uuid": "e94fb4ad-f8eb-4c17-89ed-8b3e0c993eaf"
-            }
-          ],
-          "groups": [],
-          "priority": null,
-          "uuid": "593b2b47-1d00-4890-a1df-5c47db5d613a",
-          "id": 2358,
-          "createUser": "/api/3/appliances/57545210-2adc-472b-a24f-2df6ee8dfe63",
-          "createDate": 1672378550.068283,
-          "modifyUser": "/api/3/appliances/57545210-2adc-472b-a24f-2df6ee8dfe63",
-          "modifyDate": 1672378550.068283,
-          "owners": [],
-          "isPrivate": false,
-          "deletedAt": null,
-          "importedBy": [],
-          "recordTags": [
-            "dataingestion",
             "threatstream"
           ]
         },
@@ -3353,7 +3172,7 @@
               "description": null,
               "arguments": {
                 "name": "Anomali ThreatStream",
-                "config": "0ef1c25c-2bb3-4ec9-9c5a-c4fb71a9468b",
+                "config": "",
                 "params": {
                   "value": "{{vars.indicator_value}}",
                   "validation": false,
@@ -3680,7 +3499,7 @@
               "description": null,
               "arguments": {
                 "name": "Anomali ThreatStream",
-                "config": "0ef1c25c-2bb3-4ec9-9c5a-c4fb71a9468b",
+                "config": "",
                 "params": {
                   "value": "{{vars.indicator_value}}",
                   "validation": false,
@@ -3959,7 +3778,7 @@
               "description": null,
               "arguments": {
                 "name": "Anomali ThreatStream",
-                "config": "0ef1c25c-2bb3-4ec9-9c5a-c4fb71a9468b",
+                "config": "",
                 "params": {
                   "limit": 20,
                   "value": "{{vars.indicator_value}}",
@@ -4081,7 +3900,7 @@
               "description": null,
               "arguments": {
                 "name": "Anomali ThreatStream",
-                "config": "0ef1c25c-2bb3-4ec9-9c5a-c4fb71a9468b",
+                "config": "",
                 "params": {
                   "value": "{{vars.indicator_value}}",
                   "validation": false,
@@ -4380,7 +4199,7 @@
               "description": null,
               "arguments": {
                 "name": "Anomali ThreatStream",
-                "config": "0ef1c25c-2bb3-4ec9-9c5a-c4fb71a9468b",
+                "config": "",
                 "params": {
                   "value": "{{vars.indicator_value}}",
                   "validation": false,
