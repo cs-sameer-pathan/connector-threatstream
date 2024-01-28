@@ -7,13 +7,14 @@
 # Anomali ThreatStream
 # -----------------------------------------
 
+import logging
 from .operations import *
 from connectors.core.connector import Connector, get_logger, ConnectorError
 from integrations.crudhub import make_request
 from django.conf import settings
 
 logger = get_logger('anomali-threatstream')
-
+#logger.setLevel(logging.DEBUG) # Uncomment to enable local debug
 
 class ThreatStream(Connector):
     def execute(self, config, operation, params, **kwargs):

@@ -12,6 +12,7 @@ from requests import request, exceptions as req_exceptions
 from datetime import datetime, timedelta
 from connectors.core.connector import Connector, get_logger, ConnectorError
 from integrations.crudhub import make_request
+from requests_toolbelt.utils import dump
 from django.conf import settings
 
 logger = get_logger("anomali-threatstream")
@@ -45,7 +46,7 @@ resp_list = [
     "approve_import_job",
     "reject_import_job",
     "delete_incident",
-    "list_incidents",
+    "list_incidents"
 ]
 
 query_actions = [
@@ -69,6 +70,10 @@ tb_action = [
     "fetch_all_incidents",
 ]
 
+investigation_actions = [
+    "list_investigations",
+    "list_investigationelements"
+]
 itype_dict = {
     "domain_reputation": "domain",
     "email_reputation": "email",
@@ -155,18 +160,23 @@ def generate_payload(config, params):
 
 
 def get_all_record(resp_json, params, config):
-    if resp_json["meta"]["total_count"] != 0:
-        if "record_number" in params:
-            if params.get("record_number") == "Fetch All Records":
-                make_rest_call(resp_json["meta"]["next"], config, resp_json)
+    if "meta" in resp_json: 
+        if resp_json["meta"]["total_count"] != 0:
+            if "record_number" in params:
+                if params.get("record_number") == "Fetch All Records":
+                    make_rest_call(resp_json["meta"]["next"], config, resp_json)
 
-        return resp_json
+            return resp_json
+
+        else:
+            return {
+                "message": "Executed successfully returned no data",
+                "total_count": resp_json["meta"]["total_count"],
+                "result": resp_json,
+            }
     else:
-        return {
-            "message": "Executed successfully returned no data",
-            "total_count": resp_json["meta"]["total_count"],
-            "result": resp_json,
-        }
+        if resp_json is not None:
+            return resp_json
 
 
 def parse_response(resp_json, params, operation_details, config):
@@ -618,6 +628,24 @@ def api_request(config, params, operation_details):
                     payload["offset"] = 0
                 payload.pop("record_number")
 
+        elif operation_details["operation"] in investigation_actions:
+            base_url = check_server_url(config.get("base_url"))
+            endpoint = base_url + operation_details["endpoint"]
+            investigation_id = params.pop("investigation_id")
+            if investigation_id:
+                endpoint = f"{endpoint}{investigation_id}/"
+
+            payload = generate_payload(config, params)
+            
+            if "record_number" in params:
+                if params.get("record_number") == "Fetch Limited Records":
+                    payload["limit"] = params.get("limit")
+                    payload["offset"] = params.get("offset", 0)
+                else:
+                    payload["limit"] = 1000
+                    payload["offset"] = 0
+                payload.pop("record_number")
+
         else:
             payload = generate_payload_filter(
                 config, params, itype_dict.get(operation_details["operation"])
@@ -644,6 +672,7 @@ def api_request(config, params, operation_details):
                     verify=config.get("verify_ssl"),
                     timeout=MAX_REQUEST_TIMEOUT
                 )
+                logger.debug('\n{}\n'.format(dump.dump_all(response).decode('utf-8')))
                 if response.status_code in (200, 202):
                     if operation_details["operation"] in list(
                         set(resp_list) | set(query_actions)
@@ -973,6 +1002,37 @@ def intelligence_enrichments(config, params):
         raise ConnectorError("{0}".format(str(err)))
 
 
+def update_investigation(config, params):
+    try:
+        server_url = check_server_url(config.get("base_url"))
+        investigation_id = params.get("investigation_id")     
+        endpoint = f"{server_url}/api/v1/investigation/{investigation_id}/"
+        payload = params.get("payload")        
+        header = {"Content-Type": "application/json"}
+        response = request(
+            "PATCH",
+            endpoint,
+            headers=header,
+            json=payload,
+            verify=config.get("verify_ssl"),
+            timeout=MAX_REQUEST_TIMEOUT
+        )
+        logger.debug('\n{}\n'.format(dump.dump_all(response).decode('utf-8')))
+        if response.status_code == 202:
+            return response.json()
+        else:
+            logger.error(
+                "Failure {0}: {1}".format(response.status_code, response.reason)
+            )
+            raise ConnectorError(
+                "Failure {0}: {1}".format(response.status_code, response.reason)
+            )
+
+    except Exception as err:
+        logger.error("{0}".format(str(err)))
+        raise ConnectorError("{0}".format(str(err)))
+
+
 operation_sym = {
     "create_incident": create_incident,
     "update_incident": update_incident,
@@ -986,4 +1046,5 @@ operation_sym = {
     "update_threat_bulletin": update_threat_bulletin,
     "submit_urls_files": submit_urls_files,
     "intelligence_enrichments": intelligence_enrichments,
+    "update_investigation":update_investigation
 }
