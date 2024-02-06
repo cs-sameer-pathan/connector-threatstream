@@ -1,7 +1,7 @@
 {
   "name": "threatstream",
   "label": "Anomali ThreatStream",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "description": "Anomali ThreatStream offers the most comprehensive Threat Intelligence Platform, allowing organizations to access all intelligence feeds and integrate it seamlessly with internal security and IT systems. This connector facilitates automated operations to to pull threat intelligence from the ThreatStream platform, import observables into ThreatStream from any source, manage threat model entities and investigations, and so on.",
   "publisher": "Fortinet",
   "cs_approved": true,
@@ -74,68 +74,6 @@
       "endpoint": "/api/v2/intelligence/",
       "http_method": "GET",
       "handler_method": false,
-      "output_schema": {
-        "objects": [
-          {
-            "update_id": "",
-            "value": "",
-            "status": "",
-            "ip": "",
-            "id": "",
-            "threat_type": "",
-            "confidence": "",
-            "itype": "",
-            "is_public": "",
-            "tags": [
-              {
-                "id": "",
-                "name": ""
-              }
-            ],
-            "created_ts": "",
-            "modified_ts": "",
-            "tlp": "",
-            "retina_confidence": "",
-            "source_reported_confidence": "",
-            "threatscore": "",
-            "asn": "",
-            "owner_organization_id": "",
-            "org": "",
-            "rdns": "",
-            "type": "",
-            "trusted_circle_ids": [],
-            "expiration_ts": "",
-            "longitude": "",
-            "latitude": "",
-            "source": "",
-            "is_anonymous": "",
-            "feed_id": "",
-            "is_editable": "",
-            "resource_uri": "",
-            "country": "",
-            "import_session_id": "",
-            "uuid": "",
-            "workgroups": [],
-            "description": "",
-            "meta": {
-              "media_type": "",
-              "detail": "",
-              "media": "",
-              "severity": "",
-              "maltype": "",
-              "detail2": ""
-            }
-          }
-        ],
-        "meta": {
-          "limit": "",
-          "offset": "",
-          "took": "",
-          "next": "",
-          "total_count": "",
-          "previous": ""
-        }
-      },
       "enabled": true,
       "parameters": [
         {
@@ -220,17 +158,7 @@
             ]
           }
         }
-      ]
-    },
-    {
-      "operation": "email_reputation",
-      "title": "Get Email ID Reputation",
-      "description": "Retrieves the reputation of the specified Email address based on the filter criteria such as the email address and other input parameters that you have specified.",
-      "category": "investigation",
-      "annotation": "email_reputation",
-      "endpoint": "/api/v2/intelligence/",
-      "http_method": "GET",
-      "handler_method": false,
+      ],
       "output_schema": {
         "objects": [
           {
@@ -292,7 +220,17 @@
           "total_count": "",
           "previous": ""
         }
-      },
+      }
+    },
+    {
+      "operation": "email_reputation",
+      "title": "Get Email ID Reputation",
+      "description": "Retrieves the reputation of the specified Email address based on the filter criteria such as the email address and other input parameters that you have specified.",
+      "category": "investigation",
+      "annotation": "email_reputation",
+      "endpoint": "/api/v2/intelligence/",
+      "http_method": "GET",
+      "handler_method": false,
       "enabled": true,
       "parameters": [
         {
@@ -377,14 +315,7 @@
             ]
           }
         }
-      ]
-    },
-    {
-      "operation": "ip_reputation",
-      "title": "Get IP Reputation",
-      "description": "Retrieves the reputation of the specified IP address based on the filter criteria such as the IP address and other input parameters that you have specified.",
-      "category": "investigation",
-      "annotation": "ip_reputation",
+      ],
       "output_schema": {
         "objects": [
           {
@@ -446,7 +377,14 @@
           "total_count": "",
           "previous": ""
         }
-      },
+      }
+    },
+    {
+      "operation": "ip_reputation",
+      "title": "Get IP Reputation",
+      "description": "Retrieves the reputation of the specified IP address based on the filter criteria such as the IP address and other input parameters that you have specified.",
+      "category": "investigation",
+      "annotation": "ip_reputation",
       "endpoint": "/api/v2/intelligence/",
       "http_method": "GET",
       "handler_method": false,
@@ -534,17 +472,7 @@
             ]
           }
         }
-      ]
-    },
-    {
-      "operation": "file_reputation",
-      "title": "Get File Reputation",
-      "description": "Retrieves the reputation of the specified FileHash based on the filter criteria such as the filehash and other input parameters that you have specified.",
-      "category": "investigation",
-      "annotation": "file_reputation",
-      "endpoint": "/api/v2/intelligence/",
-      "http_method": "GET",
-      "handler_method": false,
+      ],
       "output_schema": {
         "objects": [
           {
@@ -606,7 +534,17 @@
           "total_count": "",
           "previous": ""
         }
-      },
+      }
+    },
+    {
+      "operation": "file_reputation",
+      "title": "Get File Reputation",
+      "description": "Retrieves the reputation of the specified FileHash based on the filter criteria such as the filehash and other input parameters that you have specified.",
+      "category": "investigation",
+      "annotation": "file_reputation",
+      "endpoint": "/api/v2/intelligence/",
+      "http_method": "GET",
+      "handler_method": false,
       "enabled": true,
       "parameters": [
         {
@@ -692,17 +630,7 @@
             ]
           }
         }
-      ]
-    },
-    {
-      "operation": "url_reputation",
-      "title": "Get URL Reputation",
-      "description": "Retrieves the reputation of the specified URL based on the filter criteria such as the URL and other input parameters that you have specified.",
-      "category": "investigation",
-      "annotation": "url_reputation",
-      "endpoint": "/api/v2/intelligence/",
-      "http_method": "GET",
-      "handler_method": false,
+      ],
       "output_schema": {
         "objects": [
           {
@@ -764,7 +692,17 @@
           "total_count": "",
           "previous": ""
         }
-      },
+      }
+    },
+    {
+      "operation": "url_reputation",
+      "title": "Get URL Reputation",
+      "description": "Retrieves the reputation of the specified URL based on the filter criteria such as the URL and other input parameters that you have specified.",
+      "category": "investigation",
+      "annotation": "url_reputation",
+      "endpoint": "/api/v2/intelligence/",
+      "http_method": "GET",
+      "handler_method": false,
       "enabled": true,
       "parameters": [
         {
@@ -849,63 +787,7 @@
             ]
           }
         }
-      ]
-    },
-    {
-      "operation": "whois_domain",
-      "title": "Get Whois Domain Information",
-      "description": "Executes a WhoIs lookup on the specified domain name and retrieves a list of domains based on the domain name that you have specified.",
-      "category": "investigation",
-      "annotation": "whois_domain",
-      "endpoint": "/api/v1/inteldetails/whois/{value}/",
-      "http_method": "GET",
-      "handler_method": false,
-      "output_schema": "",
-      "enabled": true,
-      "parameters": [
-        {
-          "title": "Domain Name",
-          "required": true,
-          "editable": true,
-          "visible": true,
-          "type": "text",
-          "name": "value",
-          "description": "Name of the domain for which you want to retrieve information from Whois."
-        }
-      ]
-    },
-    {
-      "operation": "whois_ip",
-      "title": "Get Whois IP Information",
-      "description": "Executes a WhoIs lookup on the specified IP address and retrieves a list of IP addresses based on the IP address that you have specified.",
-      "category": "investigation",
-      "annotation": "whois_ip",
-      "handler_method": false,
-      "endpoint": "/api/v1/inteldetails/whois/{value}/",
-      "http_method": "GET",
-      "output_schema": "",
-      "enabled": true,
-      "parameters": [
-        {
-          "title": "IP Address",
-          "required": true,
-          "editable": true,
-          "visible": true,
-          "type": "text",
-          "name": "value",
-          "description": "The IP address for which you want to retrieve information from Whois."
-        }
-      ]
-    },
-    {
-      "operation": "filter_language_query",
-      "title": "Run Filter Language Query",
-      "description": "Runs a search query using ThreatStream's Filter Language Query grammar.",
-      "category": "investigation",
-      "annotation": "search_query",
-      "endpoint": "/api/v2/intelligence/?q={value}",
-      "http_method": "GET",
-      "handler_method": false,
+      ],
       "output_schema": {
         "objects": [
           {
@@ -967,7 +849,63 @@
           "total_count": "",
           "previous": ""
         }
-      },
+      }
+    },
+    {
+      "operation": "whois_domain",
+      "title": "Get Whois Domain Information",
+      "description": "Executes a WhoIs lookup on the specified domain name and retrieves a list of domains based on the domain name that you have specified.",
+      "category": "investigation",
+      "annotation": "whois_domain",
+      "endpoint": "/api/v1/inteldetails/whois/{value}/",
+      "http_method": "GET",
+      "handler_method": false,
+      "enabled": true,
+      "parameters": [
+        {
+          "title": "Domain Name",
+          "required": true,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "value",
+          "description": "Name of the domain for which you want to retrieve information from Whois."
+        }
+      ],
+      "output_schema": ""
+    },
+    {
+      "operation": "whois_ip",
+      "title": "Get Whois IP Information",
+      "description": "Executes a WhoIs lookup on the specified IP address and retrieves a list of IP addresses based on the IP address that you have specified.",
+      "category": "investigation",
+      "annotation": "whois_ip",
+      "handler_method": false,
+      "endpoint": "/api/v1/inteldetails/whois/{value}/",
+      "http_method": "GET",
+      "enabled": true,
+      "parameters": [
+        {
+          "title": "IP Address",
+          "required": true,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "value",
+          "description": "The IP address for which you want to retrieve information from Whois."
+        }
+      ],
+      "output_schema": ""
+    },
+    {
+      "operation": "filter_language_query",
+      "title": "Run Filter Language Query",
+      "description": "Runs a search query using ThreatStream's Filter Language Query grammar.",
+      "category": "investigation",
+      "annotation": "search_query",
+      "endpoint": "/api/v2/intelligence/?q={value}",
+      "http_method": "GET",
+      "handler_method": false,
       "enabled": true,
       "parameters": [
         {
@@ -1022,17 +960,7 @@
             ]
           }
         }
-      ]
-    },
-    {
-      "operation": "advance_query",
-      "title": "Run Advanced Search",
-      "description": "Runs an advanced search query using ThreatStream's Query grammar.",
-      "category": "investigation",
-      "annotation": "search_query",
-      "endpoint": "/api/v2/intelligence/?{value}",
-      "http_method": "GET",
-      "handler_method": false,
+      ],
       "output_schema": {
         "objects": [
           {
@@ -1094,7 +1022,17 @@
           "total_count": "",
           "previous": ""
         }
-      },
+      }
+    },
+    {
+      "operation": "advance_query",
+      "title": "Run Advanced Search",
+      "description": "Runs an advanced search query using ThreatStream's Query grammar.",
+      "category": "investigation",
+      "annotation": "search_query",
+      "endpoint": "/api/v2/intelligence/?{value}",
+      "http_method": "GET",
+      "handler_method": false,
       "enabled": true,
       "parameters": [
         {
@@ -1148,7 +1086,69 @@
             ]
           }
         }
-      ]
+      ],
+      "output_schema": {
+        "objects": [
+          {
+            "update_id": "",
+            "value": "",
+            "status": "",
+            "ip": "",
+            "id": "",
+            "threat_type": "",
+            "confidence": "",
+            "itype": "",
+            "is_public": "",
+            "tags": [
+              {
+                "id": "",
+                "name": ""
+              }
+            ],
+            "created_ts": "",
+            "modified_ts": "",
+            "tlp": "",
+            "retina_confidence": "",
+            "source_reported_confidence": "",
+            "threatscore": "",
+            "asn": "",
+            "owner_organization_id": "",
+            "org": "",
+            "rdns": "",
+            "type": "",
+            "trusted_circle_ids": [],
+            "expiration_ts": "",
+            "longitude": "",
+            "latitude": "",
+            "source": "",
+            "is_anonymous": "",
+            "feed_id": "",
+            "is_editable": "",
+            "resource_uri": "",
+            "country": "",
+            "import_session_id": "",
+            "uuid": "",
+            "workgroups": [],
+            "description": "",
+            "meta": {
+              "media_type": "",
+              "detail": "",
+              "media": "",
+              "severity": "",
+              "maltype": "",
+              "detail2": ""
+            }
+          }
+        ],
+        "meta": {
+          "limit": "",
+          "offset": "",
+          "took": "",
+          "next": "",
+          "total_count": "",
+          "previous": ""
+        }
+      }
     },
     {
       "operation": "submit_observables",
@@ -1158,11 +1158,6 @@
       "annotation": "submit_sample",
       "handler_method": true,
       "enabled": true,
-      "output_schema": {
-        "job_id": "",
-        "success": "",
-        "import_session_id": ""
-      },
       "parameters": [
         {
           "title": "Attachment IRI",
@@ -1370,7 +1365,12 @@
           "description": "(Optional) Select to exclude the observable in this import. By default it is True. Note: Observables those assigned a confidence score of 15 or less are automatically excluded from the import job.",
           "tooltip": "Select to exclude the observable in this import. Note: Observables those assigned a confidence score of 15 or less are automatically excluded from the import job."
         }
-      ]
+      ],
+      "output_schema": {
+        "job_id": "",
+        "success": "",
+        "import_session_id": ""
+      }
     },
     {
       "operation": "get_import_job_status",
@@ -1381,6 +1381,19 @@
       "handler_method": false,
       "endpoint": "/api/v1/importsession/{value}",
       "http_method": "GET",
+      "enabled": true,
+      "parameters": [
+        {
+          "title": "Import Session ID",
+          "required": true,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "value",
+          "tooltip": "The identifier that was returned in the response of the Submit Observables call",
+          "description": "The ID of the import session for which you want to retrieve the submitted observable status from ThreatStream. The import session ID is returned in the response of the Submit Observables operation."
+        }
+      ],
       "output_schema": {
         "id": "",
         "processed_ts": "",
@@ -1442,20 +1455,7 @@
         "messages": "",
         "resource_uri": "",
         "source_confidence_weight": ""
-      },
-      "enabled": true,
-      "parameters": [
-        {
-          "title": "Import Session ID",
-          "required": true,
-          "editable": true,
-          "visible": true,
-          "type": "text",
-          "name": "value",
-          "tooltip": "The identifier that was returned in the response of the Submit Observables call",
-          "description": "The ID of the import session for which you want to retrieve the submitted observable status from ThreatStream. The import session ID is returned in the response of the Submit Observables operation."
-        }
-      ]
+      }
     },
     {
       "operation": "get_import_jobs",
@@ -1466,6 +1466,60 @@
       "handler_method": false,
       "endpoint": "/api/v1/importsession/?{value}",
       "http_method": "GET",
+      "enabled": true,
+      "parameters": [
+        {
+          "title": "Search Query",
+          "required": true,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "value",
+          "description": "Valid query to be run on the ThreatStream server based on which you want to retrieve the list of threat bulletins. For example, created_ts__gte=2014-10-02T20:44:35",
+          "placeholder": "e.g date_modified__gte=2019-05-01T00:00:00.000Z&status__in=approved"
+        },
+        {
+          "title": "Number of Records to Return",
+          "description": "This parameter determines if the operation will Fetch All Records or Fetch Limited Records.",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "select",
+          "options": [
+            "Fetch All Records",
+            "Fetch Limited Records"
+          ],
+          "name": "record_number",
+          "value": "Fetch Limited Records",
+          "onchange": {
+            "Fetch All Records": [],
+            "Fetch Limited Records": [
+              {
+                "title": "Limit",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "type": "integer",
+                "name": "limit",
+                "value": 20,
+                "tooltip": "Maximum number of results, per page, that this operation should return. Specifying 0 will return up to a maximum of 1000 results (if available). Max limit is 1000",
+                "description": "Maximum number of results, per page, that this operation should return."
+              },
+              {
+                "title": "Offset",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "type": "integer",
+                "name": "offset",
+                "value": 0,
+                "tooltip": " 0 based index of the page that this operation should return.",
+                "description": " 0 based index of the page that this operation should return."
+              }
+            ]
+          }
+        }
+      ],
       "output_schema": {
         "meta": {
           "limit": "",
@@ -1538,61 +1592,7 @@
             "numIndicators": ""
           }
         ]
-      },
-      "enabled": true,
-      "parameters": [
-        {
-          "title": "Search Query",
-          "required": true,
-          "editable": true,
-          "visible": true,
-          "type": "text",
-          "name": "value",
-          "description": "Valid query to be run on the ThreatStream server based on which you want to retrieve the list of threat bulletins. For example, created_ts__gte=2014-10-02T20:44:35",
-          "placeholder": "e.g date_modified__gte=2019-05-01T00:00:00.000Z&status__in=approved"
-        },
-        {
-          "title": "Number of Records to Return",
-          "description": "This parameter determines if the operation will Fetch All Records or Fetch Limited Records.",
-          "required": false,
-          "editable": true,
-          "visible": true,
-          "type": "select",
-          "options": [
-            "Fetch All Records",
-            "Fetch Limited Records"
-          ],
-          "name": "record_number",
-          "value": "Fetch Limited Records",
-          "onchange": {
-            "Fetch All Records": [],
-            "Fetch Limited Records": [
-              {
-                "title": "Limit",
-                "required": true,
-                "editable": true,
-                "visible": true,
-                "type": "integer",
-                "name": "limit",
-                "value": 20,
-                "tooltip": "Maximum number of results, per page, that this operation should return. Specifying 0 will return up to a maximum of 1000 results (if available). Max limit is 1000",
-                "description": "Maximum number of results, per page, that this operation should return."
-              },
-              {
-                "title": "Offset",
-                "required": true,
-                "editable": true,
-                "visible": true,
-                "type": "integer",
-                "name": "offset",
-                "value": 0,
-                "tooltip": " 0 based index of the page that this operation should return.",
-                "description": " 0 based index of the page that this operation should return."
-              }
-            ]
-          }
-        }
-      ]
+      }
     },
     {
       "operation": "approve_import_job",
@@ -1600,6 +1600,22 @@
       "description": "Approves the specific import job in ThreatStream based on the import ID you have specified.",
       "category": "investigation",
       "annotation": "approve_import_job",
+      "endpoint": "/api/v1/importsession/{value}/approve_all",
+      "http_method": "PATCH",
+      "handler_method": false,
+      "enabled": true,
+      "parameters": [
+        {
+          "title": "Job ID",
+          "required": true,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "value",
+          "tooltip": "The ID of the import job that you want to approve in ThreatStream. Note: Specify \"import_session_id\" from output schema.",
+          "description": "The ID of the import job that you want to approve in ThreatStream. Note: Specify \"import_session_id\" from output schema."
+        }
+      ],
       "output_schema": {
         "approved_by": {
           "avatar_s3_url": "",
@@ -1676,23 +1692,7 @@
         "user_id": "",
         "visibleForReview": "",
         "workgroups": []
-      },
-      "endpoint": "/api/v1/importsession/{value}/approve_all",
-      "http_method": "PATCH",
-      "handler_method": false,
-      "enabled": true,
-      "parameters": [
-        {
-          "title": "Job ID",
-          "required": true,
-          "editable": true,
-          "visible": true,
-          "type": "text",
-          "name": "value",
-          "tooltip": "The ID of the import job that you want to approve in ThreatStream. Note: Specify \"import_session_id\" from output schema.",
-          "description": "The ID of the import job that you want to approve in ThreatStream. Note: Specify \"import_session_id\" from output schema."
-        }
-      ]
+      }
     },
     {
       "operation": "reject_import_job",
@@ -1700,9 +1700,6 @@
       "description": "Rejects the specific import job, after it has been verified as 'ready for review' in ThreatStream based on the import ID you have specified.",
       "category": "investigation",
       "annotation": "reject_import_job",
-      "output_schema": {
-        "result": ""
-      },
       "endpoint": "/api/v1/importsession/{value}",
       "http_method": "DELETE",
       "handler_method": false,
@@ -1717,7 +1714,10 @@
           "name": "value",
           "description": "The ID of the import job that you want to reject in ThreatStream. You can reject import jobs after it has been verified as 'ready for review'."
         }
-      ]
+      ],
+      "output_schema": {
+        "result": ""
+      }
     },
     {
       "operation": "create_incident",
@@ -1726,60 +1726,6 @@
       "category": "investigation",
       "annotation": "create_incidents",
       "handler_method": true,
-      "output_schema": {
-        "watched_total_count": "",
-        "organization": {
-          "resource_uri": "",
-          "id": "",
-          "name": ""
-        },
-        "publication_status": "",
-        "modified_ts": "",
-        "starred_by_me": "",
-        "feed_id": "",
-        "sandbox_reports": [],
-        "is_anonymous": "",
-        "logo_s3_url": "",
-        "end_date": "",
-        "external_references": [],
-        "id": "",
-        "watched_by_me": "",
-        "status": {
-          "display_name": "",
-          "resource_uri": "",
-          "id": ""
-        },
-        "organization_id": "",
-        "created_ts": "",
-        "status_desc": "",
-        "intended_effects": [],
-        "resource_uri": "",
-        "parent": "",
-        "published_ts": "",
-        "tlp": "",
-        "assignee_user": "",
-        "body_content_type": "",
-        "description": "",
-        "start_date": "",
-        "is_cloneable": "",
-        "workgroups": [],
-        "starred_total_count": "",
-        "is_public": "",
-        "victims": [],
-        "circles": [],
-        "activity_dates": [],
-        "owner_user": {
-          "email": "",
-          "resource_uri": "",
-          "id": "",
-          "name": ""
-        },
-        "name": "",
-        "votes": {
-          "total": "",
-          "me": ""
-        }
-      },
       "enabled": true,
       "parameters": [
         {
@@ -1848,7 +1794,61 @@
           "name": "fields",
           "description": "(Optional) Specify other fields that you want to include with the incident that you want to create in ThreatStream."
         }
-      ]
+      ],
+      "output_schema": {
+        "watched_total_count": "",
+        "organization": {
+          "resource_uri": "",
+          "id": "",
+          "name": ""
+        },
+        "publication_status": "",
+        "modified_ts": "",
+        "starred_by_me": "",
+        "feed_id": "",
+        "sandbox_reports": [],
+        "is_anonymous": "",
+        "logo_s3_url": "",
+        "end_date": "",
+        "external_references": [],
+        "id": "",
+        "watched_by_me": "",
+        "status": {
+          "display_name": "",
+          "resource_uri": "",
+          "id": ""
+        },
+        "organization_id": "",
+        "created_ts": "",
+        "status_desc": "",
+        "intended_effects": [],
+        "resource_uri": "",
+        "parent": "",
+        "published_ts": "",
+        "tlp": "",
+        "assignee_user": "",
+        "body_content_type": "",
+        "description": "",
+        "start_date": "",
+        "is_cloneable": "",
+        "workgroups": [],
+        "starred_total_count": "",
+        "is_public": "",
+        "victims": [],
+        "circles": [],
+        "activity_dates": [],
+        "owner_user": {
+          "email": "",
+          "resource_uri": "",
+          "id": "",
+          "name": ""
+        },
+        "name": "",
+        "votes": {
+          "total": "",
+          "me": ""
+        }
+      }
     },
     {
       "operation": "fetch_incidents",
@@ -1857,62 +1857,6 @@
       "handler_method": true,
       "category": "investigation",
       "annotation": "get_incident_list",
-      "output_schema": {
-        "meta": {
-          "limit": "",
-          "next": "",
-          "previous": "",
-          "offset": "",
-          "total_count": ""
-        },
-        "objects": [
-          {
-            "tags_v2": [
-              {
-                "name": "",
-                "id": ""
-              }
-            ],
-            "is_cloneable": "",
-            "is_public": "",
-            "organization_id": "",
-            "tlp": "",
-            "resource_uri": "",
-            "workgroups": [],
-            "start_date": "",
-            "feed_id": "",
-            "watched_by_me": "",
-            "end_date": "",
-            "tags": [],
-            "starred_total_count": "",
-            "publication_status": "",
-            "id": "",
-            "votes": {
-              "total": "",
-              "me": ""
-            },
-            "status": {
-              "display_name": "",
-              "id": "",
-              "resource_uri": ""
-            },
-            "watched_total_count": "",
-            "created_ts": "",
-            "name": "",
-            "is_anonymous": "",
-            "circles": [
-              {
-                "name": "",
-                "id": "",
-                "resource_uri": ""
-              }
-            ],
-            "starred_by_me": "",
-            "published_ts": "",
-            "modified_ts": ""
-          }
-        ]
-      },
       "enabled": true,
       "parameters": [
         {
@@ -1946,17 +1890,7 @@
           "value": 0,
           "description": "0 based index of the page that this operation should return."
         }
-      ]
-    },
-    {
-      "operation": "list_incidents_by_indicator",
-      "title": "Get Incident List By Indicator",
-      "description": "Retrieves a list of incidents based on specific intelligence values and other input parameters that you have specified.",
-      "handler_method": false,
-      "endpoint": "/api/v1/incident/associated_with_intelligence/",
-      "http_method": "GET",
-      "category": "investigation",
-      "annotation": "get_incident_list",
+      ],
       "output_schema": {
         "meta": {
           "limit": "",
@@ -2012,7 +1946,17 @@
             "modified_ts": ""
           }
         ]
-      },
+      }
+    },
+    {
+      "operation": "list_incidents_by_indicator",
+      "title": "Get Incident List By Indicator",
+      "description": "Retrieves a list of incidents based on specific intelligence values and other input parameters that you have specified.",
+      "handler_method": false,
+      "endpoint": "/api/v1/incident/associated_with_intelligence/",
+      "http_method": "GET",
+      "category": "investigation",
+      "annotation": "get_incident_list",
       "enabled": true,
       "parameters": [
         {
@@ -2046,7 +1990,63 @@
           "value": 0,
           "description": "0 based index of the page that this operation should return."
         }
-      ]
+      ],
+      "output_schema": {
+        "meta": {
+          "limit": "",
+          "next": "",
+          "previous": "",
+          "offset": "",
+          "total_count": ""
+        },
+        "objects": [
+          {
+            "tags_v2": [
+              {
+                "name": "",
+                "id": ""
+              }
+            ],
+            "is_cloneable": "",
+            "is_public": "",
+            "organization_id": "",
+            "tlp": "",
+            "resource_uri": "",
+            "workgroups": [],
+            "start_date": "",
+            "feed_id": "",
+            "watched_by_me": "",
+            "end_date": "",
+            "tags": [],
+            "starred_total_count": "",
+            "publication_status": "",
+            "id": "",
+            "votes": {
+              "total": "",
+              "me": ""
+            },
+            "status": {
+              "display_name": "",
+              "id": "",
+              "resource_uri": ""
+            },
+            "watched_total_count": "",
+            "created_ts": "",
+            "name": "",
+            "is_anonymous": "",
+            "circles": [
+              {
+                "name": "",
+                "id": "",
+                "resource_uri": ""
+              }
+            ],
+            "starred_by_me": "",
+            "published_ts": "",
+            "modified_ts": ""
+          }
+        ]
+      }
     },
     {
       "operation": "get_incident",
@@ -2057,6 +2057,18 @@
       "handler_method": false,
       "endpoint": "/api/v1/incident/{value}",
       "http_method": "GET",
+      "enabled": true,
+      "parameters": [
+        {
+          "title": "Incident ID",
+          "required": true,
+          "editable": true,
+          "visible": true,
+          "type": "integer",
+          "name": "value",
+          "description": "The ID of the generated incident whose details you want to retrieve from ThreatStream."
+        }
+      ],
       "output_schema": {
         "status": {
           "id": "",
@@ -2139,7 +2151,15 @@
         "status_desc": "",
         "actors": [],
         "campaigns": []
-      },
+      }
+    },
+    {
+      "operation": "update_incident",
+      "title": "Update Incident",
+      "description": "Updates an incident in ThreatStream based on the incident ID and other input parameters that you have specified.",
+      "category": "investigation",
+      "annotation": "update_incident",
+      "handler_method": true,
       "enabled": true,
       "parameters": [
         {
@@ -2149,17 +2169,47 @@
           "visible": true,
           "type": "integer",
           "name": "value",
-          "description": "The ID of the generated incident whose details you want to retrieve from ThreatStream."
+          "description": "The ID of the incident that you want to update on ThreatStream."
+        },
+        {
+          "title": "Incident Name",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "name",
+          "description": "Name of the incident that you want to update on ThreatStream."
+        },
+        {
+          "title": "Status",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "select",
+          "name": "status",
+          "apiOperation": "get_status",
+          "tooltip": "Status of the Incident.",
+          "description": "(Optional) Select the status of the incident that you want to update on ThreatStream. You can choose from the following options: New, Open, Stalled, Containment Achieved, Restoration Achieved, Incident Reported, Closed, Rejected, or Deleted. Note: This parameter will make an API call named \"get_status\" to dynamically populate its dropdown selections."
+        },
+        {
+          "title": "Status Description",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "status_desc",
+          "description": "(Optional) Description associated with the status of the incident that you want to update on ThreatStream."
+        },
+        {
+          "title": "Fields to Update on Incident",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "json",
+          "name": "fields",
+          "description": "(Optional) Specify other fields that you want to include with the incident that you want to update in ThreatStream."
         }
-      ]
-    },
-    {
-      "operation": "update_incident",
-      "title": "Update Incident",
-      "description": "Updates an incident in ThreatStream based on the incident ID and other input parameters that you have specified.",
-      "category": "investigation",
-      "annotation": "update_incident",
-      "handler_method": true,
+      ],
       "output_schema": {
         "watched_total_count": "",
         "organization": {
@@ -2213,57 +2263,7 @@
           "total": "",
           "me": ""
         }
-      },
-      "enabled": true,
-      "parameters": [
-        {
-          "title": "Incident ID",
-          "required": true,
-          "editable": true,
-          "visible": true,
-          "type": "integer",
-          "name": "value",
-          "description": "The ID of the incident that you want to update on ThreatStream."
-        },
-        {
-          "title": "Incident Name",
-          "required": false,
-          "editable": true,
-          "visible": true,
-          "type": "text",
-          "name": "name",
-          "description": "Name of the incident that you want to update on ThreatStream."
-        },
-        {
-          "title": "Status",
-          "required": false,
-          "editable": true,
-          "visible": true,
-          "type": "select",
-          "name": "status",
-          "apiOperation": "get_status",
-          "tooltip": "Status of the Incident.",
-          "description": "(Optional) Select the status of the incident that you want to update on ThreatStream. You can choose from the following options: New, Open, Stalled, Containment Achieved, Restoration Achieved, Incident Reported, Closed, Rejected, or Deleted. Note: This parameter will make an API call named \"get_status\" to dynamically populate its dropdown selections."
-        },
-        {
-          "title": "Status Description",
-          "required": false,
-          "editable": true,
-          "visible": true,
-          "type": "text",
-          "name": "status_desc",
-          "description": "(Optional) Description associated with the status of the incident that you want to update on ThreatStream."
-        },
-        {
-          "title": "Fields to Update on Incident",
-          "required": false,
-          "editable": true,
-          "visible": true,
-          "type": "json",
-          "name": "fields",
-          "description": "(Optional) Specify other fields that you want to include with the incident that you want to update in ThreatStream."
-        }
-      ]
+      }
     },
     {
       "operation": "delete_incident",
@@ -2274,9 +2274,6 @@
       "handler_method": false,
       "endpoint": "/api/v1/incident/{value}",
       "http_method": "DELETE",
-      "output_schema": {
-        "result": ""
-      },
       "enabled": true,
       "parameters": [
         {
@@ -2288,7 +2285,10 @@
           "name": "value",
           "description": "The ID of the incident that you want to delete from ThreatStream."
         }
-      ]
+      ],
+      "output_schema": {
+        "result": ""
+      }
     },
     {
       "operation": "create_threat_bulletin",
@@ -3256,6 +3256,59 @@
       "handler_method": true,
       "category": "investigation",
       "annotation": "get_threat_bulletin_list",
+      "enabled": true,
+      "parameters": [
+        {
+          "title": "Search Query",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "query",
+          "tooltip": "Specify valid query to be run on the ThreatStream server based on which you want to retrieve the list of threat bulletins.",
+          "placeholder": "e.g created_ts__gte=2014-10-02T20:44:35",
+          "description": "Valid query to be run on the ThreatStream server based on which you want to retrieve the list of threat bulletins. For example, created_ts__gte=2014-10-02T20:44:35"
+        },
+        {
+          "title": "Number of Records to Return",
+          "description": "This parameter determines if the operation will Fetch All Records or Fetch Limited Records.",
+          "editable": true,
+          "visible": true,
+          "type": "select",
+          "options": [
+            "Fetch All Records",
+            "Fetch Limited Records"
+          ],
+          "name": "record_number",
+          "value": "Fetch Limited Records",
+          "onchange": {
+            "Fetch All Records": [],
+            "Fetch Limited Records": [
+              {
+                "title": "Limit",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "type": "integer",
+                "name": "limit",
+                "value": 20,
+                "tooltip": "Maximum number of results that this operation should return. This will return up to a maximum of 1000 results (if available).",
+                "description": "Maximum number of results that this operation should return."
+              },
+              {
+                "title": "Offset",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "type": "integer",
+                "name": "offset",
+                "value": 0,
+                "description": "0 based index of the page that this operation should return."
+              }
+            ]
+          }
+        }
+      ],
       "output_schema": {
         "objects": [
           {
@@ -3360,60 +3413,7 @@
           "offset": "",
           "previous": ""
         }
-      },
-      "enabled": true,
-      "parameters": [
-        {
-          "title": "Search Query",
-          "required": false,
-          "editable": true,
-          "visible": true,
-          "type": "text",
-          "name": "query",
-          "tooltip": "Specify valid query to be run on the ThreatStream server based on which you want to retrieve the list of threat bulletins.",
-          "placeholder": "e.g created_ts__gte=2014-10-02T20:44:35",
-          "description": "Valid query to be run on the ThreatStream server based on which you want to retrieve the list of threat bulletins. For example, created_ts__gte=2014-10-02T20:44:35"
-        },
-        {
-          "title": "Number of Records to Return",
-          "description": "This parameter determines if the operation will Fetch All Records or Fetch Limited Records.",
-          "editable": true,
-          "visible": true,
-          "type": "select",
-          "options": [
-            "Fetch All Records",
-            "Fetch Limited Records"
-          ],
-          "name": "record_number",
-          "value": "Fetch Limited Records",
-          "onchange": {
-            "Fetch All Records": [],
-            "Fetch Limited Records": [
-              {
-                "title": "Limit",
-                "required": true,
-                "editable": true,
-                "visible": true,
-                "type": "integer",
-                "name": "limit",
-                "value": 20,
-                "tooltip": "Maximum number of results that this operation should return. This will return up to a maximum of 1000 results (if available).",
-                "description": "Maximum number of results that this operation should return."
-              },
-              {
-                "title": "Offset",
-                "required": true,
-                "editable": true,
-                "visible": true,
-                "type": "integer",
-                "name": "offset",
-                "value": 0,
-                "description": "0 based index of the page that this operation should return."
-              }
-            ]
-          }
-        }
-      ]
+      }
     },
     {
       "operation": "list_threat_model_entity",
@@ -3955,6 +3955,59 @@
       "handler_method": false,
       "category": "investigation",
       "annotation": "get_observables_associated_threat_bulletin",
+      "enabled": true,
+      "parameters": [
+        {
+          "title": "Threat Bulletin ID",
+          "required": true,
+          "editable": true,
+          "visible": true,
+          "type": "integer",
+          "name": "value",
+          "description": "The ID of the threat bulletin whose associated observables that you want to retrieve from ThreatStream."
+        },
+        {
+          "title": "Number of Records to Return",
+          "description": "This parameter determines if the operation will Fetch All Records or Fetch Limited Records.",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "select",
+          "options": [
+            "Fetch All Records",
+            "Fetch Limited Records"
+          ],
+          "name": "record_number",
+          "value": "Fetch Limited Records",
+          "onchange": {
+            "Fetch All Records": [],
+            "Fetch Limited Records": [
+              {
+                "title": "Limit",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "type": "integer",
+                "name": "limit",
+                "value": 20,
+                "tooltip": "Maximum number of results that this operation should return. Specifying 0 will return up to a maximum of 1000 results (if available). Max limit is 1000",
+                "description": "Maximum number of results that this operation should return."
+              },
+              {
+                "title": "Offset",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "type": "integer",
+                "name": "offset",
+                "value": 0,
+                "tooltip": "0 based index of the page that this operation should return.",
+                "description": "0 based index of the page that this operation should return."
+              }
+            ]
+          }
+        }
+      ],
       "output_schema": {
         "meta": {
           "next": "",
@@ -4037,60 +4090,7 @@
             "resource_uri": ""
           }
         ]
-      },
-      "enabled": true,
-      "parameters": [
-        {
-          "title": "Threat Bulletin ID",
-          "required": true,
-          "editable": true,
-          "visible": true,
-          "type": "integer",
-          "name": "value",
-          "description": "The ID of the threat bulletin whose associated observables that you want to retrieve from ThreatStream."
-        },
-        {
-          "title": "Number of Records to Return",
-          "description": "This parameter determines if the operation will Fetch All Records or Fetch Limited Records.",
-          "required": false,
-          "editable": true,
-          "visible": true,
-          "type": "select",
-          "options": [
-            "Fetch All Records",
-            "Fetch Limited Records"
-          ],
-          "name": "record_number",
-          "value": "Fetch Limited Records",
-          "onchange": {
-            "Fetch All Records": [],
-            "Fetch Limited Records": [
-              {
-                "title": "Limit",
-                "required": true,
-                "editable": true,
-                "visible": true,
-                "type": "integer",
-                "name": "limit",
-                "value": 20,
-                "tooltip": "Maximum number of results that this operation should return. Specifying 0 will return up to a maximum of 1000 results (if available). Max limit is 1000",
-                "description": "Maximum number of results that this operation should return."
-              },
-              {
-                "title": "Offset",
-                "required": true,
-                "editable": true,
-                "visible": true,
-                "type": "integer",
-                "name": "offset",
-                "value": 0,
-                "tooltip": "0 based index of the page that this operation should return.",
-                "description": "0 based index of the page that this operation should return."
-              }
-            ]
-          }
-        }
-      ]
+      }
     },
     {
       "operation": "submit_urls_files",
@@ -4100,21 +4100,6 @@
       "annotation": "submit_sample",
       "handler_method": true,
       "enabled": true,
-      "output_schema": {
-        "reports": {
-          "WINDOWS7": {
-            "detail": "",
-            "status": "",
-            "id": ""
-          },
-          "WINDOWSXP": {
-            "id": "",
-            "detail": "",
-            "status": ""
-          }
-        },
-        "success": ""
-      },
       "parameters": [
         {
           "title": "Classification of the Sandbox Submission",
@@ -4272,7 +4257,22 @@
           "placeholder": "e.g. 1, 2, 3",
           "tooltip": "ID of the trusted circle with which you want to associate the sandbox data. If you want to specify multiple trusted circles, enter a list of comma-separated Trusted Circle IDs."
         }
-      ]
+      ],
+      "output_schema": {
+        "reports": {
+          "WINDOWS7": {
+            "detail": "",
+            "status": "",
+            "id": ""
+          },
+          "WINDOWSXP": {
+            "id": "",
+            "detail": "",
+            "status": ""
+          }
+        },
+        "success": ""
+      }
     },
     {
       "operation": "get_submit_url_status",
@@ -4283,6 +4283,18 @@
       "handler_method": false,
       "endpoint": "/api/v1/submit/{value}/",
       "http_method": "GET",
+      "enabled": true,
+      "parameters": [
+        {
+          "title": "Report ID",
+          "required": true,
+          "editable": true,
+          "visible": true,
+          "type": "integer",
+          "name": "value",
+          "description": "The ID of the sandbox report whose sandbox status for submitted URLs or Files you want to retrieve from ThreatStream."
+        }
+      ],
       "output_schema": {
         "circles": [],
         "classification": "",
@@ -4326,19 +4338,7 @@
         "watched_by_me": "",
         "watched_total_count": "",
         "yara": ""
-      },
-      "enabled": true,
-      "parameters": [
-        {
-          "title": "Report ID",
-          "required": true,
-          "editable": true,
-          "visible": true,
-          "type": "integer",
-          "name": "value",
-          "description": "The ID of the sandbox report whose sandbox status for submitted URLs or Files you want to retrieve from ThreatStream."
-        }
-      ]
+      }
     },
     {
       "operation": "get_submitted_url_report",
@@ -4349,6 +4349,18 @@
       "handler_method": false,
       "endpoint": "/api/v1/submit/{value}/report",
       "http_method": "GET",
+      "enabled": true,
+      "parameters": [
+        {
+          "title": "Sandbox Report ID",
+          "required": true,
+          "editable": true,
+          "visible": true,
+          "type": "integer",
+          "name": "value",
+          "description": "The ID of the sandbox report whose sandbox report for submitted URLs or Files you want to retrieve from ThreatStream."
+        }
+      ],
       "output_schema": {
         "pcap": "",
         "screenshots": [],
@@ -4502,19 +4514,7 @@
           }
         },
         "success": ""
-      },
-      "enabled": true,
-      "parameters": [
-        {
-          "title": "Sandbox Report ID",
-          "required": true,
-          "editable": true,
-          "visible": true,
-          "type": "integer",
-          "name": "value",
-          "description": "The ID of the sandbox report whose sandbox report for submitted URLs or Files you want to retrieve from ThreatStream."
-        }
-      ]
+      }
     },
     {
       "operation": "intelligence_enrichments",
@@ -4721,6 +4721,42 @@
       "handler_method": true,
       "category": "investigation",
       "annotation": "get_incident_list",
+      "enabled": false,
+      "visible": false,
+      "parameters": [
+        {
+          "title": "Limit",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "integer",
+          "name": "limit",
+          "value": 0,
+          "tooltip": "Specifying 0 will return up to a maximum of 1000 results (if available). Max limit is 1000",
+          "description": "Maximum number of results that this operation should return."
+        },
+        {
+          "title": "Offset",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "integer",
+          "name": "offset",
+          "value": 0,
+          "description": "0 based index of the page that this operation should return."
+        },
+        {
+          "title": "Intelligence value to filter",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "value",
+          "value": "",
+          "tooltip": "e.g. example.com returns all Incidents that are associated with example.com.",
+          "description": "Intelligence value based on which you want to filter incidents to be retrieved from ThreatStream. For example google.com returns all Incidents that are associated with google.com."
+        }
+      ],
       "output_schema": {
         "meta": {
           "limit": "",
@@ -4776,43 +4812,342 @@
             "modified_ts": ""
           }
         ]
-      },
-      "enabled": false,
-      "visible": false,
+      }
+    },
+    {
+      "operation": "list_investigations",
+      "title": "List Investigations",
+      "description": "Collects and retrieves investigations from ThreatStream",
+      "category": "investigation",
+      "annotation": "list_investigations",
+      "handler_method": false,
+      "endpoint": "/api/v1/investigation/",
+      "http_method": "GET",
+      "enabled": true,
       "parameters": [
         {
-          "title": "Limit",
-          "required": false,
-          "editable": true,
-          "visible": true,
-          "type": "integer",
-          "name": "limit",
-          "value": 0,
-          "tooltip": "Specifying 0 will return up to a maximum of 1000 results (if available). Max limit is 1000",
-          "description": "Maximum number of results that this operation should return."
-        },
-        {
-          "title": "Offset",
-          "required": false,
-          "editable": true,
-          "visible": true,
-          "type": "integer",
-          "name": "offset",
-          "value": 0,
-          "description": "0 based index of the page that this operation should return."
-        },
-        {
-          "title": "Intelligence value to filter",
-          "required": false,
-          "editable": true,
-          "visible": true,
+          "name": "investigation_id",
+          "title": "Investigation ID",
           "type": "text",
-          "name": "value",
-          "value": "",
-          "tooltip": "e.g. example.com returns all Incidents that are associated with example.com.",
-          "description": "Intelligence value based on which you want to filter incidents to be retrieved from ThreatStream. For example google.com returns all Incidents that are associated with google.com."
+          "editable": true,
+          "visible": true,
+          "required": false,
+          "tooltip": "ID of the specific investigation to fetch",
+          "description": "ID of the specific investigation to fetch"
+        },
+        {
+          "name": "created_ts__gte",
+          "title": "Date From",
+          "type": "text",
+          "placeholder": "2023-01-02T20:44:35",
+          "editable": true,
+          "visible": true,
+          "required": false,
+          "tooltip": "Date of the oldest investigation record to fetch in the format <YYYY-MM-DDTHH:mm:ss>",
+          "description": "Date of the first investigation record to fetch in the format <YYYY-MM-DDTHH:mm:ss>"
+        },
+        {
+          "name": "created_ts__lte",
+          "title": "Date To",
+          "type": "text",
+          "placeholder": "2023-01-12T20:44:35",
+          "editable": true,
+          "visible": true,
+          "required": false,
+          "tooltip": "Date of the most recent investigation record to fetch in the format <YYYY-MM-DDTHH:mm:ss>",
+          "description": "Date of the most recent investigation record to fetch in the format <YYYY-MM-DDTHH:mm:ss>"
+        },
+        {
+          "name": "name",
+          "title": "Investigation Name",
+          "type": "text",
+          "editable": true,
+          "visible": true,
+          "required": false,
+          "tooltip": "The name of the investigation",
+          "description": "The name of the investigation"
+        },
+        {
+          "name": "priority",
+          "title": "Priority",
+          "type": "select",
+          "editable": true,
+          "visible": true,
+          "required": false,
+          "tooltip": "The priority of the investigation",
+          "description": "The priority of the investigation",
+          "options": [
+            "Very Low",
+            "Low",
+            "Medium",
+            "High",
+            "Very High"
+          ]
+        },
+        {
+          "name": "status",
+          "title": "Status",
+          "type": "select",
+          "editable": true,
+          "visible": true,
+          "required": false,
+          "tooltip": "The status of the investigation.",
+          "description": "The status of the investigation.",
+          "options": [
+            "Completed",
+            "In-Progress",
+            "Pending",
+            "Unassigned"
+          ]
+        },
+        {
+          "name": "remote_api",
+          "title": "Remote API",
+          "type": "checkbox",
+          "editable": true,
+          "visible": true,
+          "required": false,
+          "tooltip": "Whether the investigation is remote (stored on Cloud). Value returned for this attribute is true when the investigation is remote",
+          "description": "Whether the investigation is remote (stored on Cloud). Value returned for this attribute is true when the investigation is remote"
+        },
+        {
+          "name": "add_related_indicators",
+          "title": "Add Related Indicators",
+          "type": "select",
+          "options": [
+            0,
+            1
+          ],
+          "editable": true,
+          "visible": true,
+          "required": false,
+          "tooltip": "When enabled, observables related to the entity you are associating with the investigation are also added (when set to 1)",
+          "description": "When enabled, observables related to the entity you are associating with the investigation are also added (when set to 1)"
+        },
+        {
+          "title": "Number of Records to Return",
+          "description": "Select whether you want this operation to Fetch Limited Records or Fetch All Records.",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "select",
+          "options": [
+            "Fetch All Records",
+            "Fetch Limited Records"
+          ],
+          "name": "record_number",
+          "value": "Fetch Limited Records",
+          "onchange": {
+            "Fetch All Records": [],
+            "Fetch Limited Records": [
+              {
+                "title": "Limit",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "type": "integer",
+                "name": "limit",
+                "value": 20,
+                "tooltip": "Maximum number of results, per page, that this operation should return. Specifying 0 will return up to a maximum of 1000 results (if available). Max limit is 1000",
+                "description": "Maximum number of results, per page, that this operation should return."
+              },
+              {
+                "title": "Offset",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "type": "integer",
+                "name": "offset",
+                "value": 0,
+                "tooltip": "0 based index of the page that this operation should return.",
+                "description": "0 based index of the page that this operation should return."
+              }
+            ]
+          }
         }
-      ]
+      ],
+      "output_schema": {
+        "meta": {
+          "next": "",
+          "limit": "",
+          "errors": "",
+          "offset": "",
+          "total_count": ""
+        },
+        "objects": [
+          {
+            "id": "",
+            "tlp": "",
+            "name": "",
+            "tags": "",
+            "status": "",
+            "circles": "",
+            "assignee": "",
+            "priority": "",
+            "reporter": {
+              "id": "",
+              "name": "",
+              "email": "",
+              "resource_uri": ""
+            },
+            "is_public": "",
+            "owner_org": {
+              "id": "",
+              "name": "",
+              "resource_uri": ""
+            },
+            "created_ts": "",
+            "workgroups": "",
+            "modified_ts": "",
+            "reporter_id": "",
+            "source_type": "",
+            "owner_org_id": "",
+            "resource_uri": "",
+            "intelligence_initiatives": ""
+          }
+        ]
+      }
+    },
+    {
+      "operation": "list_investigationelements",
+      "title": "List Investigation Elements",
+      "description": "Retrieve associations between entities and existing investigations",
+      "category": "investigation",
+      "annotation": "list_investigationelements",
+      "handler_method": false,
+      "endpoint": "/api/v1/investigationelement/",
+      "http_method": "GET",
+      "enabled": true,
+      "parameters": [
+        {
+          "name": "investigation_id",
+          "title": "Investigation ID",
+          "type": "text",
+          "editable": true,
+          "visible": true,
+          "required": true,
+          "tooltip": "ID of the specific investigation to fetch elements for, you can get the ID with the list_investigations action",
+          "description": "ID of the specific investigation to fetch elements for, you can get the ID with the list_investigations action"
+        },
+        {
+          "name": "add_related_indicators",
+          "title": "Add Related Indicators",
+          "type": "select",
+          "options": [
+            0,
+            1
+          ],
+          "editable": true,
+          "visible": true,
+          "required": false,
+          "tooltip": "When enabled, observables related to the entity you are associating with the investigation are also added (when set to 1)",
+          "description": "When enabled, observables related to the entity you are associating with the investigation are also added (when set to 1)"
+        },
+        {
+          "title": "Number of Records to Return",
+          "description": "Select whether you want this operation to Fetch Limited Records or Fetch All Records.",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "select",
+          "options": [
+            "Fetch All Records",
+            "Fetch Limited Records"
+          ],
+          "name": "record_number",
+          "value": "Fetch Limited Records",
+          "onchange": {
+            "Fetch All Records": [],
+            "Fetch Limited Records": [
+              {
+                "title": "Limit",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "type": "integer",
+                "name": "limit",
+                "value": 20,
+                "tooltip": "Maximum number of results, per page, that this operation should return. Specifying 0 will return up to a maximum of 1000 results (if available). Max limit is 1000",
+                "description": "Maximum number of results, per page, that this operation should return."
+              },
+              {
+                "title": "Offset",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "type": "integer",
+                "name": "offset",
+                "value": 0,
+                "tooltip": "0 based index of the page that this operation should return.",
+                "description": "0 based index of the page that this operation should return."
+              }
+            ]
+          }
+        }
+      ],
+      "output_schema": {
+        "data": {
+          "id": "",
+          "tlp": "",
+          "r_id": "",
+          "score": "",
+          "entity": {
+            "id": "",
+            "local_object_id": "",
+            "remote_object_id": "",
+            "local_content_type": "",
+            "remote_content_type": ""
+          },
+          "r_type": "",
+          "parents": "",
+          "created_ts": "",
+          "modified_ts": "",
+          "resource_uri": "",
+          "investigation": {
+            "id": "",
+            "name": ""
+          },
+          "relation_types": "",
+          "investigation_id": ""
+        },
+        "status": "",
+        "message": "",
+        "operation": "",
+        "execution_time": ""
+      }
+    },
+    {
+      "operation": "update_investigation",
+      "title": "Update Investigation",
+      "description": "Update investigation attributes",
+      "category": "investigation",
+      "annotation": "update_investigation",
+      "handler_method": true,
+      "http_method": "PATCH",
+      "enabled": true,
+      "parameters": [
+        {
+          "name": "investigation_id",
+          "title": "Investigation ID",
+          "type": "text",
+          "editable": true,
+          "visible": true,
+          "required": true,
+          "tooltip": "ID of the specific investigation to update",
+          "description": "ID of the specific investigation to update"
+        },
+        {
+          "name": "payload",
+          "title": "Investigation Attributes",
+          "type": "json",
+          "editable": true,
+          "visible": true,
+          "required": true,
+          "tooltip": "Attributes to update in JSON format exp:'{'description':'<p>new evidence found</p>'}",
+          "description": "Attributes to update in JSON format exp:'{'description':'<p>new evidence found</p>'}"
+        }
+      ],
+      "output_schema": ""
     }
   ]
 }
