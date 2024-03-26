@@ -1,10 +1,10 @@
-""" Copyright start
-  Copyright (C) 2008 - 2023 Fortinet Inc.
-  All rights reserved.
-  FORTINET CONFIDENTIAL & FORTINET PROPRIETARY SOURCE CODE
-  Copyright end """
-from time import sleep
+"""
+Copyright start
+MIT License
+Copyright (c) 2024 Fortinet Inc Copyright end
+"""
 
+from time import sleep
 import validators, json
 import os
 from os.path import join, exists
@@ -12,7 +12,6 @@ from requests import request, exceptions as req_exceptions
 from datetime import datetime, timedelta
 from connectors.core.connector import Connector, get_logger, ConnectorError
 from integrations.crudhub import make_request
-from requests_toolbelt.utils import dump
 from django.conf import settings
 
 logger = get_logger("anomali-threatstream")
@@ -29,6 +28,14 @@ MACRO_LIST = [
     "Email_Enrichment_Playbooks_IRIs",
     "FileHash_Enrichment_Playbooks_IRIs",
 ]
+
+PRIORITY_MAPPING = {
+    "High": "high",
+    "Medium": "medium",
+    "Low": "low",
+    "Very High": "veryhigh",
+    "Very Low": "verylow"
+}
 
 CONNECTOR_NAME = "threatstream"
 
@@ -72,7 +79,7 @@ tb_action = [
 
 investigation_actions = [
     "list_investigations",
-    "list_investigationelements"
+    "list_investigation_elements"
 ]
 itype_dict = {
     "domain_reputation": "domain",
@@ -631,10 +638,15 @@ def api_request(config, params, operation_details):
         elif operation_details["operation"] in investigation_actions:
             base_url = check_server_url(config.get("base_url"))
             endpoint = base_url + operation_details["endpoint"]
-            investigation_id = params.pop("investigation_id")
-            if investigation_id:
-                endpoint = f"{endpoint}{investigation_id}/"
-
+            if operation_details["operation"] == 'list_investigations':
+                investigation_id = params.pop("investigation_id")
+                if investigation_id:
+                    endpoint = f"{endpoint}{investigation_id}/"
+            for key in ['priority', 'status']:
+                if params.get(key):
+                    params[key] = params.get(key).lower()
+            if params.get('add_related_indicators'):
+                params['add_related_indicators'] = 1 if params.get('add_related_indicators') == 'Yes' else 0
             payload = generate_payload(config, params)
             
             if "record_number" in params:
@@ -672,7 +684,6 @@ def api_request(config, params, operation_details):
                     verify=config.get("verify_ssl"),
                     timeout=MAX_REQUEST_TIMEOUT
                 )
-                logger.debug('\n{}\n'.format(dump.dump_all(response).decode('utf-8')))
                 if response.status_code in (200, 202):
                     if operation_details["operation"] in list(
                         set(resp_list) | set(query_actions)
@@ -1002,23 +1013,34 @@ def intelligence_enrichments(config, params):
         raise ConnectorError("{0}".format(str(err)))
 
 
-def update_investigation(config, params):
+def create_or_update_investigation(config, params):
     try:
         server_url = check_server_url(config.get("base_url"))
-        investigation_id = params.get("investigation_id")     
-        endpoint = f"{server_url}/api/v1/investigation/{investigation_id}/"
-        payload = params.get("payload")        
+        investigation_id = params.pop("investigation_id", '')
+        if investigation_id or investigation_id == 0:
+            endpoint = f"{server_url}/api/v1/investigation/{investigation_id}/"
+            method = "PATCH"
+        else:
+            endpoint = f"{server_url}/api/v1/investigation/"
+            method = "POST"
+        additional_attributes = params.pop('additional_attributes', {})
+        params['priority'] = PRIORITY_MAPPING.get(params.get('priority'), params.get('priority'))
+        for k in ['tlp', 'status']:
+            params[k] = params.get(k, '').lower()
+        payload = {k: v for k, v in params.items() if v != '' and v is not None}
+        if additional_attributes:
+            payload.update(additional_attributes)
         header = {"Content-Type": "application/json"}
         response = request(
-            "PATCH",
+            method,
             endpoint,
             headers=header,
+            params=generate_payload(config, None),
             json=payload,
             verify=config.get("verify_ssl"),
             timeout=MAX_REQUEST_TIMEOUT
         )
-        logger.debug('\n{}\n'.format(dump.dump_all(response).decode('utf-8')))
-        if response.status_code == 202:
+        if response.ok:
             return response.json()
         else:
             logger.error(
@@ -1027,7 +1049,6 @@ def update_investigation(config, params):
             raise ConnectorError(
                 "Failure {0}: {1}".format(response.status_code, response.reason)
             )
-
     except Exception as err:
         logger.error("{0}".format(str(err)))
         raise ConnectorError("{0}".format(str(err)))
@@ -1046,5 +1067,6 @@ operation_sym = {
     "update_threat_bulletin": update_threat_bulletin,
     "submit_urls_files": submit_urls_files,
     "intelligence_enrichments": intelligence_enrichments,
-    "update_investigation":update_investigation
+    "update_investigation": create_or_update_investigation,
+    "create_investigation": create_or_update_investigation,
 }

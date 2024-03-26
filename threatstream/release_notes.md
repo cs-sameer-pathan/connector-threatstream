@@ -1,6 +1,7 @@
 #### What's Improved
-- New actions:
+- Added following new actions:
   - List Investigations
+  - Create Investigation
   - Update Investigation
   - List Investigation Elements
 
