@@ -1,7 +1,7 @@
 {
   "name": "threatstream",
   "label": "Anomali ThreatStream",
-  "version": "2.4.1",
+  "version": "2.5.0",
   "description": "Anomali ThreatStream offers the most comprehensive Threat Intelligence Platform, allowing organizations to access all intelligence feeds and integrate it seamlessly with internal security and IT systems. This connector facilitates automated operations to to pull threat intelligence from the ThreatStream platform, import observables into ThreatStream from any source, manage threat model entities and investigations, and so on.",
   "publisher": "Fortinet",
   "cs_approved": true,
@@ -21,7 +21,7 @@
   "ingestion_modes": [
     "scheduled"
   ],
-  "help_online": "https://docs.fortinet.com/document/fortisoar/2.4.0/anomali-threatstream/756/anomali-threatstream-v2-4-0",
+  "help_online": "",
   "configuration": {
     "fields": [
       {
@@ -4817,7 +4817,7 @@
     {
       "operation": "list_investigations",
       "title": "List Investigations",
-      "description": "Collects and retrieves investigations from ThreatStream",
+      "description": "Retrieves a list of investigations from Anomali ThreatStream based on the input parameter specified.",
       "category": "investigation",
       "annotation": "list_investigations",
       "handler_method": false,
@@ -4832,30 +4832,8 @@
           "editable": true,
           "visible": true,
           "required": false,
-          "tooltip": "ID of the specific investigation to fetch",
-          "description": "ID of the specific investigation to fetch"
-        },
-        {
-          "name": "created_ts__gte",
-          "title": "Date From",
-          "type": "text",
-          "placeholder": "2023-01-02T20:44:35",
-          "editable": true,
-          "visible": true,
-          "required": false,
-          "tooltip": "Date of the oldest investigation record to fetch in the format <YYYY-MM-DDTHH:mm:ss>",
-          "description": "Date of the first investigation record to fetch in the format <YYYY-MM-DDTHH:mm:ss>"
-        },
-        {
-          "name": "created_ts__lte",
-          "title": "Date To",
-          "type": "text",
-          "placeholder": "2023-01-12T20:44:35",
-          "editable": true,
-          "visible": true,
-          "required": false,
-          "tooltip": "Date of the most recent investigation record to fetch in the format <YYYY-MM-DDTHH:mm:ss>",
-          "description": "Date of the most recent investigation record to fetch in the format <YYYY-MM-DDTHH:mm:ss>"
+          "tooltip": "Specify the ID of the investigation to retrieve specific Investigation from ThreaStream.",
+          "description": "Specify the ID of the investigation to retrieve specific Investigation from ThreaStream."
         },
         {
           "name": "name",
@@ -4864,25 +4842,8 @@
           "editable": true,
           "visible": true,
           "required": false,
-          "tooltip": "The name of the investigation",
-          "description": "The name of the investigation"
-        },
-        {
-          "name": "priority",
-          "title": "Priority",
-          "type": "select",
-          "editable": true,
-          "visible": true,
-          "required": false,
-          "tooltip": "The priority of the investigation",
-          "description": "The priority of the investigation",
-          "options": [
-            "Very Low",
-            "Low",
-            "Medium",
-            "High",
-            "Very High"
-          ]
+          "tooltip": "Specify the The name of the investigation to filter the investigations.",
+          "description": "Specify the The name of the investigation to filter the investigations."
         },
         {
           "name": "status",
@@ -4901,28 +4862,567 @@
           ]
         },
         {
+          "name": "add_related_indicators",
+          "title": "Add Related Indicators",
+          "type": "select",
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "editable": true,
+          "visible": true,
+          "required": false,
+          "tooltip": "When enabled, observables related to the entity you are associating with the investigation are also added (when set to Yes)",
+          "description": "When enabled, observables related to the entity you are associating with the investigation are also added (when set to Yes)"
+        },
+        {
           "name": "remote_api",
           "title": "Remote API",
           "type": "checkbox",
           "editable": true,
           "visible": true,
           "required": false,
-          "tooltip": "Whether the investigation is remote (stored on Cloud). Value returned for this attribute is true when the investigation is remote",
-          "description": "Whether the investigation is remote (stored on Cloud). Value returned for this attribute is true when the investigation is remote"
+          "tooltip": "Specify whether the investigation is remote (stored on Cloud). Value returned for this attribute is true when the investigation is remote",
+          "description": "Specify whether the investigation is remote (stored on Cloud). Value returned for this attribute is true when the investigation is remote"
+        },
+        {
+          "name": "created_ts__gte",
+          "title": "Date From",
+          "type": "datetime",
+          "editable": true,
+          "visible": true,
+          "required": false,
+          "tooltip": "Specify the datetime to retrieve investigation records on or after the indicated datetime.",
+          "description": "Specify the datetime to retrieve investigation records on or after the indicated datetime."
+        },
+        {
+          "name": "created_ts__lte",
+          "title": "Date To",
+          "type": "datetime",
+          "editable": true,
+          "visible": true,
+          "required": false,
+          "tooltip": "Specify the datetime to retrieve investigation records on or before the indicated datetime.",
+          "description": "Specify the datetime to retrieve investigation records on or before the indicated datetime."
+        },
+        {
+          "title": "Number of Records to Return",
+          "description": "Select whether you want this operation to Fetch Limited Records or Fetch All Records.",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "select",
+          "options": [
+            "Fetch All Records",
+            "Fetch Limited Records"
+          ],
+          "name": "record_number",
+          "value": "Fetch Limited Records",
+          "onchange": {
+            "Fetch All Records": [],
+            "Fetch Limited Records": [
+              {
+                "title": "Limit",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "type": "integer",
+                "name": "limit",
+                "value": 20,
+                "tooltip": "Maximum number of results, per page, that this operation should return. Specifying 0 will return up to a maximum of 1000 results (if available). Max limit is 1000",
+                "description": "Maximum number of results, per page, that this operation should return."
+              },
+              {
+                "title": "Offset",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "type": "integer",
+                "name": "offset",
+                "value": 0,
+                "tooltip": "0 based index of the page that this operation should return.",
+                "description": "0 based index of the page that this operation should return."
+              }
+            ]
+          }
+        }
+      ],
+      "conditional_output_schema": [
+        {
+          "condition": "{{investigation_id == ''}}",
+          "output_schema": {
+            "meta": {
+              "errors": [
+              ],
+              "limit": "",
+              "next": "",
+              "offset": "",
+              "total_count": ""
+            },
+            "objects": [
+              {
+                "assignee": {
+                  "assignee_type": "",
+                  "id": "",
+                  "members": "",
+                  "name": "",
+                  "owner_org": {
+                    "id": "",
+                    "name": "",
+                    "resource_uri": ""
+                  },
+                  "resource_uri": ""
+                },
+                "circles": [
+                ],
+                "created_ts": "",
+                "id": "",
+                "intelligence_initiatives": [
+                  {
+                    "id": "",
+                    "type": ""
+                  }
+                ],
+                "is_public": "",
+                "modified_ts": "",
+                "name": "",
+                "owner_org": {
+                  "id": "",
+                  "name": "",
+                  "resource_uri": ""
+                },
+                "owner_org_id": null,
+                "priority": "",
+                "reporter": {
+                  "email": "",
+                  "id": "",
+                  "name": "",
+                  "resource_uri": ""
+                },
+                "reporter_id": "",
+                "resource_uri": "",
+                "source_type": "",
+                "status": "",
+                "tags": [
+                ],
+                "tlp": "",
+                "workgroups": [
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "condition": "{{investigation_id != ''}}",
+          "output_schema": {
+            "assignee": {
+              "assignee_type": "",
+              "id": "",
+              "members": "",
+              "name": "",
+              "owner_org": {
+                "id": "",
+                "name": "",
+                "resource_uri": ""
+              },
+              "resource_uri": ""
+            },
+            "attachments": [],
+            "candidate_session": null,
+            "circles": [],
+            "created_ts": "",
+            "description": "",
+            "elements": "",
+            "graph_content": {
+              "autoArrange": "",
+              "autoPivotMitre": "",
+              "autoZoom": "",
+              "combos": {
+                "links": [],
+                "nodes": []
+              },
+              "items": [],
+              "reveal": [],
+              "scrollToZoom": "",
+              "type": "",
+              "v2": "",
+              "viewSettings": {
+                "height": "",
+                "offsetX": "",
+                "offsetY": "",
+                "width": "",
+                "zoom": ""
+              }
+            },
+            "id": "",
+            "intelligence_initiatives": [],
+            "investigation_attachments": [],
+            "is_public": "",
+            "modified_ts": "",
+            "name": "",
+            "owner_org": {
+              "id": "",
+              "name": "",
+              "resource_uri": ""
+            },
+            "owner_org_id": null,
+            "pending_import_sessions": [],
+            "priority": "",
+            "reporter": {
+              "email": "",
+              "id": "",
+              "name": "",
+              "resource_uri": ""
+            },
+            "reporter_id": "",
+            "resource_uri": "",
+            "source_type": "",
+            "status": "",
+            "tags": [],
+            "tasks": [],
+            "tlp": "",
+            "users": [],
+            "workgroups": []
+          }
+        }
+      ]
+    },
+    {
+      "operation": "create_investigation",
+      "title": "Create Investigation",
+      "description": "Creates an investigation in Anomali ThreatStream.",
+      "category": "investigation",
+      "annotation": "create_investigation",
+      "handler_method": true,
+      "http_method": "POST",
+      "enabled": true,
+      "parameters": [
+        {
+          "name": "name",
+          "title": "Name",
+          "type": "text",
+          "editable": true,
+          "visible": true,
+          "required": true,
+          "tooltip": "Specify the name of the investigation to which is to be created in Anomali ThreatStream.",
+          "description": "Specify the name of the investigation to which is to be created in Anomali ThreatStream."
+        },
+        {
+          "name": "status",
+          "title": "Status",
+          "type": "select",
+          "editable": true,
+          "visible": true,
+          "required": false,
+          "tooltip": "Select updated status of the investigation to which is to be created in Anomali ThreatStream.",
+          "description": "Select updated status of the investigation to which is to be created in Anomali ThreatStream.",
+          "options": [
+            "Unassigned",
+            "Pending",
+            "In-Progress",
+            "Completed"
+          ]
+        },
+        {
+          "name": "priority",
+          "title": "Priority",
+          "type": "select",
+          "editable": true,
+          "visible": true,
+          "required": false,
+          "tooltip": "Select the priority of the investigation to which is to be created in Anomali ThreatStream.",
+          "description": "Select the priority of the investigation to which is to be created in Anomali ThreatStream.",
+          "options": [
+            "Very Low",
+            "Low",
+            "Medium",
+            "High",
+            "Very High"
+          ]
+        },
+        {
+          "name": "tlp",
+          "title": "TLP",
+          "type": "select",
+          "editable": true,
+          "visible": true,
+          "required": false,
+          "tooltip": "Select the tlp of the investigation to which is to be created in Anomali ThreatStream.",
+          "description": "Select the tlp of the investigation to which is to be created in Anomali ThreatStream.",
+          "options": [
+            "Red",
+            "Amber",
+            "Green",
+            "White"
+          ]
+        },
+        {
+          "name": "description",
+          "title": "Description",
+          "type": "html",
+          "editable": true,
+          "visible": true,
+          "required": false,
+          "tooltip": "Specify the description of the investigation to which is to be created in Anomali ThreatStream.",
+          "description": "Specify the description of the investigation to which is to be created in Anomali ThreatStream."
+        },
+        {
+          "name": "additional_attributes",
+          "title": "Additional Attributes",
+          "type": "json",
+          "editable": true,
+          "visible": true,
+          "required": false,
+          "tooltip": "Specify the attributes to create in key-value pair(JSON) format.",
+          "description": "Specify the attributes to create in key-value pair(JSON) format."
+        }
+      ],
+      "output_schema": {
+        "assignee": {
+          "assignee_type": "",
+          "id": "",
+          "members": "",
+          "name": "",
+          "owner_org": {
+            "id": "",
+            "name": "",
+            "resource_uri": ""
+          },
+          "resource_uri": ""
+        },
+        "assignee_id": "",
+        "assignee_type": "",
+        "circles": [],
+        "created_ts": "",
+        "description": "",
+        "graph_content": null,
+        "id": "",
+        "intelligence_initiatives": [],
+        "is_public": "",
+        "modified_ts": "",
+        "name": "",
+        "owner_org": {
+          "id": "",
+          "name": "",
+          "resource_uri": ""
+        },
+        "owner_org_id": null,
+        "priority": "",
+        "reporter": {
+          "email": "",
+          "id": "",
+          "name": "",
+          "resource_uri": ""
+        },
+        "reporter_id": "",
+        "resource_uri": "",
+        "source_type": "",
+        "status": "",
+        "tags": null,
+        "tlp": "",
+        "users": [],
+        "workgroups": []
+      }
+    },
+    {
+      "operation": "update_investigation",
+      "title": "Update Investigation",
+      "description": "Updates an investigation attributes in Anomali ThreatStream based on input parameter specified.",
+      "category": "investigation",
+      "annotation": "update_investigation",
+      "handler_method": true,
+      "http_method": "PATCH",
+      "enabled": true,
+      "parameters": [
+        {
+          "name": "investigation_id",
+          "title": "Investigation ID",
+          "type": "text",
+          "editable": true,
+          "visible": true,
+          "required": true,
+          "tooltip": "Specify the ID of the specific investigation to which is to be updated.",
+          "description": "Specify the ID of the specific investigation to which is to be updated."
+        },
+        {
+          "name": "name",
+          "title": "Name",
+          "type": "text",
+          "editable": true,
+          "visible": true,
+          "required": false,
+          "tooltip": "Specify the new name of the investigation to which is to be updated in Anomali ThreatStream.",
+          "description": "Specify the new name of the investigation to which is to be updated in Anomali ThreatStream."
+        },
+        {
+          "name": "status",
+          "title": "Status",
+          "type": "select",
+          "editable": true,
+          "visible": true,
+          "required": false,
+          "tooltip": "Select updated status of the investigation to which is to be updated in Anomali ThreatStream.",
+          "description": "Select updated status of the investigation to which is to be updated in Anomali ThreatStream.",
+          "options": [
+            "Unassigned",
+            "Pending",
+            "In-Progress",
+            "Completed"
+          ]
+        },
+        {
+          "name": "priority",
+          "title": "Priority",
+          "type": "select",
+          "editable": true,
+          "visible": true,
+          "required": false,
+          "tooltip": "Select the priority of the investigation to which is to be updated in Anomali ThreatStream.",
+          "description": "Select the priority of the investigation to which is to be updated in Anomali ThreatStream.",
+          "options": [
+            "Very Low",
+            "Low",
+            "Medium",
+            "High",
+            "Very High"
+          ]
+        },
+        {
+          "name": "tlp",
+          "title": "TLP",
+          "type": "select",
+          "editable": true,
+          "visible": true,
+          "required": false,
+          "tooltip": "Select the tlp of the investigation to which is to be updated.",
+          "description": "Select the tlp of the investigation to which is to be updated.",
+          "options": [
+            "Red",
+            "Amber",
+            "Green",
+            "White"
+          ]
+        },
+        {
+          "name": "description",
+          "title": "Description",
+          "type": "html",
+          "editable": true,
+          "visible": true,
+          "required": false,
+          "tooltip": "Specify the description of the investigation to which is to be updated.",
+          "description": "Specify the description of the investigation to which is to be updated."
+        },
+        {
+          "name": "additional_attributes",
+          "title": "Additional Attributes",
+          "type": "json",
+          "editable": true,
+          "visible": true,
+          "required": false,
+          "tooltip": "Specify the attributes to create in key-value pair(JSON) format.",
+          "description": "Specify the attributes to create in key-value pair(JSON) format."
+        }
+      ],
+      "output_schema": {
+        "assignee": {
+          "assignee_type": "",
+          "id": "",
+          "members": "",
+          "name": "",
+          "owner_org": {
+            "id": "",
+            "name": "",
+            "resource_uri": ""
+          },
+          "resource_uri": ""
+        },
+        "circles": [],
+        "created_ts": "",
+        "description": "",
+        "graph_content": {
+          "autoArrange": "",
+          "autoPivotMitre": "",
+          "autoZoom": "",
+          "combos": {
+            "links": [],
+            "nodes": []
+          },
+          "items": [],
+          "reveal": [],
+          "scrollToZoom": "",
+          "type": "",
+          "v2": "",
+          "viewSettings": {
+            "height": "",
+            "offsetX": "",
+            "offsetY": "",
+            "width": "",
+            "zoom": ""
+          }
+        },
+        "id": "",
+        "intelligence_initiatives": [],
+        "is_public": "",
+        "modified_ts": "",
+        "name": "",
+        "owner_org": {
+          "id": "",
+          "name": "",
+          "resource_uri": ""
+        },
+        "owner_org_id": null,
+        "priority": "",
+        "reporter": {
+          "email": "",
+          "id": "",
+          "name": "",
+          "resource_uri": ""
+        },
+        "reporter_id": "",
+        "resource_uri": "",
+        "source_type": "",
+        "status": "",
+        "tags": [],
+        "tlp": "",
+        "users": [],
+        "workgroups": []
+      }
+    },
+    {
+      "operation": "list_investigation_elements",
+      "title": "List Investigation Elements",
+      "description": "Retrieves associations between entities and existing investigations.",
+      "category": "investigation",
+      "annotation": "list_investigation_elements",
+      "handler_method": false,
+      "endpoint": "/api/v1/investigationelement/",
+      "http_method": "GET",
+      "enabled": true,
+      "parameters": [
+        {
+          "name": "investigation_id",
+          "title": "Investigation ID",
+          "type": "text",
+          "editable": true,
+          "visible": true,
+          "required": false,
+          "tooltip": "Specify the ID of the specific investigation to fetch elements for, you can get the ID with the 'List Investigations' action",
+          "description": "Specify the ID of the specific investigation to fetch elements for, you can get the ID with the 'List Investigations' action"
         },
         {
           "name": "add_related_indicators",
           "title": "Add Related Indicators",
           "type": "select",
           "options": [
-            0,
-            1
+            "Yes",
+            "No"
           ],
           "editable": true,
           "visible": true,
           "required": false,
-          "tooltip": "When enabled, observables related to the entity you are associating with the investigation are also added (when set to 1)",
-          "description": "When enabled, observables related to the entity you are associating with the investigation are also added (when set to 1)"
+          "tooltip": "When enabled, observables related to the entity you are associating with the investigation are also retrieved (when set to Yes)",
+          "description": "When enabled, observables related to the entity you are associating with the investigation are also retrieved (when set to Yes)"
         },
         {
           "title": "Number of Records to Return",
@@ -4968,186 +5468,83 @@
       ],
       "output_schema": {
         "meta": {
-          "next": "",
           "limit": "",
-          "errors": "",
+          "next": "",
           "offset": "",
+          "previous": null,
           "total_count": ""
         },
         "objects": [
           {
-            "id": "",
-            "tlp": "",
-            "name": "",
-            "tags": "",
-            "status": "",
-            "circles": "",
-            "assignee": "",
-            "priority": "",
-            "reporter": {
-              "id": "",
-              "name": "",
-              "email": "",
-              "resource_uri": ""
-            },
-            "is_public": "",
-            "owner_org": {
-              "id": "",
-              "name": "",
-              "resource_uri": ""
-            },
             "created_ts": "",
-            "workgroups": "",
+            "entity": {
+              "asn": "",
+              "comments": [],
+              "confidence": "",
+              "country": null,
+              "created_by": "",
+              "created_ts": "",
+              "expiration_ts": "",
+              "feed_id": "",
+              "id": "",
+              "import_session_id": "",
+              "import_source": "",
+              "ip": "",
+              "is_anonymous": "",
+              "is_mitre": "",
+              "is_public": "",
+              "itype": "",
+              "latitude": null,
+              "longitude": null,
+              "meta": {
+                "detail2": "",
+                "severity": ""
+              },
+              "modified_ts": "",
+              "org": "",
+              "owner_organization_id": "",
+              "rdns": null,
+              "resource_uri": "",
+              "retina_confidence": "",
+              "source": "",
+              "source_created": null,
+              "source_modified": null,
+              "source_reported_confidence": "",
+              "status": "",
+              "subtype": null,
+              "tags": [
+                {
+                  "id": "",
+                  "name": "",
+                  "org_id": "",
+                  "source_user": "",
+                  "source_user_id": "",
+                  "tlp": ""
+                }
+              ],
+              "threat_type": "",
+              "threatscore": "",
+              "tlp": null,
+              "trusted_circle_ids": [],
+              "trusted_circles_ids": [],
+              "type": "",
+              "update_id": "",
+              "uuid": "",
+              "value": "",
+              "workgroups": []
+            },
+            "id": "",
+            "investigation_id": "",
             "modified_ts": "",
-            "reporter_id": "",
-            "source_type": "",
-            "owner_org_id": "",
+            "r_id": "",
+            "r_type": "",
+            "relation_types": [],
             "resource_uri": "",
-            "intelligence_initiatives": ""
+            "score": "",
+            "tlp": ""
           }
         ]
       }
-    },
-    {
-      "operation": "list_investigationelements",
-      "title": "List Investigation Elements",
-      "description": "Retrieve associations between entities and existing investigations",
-      "category": "investigation",
-      "annotation": "list_investigationelements",
-      "handler_method": false,
-      "endpoint": "/api/v1/investigationelement/",
-      "http_method": "GET",
-      "enabled": true,
-      "parameters": [
-        {
-          "name": "investigation_id",
-          "title": "Investigation ID",
-          "type": "text",
-          "editable": true,
-          "visible": true,
-          "required": true,
-          "tooltip": "ID of the specific investigation to fetch elements for, you can get the ID with the list_investigations action",
-          "description": "ID of the specific investigation to fetch elements for, you can get the ID with the list_investigations action"
-        },
-        {
-          "name": "add_related_indicators",
-          "title": "Add Related Indicators",
-          "type": "select",
-          "options": [
-            0,
-            1
-          ],
-          "editable": true,
-          "visible": true,
-          "required": false,
-          "tooltip": "When enabled, observables related to the entity you are associating with the investigation are also added (when set to 1)",
-          "description": "When enabled, observables related to the entity you are associating with the investigation are also added (when set to 1)"
-        },
-        {
-          "title": "Number of Records to Return",
-          "description": "Select whether you want this operation to Fetch Limited Records or Fetch All Records.",
-          "required": false,
-          "editable": true,
-          "visible": true,
-          "type": "select",
-          "options": [
-            "Fetch All Records",
-            "Fetch Limited Records"
-          ],
-          "name": "record_number",
-          "value": "Fetch Limited Records",
-          "onchange": {
-            "Fetch All Records": [],
-            "Fetch Limited Records": [
-              {
-                "title": "Limit",
-                "required": true,
-                "editable": true,
-                "visible": true,
-                "type": "integer",
-                "name": "limit",
-                "value": 20,
-                "tooltip": "Maximum number of results, per page, that this operation should return. Specifying 0 will return up to a maximum of 1000 results (if available). Max limit is 1000",
-                "description": "Maximum number of results, per page, that this operation should return."
-              },
-              {
-                "title": "Offset",
-                "required": true,
-                "editable": true,
-                "visible": true,
-                "type": "integer",
-                "name": "offset",
-                "value": 0,
-                "tooltip": "0 based index of the page that this operation should return.",
-                "description": "0 based index of the page that this operation should return."
-              }
-            ]
-          }
-        }
-      ],
-      "output_schema": {
-        "data": {
-          "id": "",
-          "tlp": "",
-          "r_id": "",
-          "score": "",
-          "entity": {
-            "id": "",
-            "local_object_id": "",
-            "remote_object_id": "",
-            "local_content_type": "",
-            "remote_content_type": ""
-          },
-          "r_type": "",
-          "parents": "",
-          "created_ts": "",
-          "modified_ts": "",
-          "resource_uri": "",
-          "investigation": {
-            "id": "",
-            "name": ""
-          },
-          "relation_types": "",
-          "investigation_id": ""
-        },
-        "status": "",
-        "message": "",
-        "operation": "",
-        "execution_time": ""
-      }
-    },
-    {
-      "operation": "update_investigation",
-      "title": "Update Investigation",
-      "description": "Update investigation attributes",
-      "category": "investigation",
-      "annotation": "update_investigation",
-      "handler_method": true,
-      "http_method": "PATCH",
-      "enabled": true,
-      "parameters": [
-        {
-          "name": "investigation_id",
-          "title": "Investigation ID",
-          "type": "text",
-          "editable": true,
-          "visible": true,
-          "required": true,
-          "tooltip": "ID of the specific investigation to update",
-          "description": "ID of the specific investigation to update"
-        },
-        {
-          "name": "payload",
-          "title": "Investigation Attributes",
-          "type": "json",
-          "editable": true,
-          "visible": true,
-          "required": true,
-          "tooltip": "Attributes to update in JSON format exp:'{'description':'<p>new evidence found</p>'}",
-          "description": "Attributes to update in JSON format exp:'{'description':'<p>new evidence found</p>'}"
-        }
-      ],
-      "output_schema": ""
     }
   ]
 }
