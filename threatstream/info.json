@@ -21,7 +21,7 @@
   "ingestion_modes": [
     "scheduled"
   ],
-  "help_online": "",
+  "help_online": "https://docs.fortinet.com/document/fortisoar/2.5.0/anomali-threatstream/832/anomali-threatstream-v2-5-0",
   "configuration": {
     "fields": [
       {
@@ -4817,7 +4817,7 @@
     {
       "operation": "list_investigations",
       "title": "List Investigations",
-      "description": "Retrieves a list of investigations from Anomali ThreatStream based on the input parameter specified.",
+      "description": "Retrieves a list of investigations from Anomali ThreatStream based on the investigation ID, name, and other input parameters specified.",
       "category": "investigation",
       "annotation": "list_investigations",
       "handler_method": false,
@@ -4832,8 +4832,8 @@
           "editable": true,
           "visible": true,
           "required": false,
-          "tooltip": "Specify the ID of the investigation to retrieve specific Investigation from ThreaStream.",
-          "description": "Specify the ID of the investigation to retrieve specific Investigation from ThreaStream."
+          "tooltip": "Specify the ID of an investigation to retrieve its details from Anomali ThreatStream.",
+          "description": "Specify the ID of an investigation to retrieve its details from Anomali ThreatStream."
         },
         {
           "name": "name",
@@ -4843,7 +4843,7 @@
           "visible": true,
           "required": false,
           "tooltip": "Specify the The name of the investigation to filter the investigations.",
-          "description": "Specify the The name of the investigation to filter the investigations."
+          "description": "Specify the name of an investigation to filter the results retrieved from Anomali ThreatStream."
         },
         {
           "name": "status",
@@ -4852,8 +4852,8 @@
           "editable": true,
           "visible": true,
           "required": false,
-          "tooltip": "The status of the investigation.",
-          "description": "The status of the investigation.",
+          "tooltip": "Select the status of the investigation to filter the results retrieved from Anomali ThreatStream.",
+          "description": "Select the status of the investigation to filter the results retrieved from Anomali ThreatStream. You can choose from following options: Completed, In-Progress, Pending or Unassigned",
           "options": [
             "Completed",
             "In-Progress",
@@ -4872,8 +4872,8 @@
           "editable": true,
           "visible": true,
           "required": false,
-          "tooltip": "When enabled, observables related to the entity you are associating with the investigation are also added (when set to Yes)",
-          "description": "When enabled, observables related to the entity you are associating with the investigation are also added (when set to Yes)"
+          "tooltip": "Select whether observables related to the entity are also retrieved from Anomali ThreatStream.",
+          "description": "Select whether observables related to the entity are also retrieved from Anomali ThreatStream. You can choose from following options: Yes: Select to retrieve the observables related to the investigation from Anomali ThreatStream. No: Select to skip retrieval of the observables related to the investigation from Anomali ThreatStream."
         },
         {
           "name": "remote_api",
@@ -4882,8 +4882,8 @@
           "editable": true,
           "visible": true,
           "required": false,
-          "tooltip": "Specify whether the investigation is remote (stored on Cloud). Value returned for this attribute is true when the investigation is remote",
-          "description": "Specify whether the investigation is remote (stored on Cloud). Value returned for this attribute is true when the investigation is remote"
+          "tooltip": "Select if the investigation being retrieved is remote i.e., stored on Cloud.",
+          "description": "Select if the investigation being retrieved is remote i.e., stored on Cloud. When selected, the value returned for this attribute is true if the retrieved investigation is remote."
         },
         {
           "name": "created_ts__gte",
@@ -4892,8 +4892,8 @@
           "editable": true,
           "visible": true,
           "required": false,
-          "tooltip": "Specify the datetime to retrieve investigation records on or after the indicated datetime.",
-          "description": "Specify the datetime to retrieve investigation records on or after the indicated datetime."
+          "tooltip": "Specify the start datetime of the period from when to retrieve investigation records from Anomali ThreatStream.",
+          "description": "Specify the start datetime of the period from when to retrieve investigation records from Anomali ThreatStream."
         },
         {
           "name": "created_ts__lte",
@@ -4902,12 +4902,13 @@
           "editable": true,
           "visible": true,
           "required": false,
-          "tooltip": "Specify the datetime to retrieve investigation records on or before the indicated datetime.",
-          "description": "Specify the datetime to retrieve investigation records on or before the indicated datetime."
+          "tooltip": "Specify the end datetime of the period till when to retrieve investigation records from Anomali ThreatStream.",
+          "description": "Specify the end datetime of the period till when to retrieve investigation records from Anomali ThreatStream."
         },
         {
           "title": "Number of Records to Return",
-          "description": "Select whether you want this operation to Fetch Limited Records or Fetch All Records.",
+          "description": "Select whether you want this operation to fetch all records or only limited records. You can choose from the following options: Fetch All Records: Select this option to fetch all records as per the values specified in previous parameters. Fetch Limited Records: Select this option to fetch only the records as per the values specified in the following fields: Limit, Offset.",
+          "tooltip": "Select whether you want this operation to fetch all records or only limited records.",
           "required": false,
           "editable": true,
           "visible": true,
@@ -4929,8 +4930,8 @@
                 "type": "integer",
                 "name": "limit",
                 "value": 20,
-                "tooltip": "Maximum number of results, per page, that this operation should return. Specifying 0 will return up to a maximum of 1000 results (if available). Max limit is 1000",
-                "description": "Maximum number of results, per page, that this operation should return."
+                "tooltip": "Specify the maximum number of results, per page, that this operation should return.",
+                "description": "Specify the maximum number of results, per page, that this operation should return."
               },
               {
                 "title": "Offset",
@@ -4940,8 +4941,8 @@
                 "type": "integer",
                 "name": "offset",
                 "value": 0,
-                "tooltip": "0 based index of the page that this operation should return.",
-                "description": "0 based index of the page that this operation should return."
+                "tooltip": "Specify the number of records to skip when retrieving results returned by this operation.",
+                "description": "Specify the number of records to skip when retrieving results returned by this operation."
               }
             ]
           }
@@ -4952,8 +4953,7 @@
           "condition": "{{investigation_id == ''}}",
           "output_schema": {
             "meta": {
-              "errors": [
-              ],
+              "errors": [],
               "limit": "",
               "next": "",
               "offset": "",
@@ -4973,8 +4973,7 @@
                   },
                   "resource_uri": ""
                 },
-                "circles": [
-                ],
+                "circles": [],
                 "created_ts": "",
                 "id": "",
                 "intelligence_initiatives": [
@@ -5003,11 +5002,9 @@
                 "resource_uri": "",
                 "source_type": "",
                 "status": "",
-                "tags": [
-                ],
+                "tags": [],
                 "tlp": "",
-                "workgroups": [
-                ]
+                "workgroups": []
               }
             ]
           }
@@ -5090,7 +5087,7 @@
     {
       "operation": "create_investigation",
       "title": "Create Investigation",
-      "description": "Creates an investigation in Anomali ThreatStream.",
+      "description": "Creates an investigation in Anomali ThreatStream based on the investigation name, status, and other input parameters specified.",
       "category": "investigation",
       "annotation": "create_investigation",
       "handler_method": true,
@@ -5104,8 +5101,8 @@
           "editable": true,
           "visible": true,
           "required": true,
-          "tooltip": "Specify the name of the investigation to which is to be created in Anomali ThreatStream.",
-          "description": "Specify the name of the investigation to which is to be created in Anomali ThreatStream."
+          "tooltip": "Specify the name of the investigation to create in Anomali ThreatStream.",
+          "description": "Specify the name of the investigation to create in Anomali ThreatStream."
         },
         {
           "name": "status",
@@ -5114,8 +5111,8 @@
           "editable": true,
           "visible": true,
           "required": false,
-          "tooltip": "Select updated status of the investigation to which is to be created in Anomali ThreatStream.",
-          "description": "Select updated status of the investigation to which is to be created in Anomali ThreatStream.",
+          "tooltip": "Select the status of the investigation being created in Anomali ThreatStream.",
+          "description": "Select the status of the investigation being created in Anomali ThreatStream. You can select from the following options: Completed, In-Progress, Pending or Unassigned",
           "options": [
             "Unassigned",
             "Pending",
@@ -5130,8 +5127,8 @@
           "editable": true,
           "visible": true,
           "required": false,
-          "tooltip": "Select the priority of the investigation to which is to be created in Anomali ThreatStream.",
-          "description": "Select the priority of the investigation to which is to be created in Anomali ThreatStream.",
+          "tooltip": "Select the priority of the investigation being created in Anomali ThreatStream.",
+          "description": "Select the priority of the investigation being created in Anomali ThreatStream. You can select from the following options: Very Low, Low, Medium, High or Very High",
           "options": [
             "Very Low",
             "Low",
@@ -5147,8 +5144,8 @@
           "editable": true,
           "visible": true,
           "required": false,
-          "tooltip": "Select the tlp of the investigation to which is to be created in Anomali ThreatStream.",
-          "description": "Select the tlp of the investigation to which is to be created in Anomali ThreatStream.",
+          "tooltip": "Select the TLP to associate with the investigation being created in Anomali ThreatStream.",
+          "description": "Select the TLP to associate with the investigation being created in Anomali ThreatStream. You can select from the following options: Red, Amber, Green or White",
           "options": [
             "Red",
             "Amber",
@@ -5163,8 +5160,8 @@
           "editable": true,
           "visible": true,
           "required": false,
-          "tooltip": "Specify the description of the investigation to which is to be created in Anomali ThreatStream.",
-          "description": "Specify the description of the investigation to which is to be created in Anomali ThreatStream."
+          "tooltip": "Specify the description of the investigation being created in Anomali ThreatStream.",
+          "description": "Specify the description of the investigation being created in Anomali ThreatStream."
         },
         {
           "name": "additional_attributes",
@@ -5173,8 +5170,8 @@
           "editable": true,
           "visible": true,
           "required": false,
-          "tooltip": "Specify the attributes to create in key-value pair(JSON) format.",
-          "description": "Specify the attributes to create in key-value pair(JSON) format."
+          "tooltip": "Specify the attributes, in JSON's key-value format, to associate with the investigation being created in Anomali ThreatStream.",
+          "description": "Specify the attributes, in JSON's key-value format, to associate with the investigation being created in Anomali ThreatStream."
         }
       ],
       "output_schema": {
@@ -5227,7 +5224,7 @@
     {
       "operation": "update_investigation",
       "title": "Update Investigation",
-      "description": "Updates an investigation attributes in Anomali ThreatStream based on input parameter specified.",
+      "description": "Updates an investigation attributes in Anomali ThreatStream based on the investigation ID, name, and other input parameters specified.",
       "category": "investigation",
       "annotation": "update_investigation",
       "handler_method": true,
@@ -5241,8 +5238,8 @@
           "editable": true,
           "visible": true,
           "required": true,
-          "tooltip": "Specify the ID of the specific investigation to which is to be updated.",
-          "description": "Specify the ID of the specific investigation to which is to be updated."
+          "tooltip": "Specify the ID of the investigation being updated on Anomali ThreatStream.",
+          "description": "Specify the ID of the investigation being updated on Anomali ThreatStream."
         },
         {
           "name": "name",
@@ -5251,8 +5248,8 @@
           "editable": true,
           "visible": true,
           "required": false,
-          "tooltip": "Specify the new name of the investigation to which is to be updated in Anomali ThreatStream.",
-          "description": "Specify the new name of the investigation to which is to be updated in Anomali ThreatStream."
+          "tooltip": "Specify the name of the investigation to update in Anomali ThreatStream.",
+          "description": "Specify the name of the investigation to update in Anomali ThreatStream."
         },
         {
           "name": "status",
@@ -5261,8 +5258,8 @@
           "editable": true,
           "visible": true,
           "required": false,
-          "tooltip": "Select updated status of the investigation to which is to be updated in Anomali ThreatStream.",
-          "description": "Select updated status of the investigation to which is to be updated in Anomali ThreatStream.",
+          "tooltip": "Select the status of the investigation to update in Anomali ThreatStream.",
+          "description": "Select the status of the investigation to update in Anomali ThreatStream. You can select from the following options: Completed, In-Progress, Pending or Unassigned",
           "options": [
             "Unassigned",
             "Pending",
@@ -5277,8 +5274,8 @@
           "editable": true,
           "visible": true,
           "required": false,
-          "tooltip": "Select the priority of the investigation to which is to be updated in Anomali ThreatStream.",
-          "description": "Select the priority of the investigation to which is to be updated in Anomali ThreatStream.",
+          "tooltip": "Select the priority of the investigation to update in Anomali ThreatStream.",
+          "description": "Select the priority of the investigation to update in Anomali ThreatStream. You can select from the following options: Very Low, Low, Medium, High or Very High",
           "options": [
             "Very Low",
             "Low",
@@ -5294,8 +5291,8 @@
           "editable": true,
           "visible": true,
           "required": false,
-          "tooltip": "Select the tlp of the investigation to which is to be updated.",
-          "description": "Select the tlp of the investigation to which is to be updated.",
+          "tooltip": "Select the new TLP to associate with the investigation being updated in Anomali ThreatStream.",
+          "description": "Select the new TLP to associate with the investigation being updated in Anomali ThreatStream. You can select from the following options: Red Amber Green White",
           "options": [
             "Red",
             "Amber",
@@ -5310,8 +5307,8 @@
           "editable": true,
           "visible": true,
           "required": false,
-          "tooltip": "Specify the description of the investigation to which is to be updated.",
-          "description": "Specify the description of the investigation to which is to be updated."
+          "tooltip": "Specify the description of the investigation to update in Anomali ThreatStream.",
+          "description": "Specify the description of the investigation to update in Anomali ThreatStream."
         },
         {
           "name": "additional_attributes",
@@ -5320,8 +5317,8 @@
           "editable": true,
           "visible": true,
           "required": false,
-          "tooltip": "Specify the attributes to create in key-value pair(JSON) format.",
-          "description": "Specify the attributes to create in key-value pair(JSON) format."
+          "tooltip": "Specify the attributes, in JSON format, to associate with the investigation being updated in Anomali ThreatStream.",
+          "description": "Specify the attributes, in JSON format, to associate with the investigation being updated in Anomali ThreatStream."
         }
       ],
       "output_schema": {
@@ -5392,7 +5389,7 @@
     {
       "operation": "list_investigation_elements",
       "title": "List Investigation Elements",
-      "description": "Retrieves associations between entities and existing investigations.",
+      "description": "Retrieves associations between entities and existing investigations based on the investigation ID, related indicators, and other input parameters specified.",
       "category": "investigation",
       "annotation": "list_investigation_elements",
       "handler_method": false,
@@ -5407,8 +5404,8 @@
           "editable": true,
           "visible": true,
           "required": false,
-          "tooltip": "Specify the ID of the specific investigation to fetch elements for, you can get the ID with the 'List Investigations' action",
-          "description": "Specify the ID of the specific investigation to fetch elements for, you can get the ID with the 'List Investigations' action"
+          "tooltip": "Specify the ID of an investigation to fetch its associated elements from Anomali ThreatStream. You can get the investigation ID from 'List Investigations' action.",
+          "description": "Specify the ID of an investigation to fetch its associated elements from Anomali ThreatStream. You can get the investigation ID from List Investigations action."
         },
         {
           "name": "add_related_indicators",
@@ -5421,12 +5418,12 @@
           "editable": true,
           "visible": true,
           "required": false,
-          "tooltip": "When enabled, observables related to the entity you are associating with the investigation are also retrieved (when set to Yes)",
-          "description": "When enabled, observables related to the entity you are associating with the investigation are also retrieved (when set to Yes)"
+          "tooltip": "Select whether observables related to the entity are also retrieved from Anomali ThreatStream.",
+          "description": "Select whether observables related to the entity are also retrieved from Anomali ThreatStream. You can choose from following options: Yes: Select to retrieve the observables related to the investigation from Anomali ThreatStream. No: Select to skip retrieval of the observables related to the investigation from Anomali ThreatStream."
         },
         {
           "title": "Number of Records to Return",
-          "description": "Select whether you want this operation to Fetch Limited Records or Fetch All Records.",
+          "description": "Select whether you want this operation to fetch all records or only limited records. You can choose from the following options: Fetch All Records: Select this option to fetch all records as per the values specified in previous parameters. Fetch Limited Records: Select this option to fetch only the records as per the values specified in the following fields: Limit and Offset.",
           "required": false,
           "editable": true,
           "visible": true,
@@ -5448,8 +5445,8 @@
                 "type": "integer",
                 "name": "limit",
                 "value": 20,
-                "tooltip": "Maximum number of results, per page, that this operation should return. Specifying 0 will return up to a maximum of 1000 results (if available). Max limit is 1000",
-                "description": "Maximum number of results, per page, that this operation should return."
+                "tooltip": "Specify the maximum number of results, per page, that this operation should return.",
+                "description": "Specify the maximum number of results, per page, that this operation should return."
               },
               {
                 "title": "Offset",
@@ -5459,8 +5456,8 @@
                 "type": "integer",
                 "name": "offset",
                 "value": 0,
-                "tooltip": "0 based index of the page that this operation should return.",
-                "description": "0 based index of the page that this operation should return."
+                "tooltip": "Specify the number of records to skip when retrieving results returned by this operation.",
+                "description": "Specify the number of records to skip when retrieving results returned by this operation."
               }
             ]
           }
@@ -5548,3 +5545,4 @@
     }
   ]
 }
+
