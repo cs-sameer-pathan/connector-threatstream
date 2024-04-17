@@ -17,8 +17,8 @@
           "uuid": "bd57a037-953b-40a2-bb71-b44e07a312d1",
           "collection": "/api/3/workflow_collections/db11b444-9949-486a-b365-18ad72814589",
           "triggerLimit": null,
-          "description": "Retrieves a list of all threat bulletins or specific threat bulletins based on the search query and other input parameters that you have specified.",
           "name": "Get Threat Bulletin List",
+          "description": "Retrieves a list of all threat bulletins or specific threat bulletins based on the search query and other input parameters that you have specified.",
           "tag": "#Anomali ThreatStream",
           "recordTags": [
             "Threatstream",
@@ -3734,11 +3734,11 @@
         },
         {
           "@type": "Workflow",
-          "uuid": "1caf976e-724f-4c57-a6c2-0399a4cb4701",
-          "collection": "/api/3/workflow_collections/db11b444-9949-486a-b365-18ad72814589",
+          "uuid": "059417d5-ab2a-458a-9c7f-3cea39edad8c",
+          "collection": "/api/3/workflow_collections/3662b3d5-2c7b-4c81-a28b-d24d747ee894",
           "steps": [
             {
-              "uuid": "28d1a959-4329-4bf1-bf2e-f36d8c0066e6",
+              "uuid": "94f16d2b-d544-4c68-842d-1189e83a4397",
               "@type": "WorkflowStep",
               "name": "Start",
               "description": null,
@@ -3755,7 +3755,7 @@
               "stepType": "/api/3/workflow_step_types/b348f017-9a94-471f-87f8-ce88b6a7ad62"
             },
             {
-              "uuid": "b46561f7-96cb-49e9-bb76-8ce0ce157090",
+              "uuid": "68272ff5-cf41-4d3c-9d37-348e389028e7",
               "@type": "WorkflowStep",
               "name": "List Investigations",
               "description": null,
@@ -3784,7 +3784,7 @@
             }
           ],
           "triggerLimit": null,
-          "description": "Collects and retrieves investigations from ThreatStream",
+          "description": "Retrieves a list of investigations from Anomali ThreatStream based on the investigation ID, name, and other input parameters specified.",
           "name": "List Investigations",
           "tag": "#Anomali ThreatStream",
           "recordTags": [
@@ -3796,26 +3796,26 @@
           "singleRecordExecution": false,
           "parameters": [],
           "synchronous": false,
-          "triggerStep": "/api/3/workflow_steps/28d1a959-4329-4bf1-bf2e-f36d8c0066e6",
+          "triggerStep": "/api/3/workflow_steps/94f16d2b-d544-4c68-842d-1189e83a4397",
           "routes": [
             {
-              "uuid": "654f0db7-eb96-45c2-9fc5-fbb2f3eb1646",
+              "uuid": "91c00022-060b-4c3d-b3f0-9f8eb1865e9c",
               "@type": "WorkflowRoute",
               "label": null,
               "isExecuted": false,
               "name": "Start-> List Investigations",
-              "sourceStep": "/api/3/workflow_steps/28d1a959-4329-4bf1-bf2e-f36d8c0066e6",
-              "targetStep": "/api/3/workflow_steps/b46561f7-96cb-49e9-bb76-8ce0ce157090"
+              "sourceStep": "/api/3/workflow_steps/94f16d2b-d544-4c68-842d-1189e83a4397",
+              "targetStep": "/api/3/workflow_steps/68272ff5-cf41-4d3c-9d37-348e389028e7"
             }
           ]
         },
         {
           "@type": "Workflow",
-          "uuid": "5d7266f7-68c2-41f7-842f-097914fe969d",
-          "collection": "/api/3/workflow_collections/db11b444-9949-486a-b365-18ad72814589",
+          "uuid": "7a7ac3bd-a4a3-4944-9d54-4ed53174f3dd",
+          "collection": "/api/3/workflow_collections/3662b3d5-2c7b-4c81-a28b-d24d747ee894",
           "steps": [
             {
-              "uuid": "d9c1e371-021c-4cf0-8e10-653672a6f737",
+              "uuid": "6c5285df-7e4e-4c78-9520-d99ec7c9f89b",
               "@type": "WorkflowStep",
               "name": "Start",
               "description": null,
@@ -3832,7 +3832,7 @@
               "stepType": "/api/3/workflow_step_types/b348f017-9a94-471f-87f8-ce88b6a7ad62"
             },
             {
-              "uuid": "e6b9ab6d-ddd7-4b24-baa1-1f42ebf76604",
+              "uuid": "765dbdea-9313-4afe-9b68-972815f4066d",
               "@type": "WorkflowStep",
               "name": "Create Investigation",
               "description": null,
@@ -3859,7 +3859,7 @@
             }
           ],
           "triggerLimit": null,
-          "description": "Creates an investigation in Anomali ThreatStream.",
+          "description": "Creates an investigation in Anomali ThreatStream based on the investigation name, status, and other input parameters specified.",
           "name": "Create Investigation",
           "tag": "#Anomali ThreatStream",
           "recordTags": [
@@ -3871,26 +3871,26 @@
           "singleRecordExecution": false,
           "parameters": [],
           "synchronous": false,
-          "triggerStep": "/api/3/workflow_steps/d9c1e371-021c-4cf0-8e10-653672a6f737",
+          "triggerStep": "/api/3/workflow_steps/6c5285df-7e4e-4c78-9520-d99ec7c9f89b",
           "routes": [
             {
-              "uuid": "5a238045-6fa1-48d9-aba0-2fc91bf05b10",
+              "uuid": "3da363ad-834f-42cf-9796-0e1247c2db79",
               "@type": "WorkflowRoute",
               "label": null,
               "isExecuted": false,
               "name": "Start-> Create Investigation",
-              "sourceStep": "/api/3/workflow_steps/d9c1e371-021c-4cf0-8e10-653672a6f737",
-              "targetStep": "/api/3/workflow_steps/e6b9ab6d-ddd7-4b24-baa1-1f42ebf76604"
+              "sourceStep": "/api/3/workflow_steps/6c5285df-7e4e-4c78-9520-d99ec7c9f89b",
+              "targetStep": "/api/3/workflow_steps/765dbdea-9313-4afe-9b68-972815f4066d"
             }
           ]
         },
         {
           "@type": "Workflow",
-          "uuid": "0b252ff1-eed7-4683-9b3b-80f425f00338",
-          "collection": "/api/3/workflow_collections/db11b444-9949-486a-b365-18ad72814589",
+          "uuid": "ae9562ad-2472-4f8b-b298-5f604229fc2d",
+          "collection": "/api/3/workflow_collections/3662b3d5-2c7b-4c81-a28b-d24d747ee894",
           "steps": [
             {
-              "uuid": "f628d708-7e3a-4daf-83d2-f96b3c4637c6",
+              "uuid": "d8abb8ac-5265-48a0-bb7d-8760dca5ab54",
               "@type": "WorkflowStep",
               "name": "Start",
               "description": null,
@@ -3907,7 +3907,7 @@
               "stepType": "/api/3/workflow_step_types/b348f017-9a94-471f-87f8-ce88b6a7ad62"
             },
             {
-              "uuid": "a76562a0-7582-4dfd-82af-f1afb579347c",
+              "uuid": "2aea4091-4e3a-46ee-895b-a529e2b279bd",
               "@type": "WorkflowStep",
               "name": "Update Investigation",
               "description": null,
@@ -3935,7 +3935,7 @@
             }
           ],
           "triggerLimit": null,
-          "description": "Updates an investigation attributes in Anomali ThreatStream based on input parameter specified.",
+          "description": "Updates an investigation attributes in Anomali ThreatStream based on the investigation ID, name, and other input parameters specified.",
           "name": "Update Investigation",
           "tag": "#Anomali ThreatStream",
           "recordTags": [
@@ -3947,26 +3947,26 @@
           "singleRecordExecution": false,
           "parameters": [],
           "synchronous": false,
-          "triggerStep": "/api/3/workflow_steps/f628d708-7e3a-4daf-83d2-f96b3c4637c6",
+          "triggerStep": "/api/3/workflow_steps/d8abb8ac-5265-48a0-bb7d-8760dca5ab54",
           "routes": [
             {
-              "uuid": "a299c13a-124d-4255-ac5f-b44e488ac1b0",
+              "uuid": "f1c02dac-dcb9-48eb-b3ff-7feb7edd009c",
               "@type": "WorkflowRoute",
               "label": null,
               "isExecuted": false,
               "name": "Start-> Update Investigation",
-              "sourceStep": "/api/3/workflow_steps/f628d708-7e3a-4daf-83d2-f96b3c4637c6",
-              "targetStep": "/api/3/workflow_steps/a76562a0-7582-4dfd-82af-f1afb579347c"
+              "sourceStep": "/api/3/workflow_steps/d8abb8ac-5265-48a0-bb7d-8760dca5ab54",
+              "targetStep": "/api/3/workflow_steps/2aea4091-4e3a-46ee-895b-a529e2b279bd"
             }
           ]
         },
         {
           "@type": "Workflow",
-          "uuid": "dfc212ca-3468-446c-b20b-2637ffe02c98",
-          "collection": "/api/3/workflow_collections/db11b444-9949-486a-b365-18ad72814589",
+          "uuid": "b1d37fc0-b080-449a-a673-7df04fc59eba",
+          "collection": "/api/3/workflow_collections/3662b3d5-2c7b-4c81-a28b-d24d747ee894",
           "steps": [
             {
-              "uuid": "71a6b710-0147-46b6-9c85-f4ba7d0106f6",
+              "uuid": "6c33b0e6-38fb-44dd-afd8-9955587a5cfc",
               "@type": "WorkflowStep",
               "name": "Start",
               "description": null,
@@ -3983,7 +3983,7 @@
               "stepType": "/api/3/workflow_step_types/b348f017-9a94-471f-87f8-ce88b6a7ad62"
             },
             {
-              "uuid": "fd951674-010d-4ff8-87e5-997cb6638fc9",
+              "uuid": "268a5195-8e1c-400b-b2c2-ab24bd5d651f",
               "@type": "WorkflowStep",
               "name": "List Investigation Elements",
               "description": null,
@@ -4007,7 +4007,7 @@
             }
           ],
           "triggerLimit": null,
-          "description": "Retrieves associations between entities and existing investigations",
+          "description": "Retrieves associations between entities and existing investigations based on the investigation ID, related indicators, and other input parameters specified.",
           "name": "List Investigation Elements",
           "tag": "#Anomali ThreatStream",
           "recordTags": [
@@ -4019,16 +4019,16 @@
           "singleRecordExecution": false,
           "parameters": [],
           "synchronous": false,
-          "triggerStep": "/api/3/workflow_steps/71a6b710-0147-46b6-9c85-f4ba7d0106f6",
+          "triggerStep": "/api/3/workflow_steps/6c33b0e6-38fb-44dd-afd8-9955587a5cfc",
           "routes": [
             {
-              "uuid": "b18b216c-58ed-4218-934e-058326ea23c4",
+              "uuid": "ab7fd469-8654-40bf-89fe-4c628f6837f8",
               "@type": "WorkflowRoute",
               "label": null,
               "isExecuted": false,
               "name": "Start-> List Investigation Elements",
-              "sourceStep": "/api/3/workflow_steps/71a6b710-0147-46b6-9c85-f4ba7d0106f6",
-              "targetStep": "/api/3/workflow_steps/fd951674-010d-4ff8-87e5-997cb6638fc9"
+              "sourceStep": "/api/3/workflow_steps/6c33b0e6-38fb-44dd-afd8-9955587a5cfc",
+              "targetStep": "/api/3/workflow_steps/268a5195-8e1c-400b-b2c2-ab24bd5d651f"
             }
           ]
         }
