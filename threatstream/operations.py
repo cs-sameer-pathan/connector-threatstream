@@ -147,8 +147,6 @@ def generate_payload_filter(config, param, itype):
         logger.info("As validation is False. Not Validating the Input")
 
     payload = dict()
-    payload["username"] = config.get("api_username")
-    payload["api_key"] = config.get("api_key")
     payload["type"] = itype
     payload[filter_opt] = param.get("value")
     payload["update_id__gt"] = 0
@@ -160,9 +158,6 @@ def generate_payload(config, params):
     payload = dict()
     if params:
         payload = {k: v for k, v in params.items() if v is not None and v != ""}
-
-    payload["username"] = config.get("api_username")
-    payload["api_key"] = config.get("api_key")
     return payload
 
 
@@ -212,11 +207,15 @@ def make_rest_call(endpoint, config, result):
         server_url = "https://" + server_url
 
     endpoint_url = server_url + endpoint
+    header = {
+        "Authorization": "apikey {0}:{1}".format(config.get('api_username'), config.get('api_key'))
+    }
     try:
         response = request(
             "GET",
             endpoint_url,
             params=generate_payload(config, None),
+            headers=header,
             verify=config.get("verify_ssl"),
             timeout=MAX_REQUEST_TIMEOUT
         )
@@ -301,12 +300,15 @@ def add_attachment_to_tb(tb_id, reference_id, config):
             "filename": (None, file_name),
         }
         endpoint_file = server_url + "/api/v1/tipreport/{0}/attachment/".format(tb_id)
-
+        header = {
+            "Authorization": "apikey {0}:{1}".format(config.get('api_username'), config.get('api_key'))
+        }
         response = request(
             "POST",
             endpoint_file,
             params=payload,
             files=files,
+            headers=header,
             verify=config.get("verify_ssl"),
             timeout=MAX_REQUEST_TIMEOUT
         )
@@ -406,13 +408,16 @@ def import_observables(config, params):
             }
 
         endpoint = server_url + IMPORT_OBSERVABLES
-
+        header = {
+            "Authorization": "apikey {0}:{1}".format(config.get('api_username'), config.get('api_key'))
+        }
         response = request(
             "POST",
             endpoint,
             params=payload,
             files=files,
             data=data,
+            headers=header,
             verify=config.get("verify_ssl"),
             timeout=MAX_REQUEST_TIMEOUT
         )
@@ -470,7 +475,10 @@ def create_incident(config, params):
 
         endpoint = server_url + "/api/v1/incident/"
 
-        header = {"Content-Type": "application/json"}
+        header = {
+            "Content-Type": "application/json",
+            "Authorization": "apikey {0}:{1}".format(config.get('api_username'), config.get('api_key'))
+        }
 
         response = request(
             "POST",
@@ -512,7 +520,11 @@ def update_incident(config, params):
 
         endpoint = server_url + "/api/v1/incident/{0}/".format(params.get("value"))
 
-        header = {"Content-Type": "application/json"}
+        header = {
+            "Content-Type": "application/json",
+            "Authorization": "apikey {0}:{1}".format(config.get('api_username'), config.get('api_key'))
+
+        }
         result.pop("value")
         response = request(
             "PATCH",
@@ -672,6 +684,10 @@ def api_request(config, params, operation_details):
                     payload["limit"] = 0
                     payload["offset"] = 0
 
+        header = {
+            "Authorization": "apikey {0}:{1}".format(config.get('api_username'), config.get('api_key'))
+        }
+
         # Common REST request query handler.
 
         retry_count = 0
@@ -682,6 +698,7 @@ def api_request(config, params, operation_details):
                     endpoint,
                     params=payload,
                     verify=config.get("verify_ssl"),
+                    headers=header,
                     timeout=MAX_REQUEST_TIMEOUT
                 )
                 if response.status_code in (200, 202):
@@ -852,7 +869,10 @@ def create_threat_bulletin(config, params):
 
         endpoint = server_url + "/api/v1/tipreport/"
 
-        header = {"Content-Type": "application/json"}
+        header = {
+            "Content-Type": "application/json",
+            "Authorization": "apikey {0}:{1}".format(config.get('api_username'), config.get('api_key'))
+        }
 
         response = request(
             "POST",
@@ -902,7 +922,10 @@ def update_threat_bulletin(config, params):
 
         endpoint = server_url + "/api/v1/tipreport/{0}/".format(tb_id)
 
-        header = {"Content-Type": "application/json"}
+        header = {
+            "Content-Type": "application/json",
+            "Authorization": "apikey {0}:{1}".format(config.get('api_username'), config.get('api_key'))
+        }
         response = request(
             "PATCH",
             endpoint,
@@ -957,11 +980,15 @@ def submit_urls_files(config, params):
         if trusted_circles:
             files["trusted_circles"] = (None, trusted_circles)
 
+        header = {
+            "Authorization": "apikey {0}:{1}".format(config.get('api_username'), config.get('api_key'))
+        }
         response = request(
             "POST",
             endpoint,
             params=payload,
             files=files,
+            headers=header,
             verify=config.get("verify_ssl"),
             timeout=MAX_REQUEST_TIMEOUT
         )
@@ -1030,7 +1057,10 @@ def create_or_update_investigation(config, params):
         payload = {k: v for k, v in params.items() if v != '' and v is not None}
         if additional_attributes:
             payload.update(additional_attributes)
-        header = {"Content-Type": "application/json"}
+        header = {
+            "Content-Type": "application/json",
+            "Authorization": "apikey {0}:{1}".format(config.get('api_username'), config.get('api_key'))
+        }
         response = request(
             method,
             endpoint,
