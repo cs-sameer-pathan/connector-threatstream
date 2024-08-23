@@ -1,7 +1,7 @@
 {
   "name": "threatstream",
   "label": "Anomali ThreatStream",
-  "version": "2.5.0",
+  "version": "2.5.1",
   "description": "Anomali ThreatStream offers the most comprehensive Threat Intelligence Platform, allowing organizations to access all intelligence feeds and integrate it seamlessly with internal security and IT systems. This connector facilitates automated operations to to pull threat intelligence from the ThreatStream platform, import observables into ThreatStream from any source, manage threat model entities and investigations, and so on.",
   "publisher": "Fortinet",
   "cs_approved": true,
@@ -21,7 +21,7 @@
   "ingestion_modes": [
     "scheduled"
   ],
-  "help_online": "https://docs.fortinet.com/document/fortisoar/2.5.0/anomali-threatstream/832/anomali-threatstream-v2-5-0",
+  "help_online": "",
   "configuration": {
     "fields": [
       {

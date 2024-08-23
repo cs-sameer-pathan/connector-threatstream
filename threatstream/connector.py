@@ -14,7 +14,8 @@ from integrations.crudhub import make_request
 from django.conf import settings
 
 logger = get_logger('anomali-threatstream')
-#logger.setLevel(logging.DEBUG) # Uncomment to enable local debug
+# logger.setLevel(logging.DEBUG) # Uncomment to enable local debug
+
 
 class ThreatStream(Connector):
     def execute(self, config, operation, params, **kwargs):
