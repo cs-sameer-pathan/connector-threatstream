@@ -1,2 +1,2 @@
 #### What's Fixed
-- Previously, the API key was included in the query parameter; now it is sent in the headers.
+- Updated the connector as per the latest guideline from Anomali to pass the API key through headers.
